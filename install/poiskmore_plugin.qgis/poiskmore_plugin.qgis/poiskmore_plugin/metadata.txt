@@ -1,0 +1,13 @@
+[general]
+name=PoiskMore
+description=Плагин для SAR операций по IAMSAR и "Поиск-Море" в QGIS
+version=1.0.1
+qgisMinimumVersion=3.40
+qgisMaximumVersion=3.40
+author=MorSpasService & AI Adaptation (Grok)
+email=support@poisk-more.ru
+repository=https://github.com/poisk-more/qgis-plugin
+experimental=False
+deprecated=False
+tags=sar,search,rescue,maritime,iamsar,qgis
+category=Plugins

@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 cd /d C:\Projects\poisk-more-qgis
 echo Добавление всех изменений...
 git add .

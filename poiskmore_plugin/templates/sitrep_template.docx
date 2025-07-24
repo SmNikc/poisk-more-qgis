@@ -1,0 +1,17 @@
+[SITREP TEMPLATE]
+
+Тип: {type}
+Дата/время (UTC): {datetime}
+SRU: {sru}
+Координаты: {coords}
+
+Погода:
+{weather}
+
+Ситуация:
+{situation}
+
+Действия:
+{actions}
+
+Вложение: {attachment}

@@ -15,7 +15,7 @@ def test_sitrep_data_complete():
     for field in required_fields:
         assert data[field] != "", f"Поле {field} должно быть заполнено"
 
-@pytest.mark.parametrize("missing", ["type", "datetime", "sru", "coords", "weather", "situation", "actions"])
+# @pytest.mark.parametrize("missing", ["type", "datetime", "sru", "coords", "weather", "situation", "actions"])
 def test_missing_field(missing):
     data = {
         "type": "INITIAL",

@@ -1,7 +1,3 @@
-# База данных учебных операций. Переписано:
-# - С MySQL на SQLite
-# - Поддержка автоинициализации
-
 import sqlite3
 
 def init_training_db(db_path="poiskmore.db"):
@@ -17,13 +13,16 @@ def init_training_db(db_path="poiskmore.db"):
                 notes TEXT
             )
         """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_training_id ON training_log(id)")
         conn.commit()
         conn.close()
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"[Ошибка] Инициализация training_log: {e}")
 
 def insert_training_entry(entry, db_path="poiskmore.db"):
     try:
+        if not all(key in entry for key in ["id", "name", "date"]):
+            raise ValueError("Отсутствуют обязательные поля: id, name, date")
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute("""
@@ -38,5 +37,7 @@ def insert_training_entry(entry, db_path="poiskmore.db"):
         ))
         conn.commit()
         conn.close()
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"[Ошибка] Сохранение записи об учении: {e}")
+    except ValueError as e:
+        print(f"[Ошибка] Валидация данных: {e}")

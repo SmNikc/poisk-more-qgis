@@ -1,6 +1,6 @@
 from qgis.core import (
     QgsVectorLayer, QgsFeature, QgsGeometry, QgsPointXY, QgsField, QgsProject
-)
+# )
 from PyQt5.QtCore import QVariant
 import random
 import math
@@ -10,7 +10,7 @@ def calculate_drift(
     wind_speed_ms: float, wind_dir_deg: float,
     time_hours: float,
     current_speed_ms: float = 0, current_dir_deg: float = 0
-) -> tuple[float, float]:
+# ) -> tuple[float, float]:
     """
     Расчёт новой позиции после дрейфа (ветер + течение), согласно IAMSAR (~3% от ветра).
     Возвращает: (new_lat, new_lon)
@@ -37,7 +37,7 @@ def generate_probability_points(
     wind_speed_ms: float = 6, wind_dir_deg: float = 45,
     time_hours: float = 2,
     current_speed_ms: float = 0, current_dir_deg: float = 0
-) -> QgsVectorLayer:
+# ) -> QgsVectorLayer:
     """
     Генерация точек вероятности с учётом дрейфа от исходного центра.
     """

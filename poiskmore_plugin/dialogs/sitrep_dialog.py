@@ -1,13 +1,10 @@
-# добавлена валидация.
-
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox,
     QLineEdit, QTextEdit, QPushButton, QFileDialog, QDateTimeEdit, QMessageBox
-# )
+)
 from PyQt5.QtCore import QDateTime
 from ..reports.sitrep_generator import generate_sitrep_pdf
 from ..reports.sitrep_generator_docx import generate_sitrep_docx
-
 
 class SitrepDialog(QDialog):
     def __init__(self, iface):
@@ -48,26 +45,32 @@ class SitrepDialog(QDialog):
 
     def generate_pdf(self):
         try:
-            generate_sitrep_pdf(
-                self.type_combo.currentText(),
-                self.datetime_edit.dateTime().toString("yyyy-MM-dd HH:mm:ss"),
-                self.sru_edit.text(),
-                self.zone_edit.text(),
-                self.notes_edit.toPlainText()
-            )
+            data = {
+                "type": self.type_combo.currentText(),
+                "datetime": self.datetime_edit.dateTime().toString("yyyy-MM-dd HH:mm:ss"),
+                "sru": self.sru_edit.text(),
+                "zone": self.zone_edit.text(),
+                "notes": self.notes_edit.toPlainText()
+            }
+            if not all(data.values()):
+                raise ValueError("Заполните все обязательные поля!")
+            generate_sitrep_pdf(data)
             QMessageBox.information(self, "Готово", "Файл PDF успешно создан.")
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", str(e))
 
     def generate_docx(self):
         try:
-            generate_sitrep_docx(
-                self.type_combo.currentText(),
-                self.datetime_edit.dateTime().toString("yyyy-MM-dd HH:mm:ss"),
-                self.sru_edit.text(),
-                self.zone_edit.text(),
-                self.notes_edit.toPlainText()
-            )
+            data = {
+                "type": self.type_combo.currentText(),
+                "datetime": self.datetime_edit.dateTime().toString("yyyy-MM-dd HH:mm:ss"),
+                "sru": self.sru_edit.text(),
+                "zone": self.zone_edit.text(),
+                "notes": self.notes_edit.toPlainText()
+            }
+            if not all(data.values()):
+                raise ValueError("Заполните все обязательные поля!")
+            generate_sitrep_docx(data)
             QMessageBox.information(self, "Готово", "Файл DOCX успешно создан.")
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", str(e))

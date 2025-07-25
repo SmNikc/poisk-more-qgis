@@ -1,50 +1,42 @@
-import mysql.connector
-from qgis.core import QgsMessageLog
-import configparser
+# База данных учебных операций. Переписано:
+# - С MySQL на SQLite
+# - Поддержка автоинициализации
 
-config = configparser.ConfigParser()
-config.read('config/default.ini')
-db_config = {
-    'host': config.get('MySQL', 'host', fallback='localhost'),
-    'user': config.get('MySQL', 'user', fallback='root'),
-    'password': config.get('MySQL', 'password', fallback=''),
-    'database': config.get('MySQL', 'database', fallback='poiskmore')
-}
+import sqlite3
 
-def save_training_data(incident_id, lat, lon, timestamp, status):
-    """Сохранение данных учений в MySQL."""
+def init_training_db(db_path="poiskmore.db"):
     try:
-        conn = mysql.connector.connect(**db_config)
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        query = """
-            INSERT INTO training_data (incident_id, latitude, longitude, timestamp, status)
-            VALUES (%s, %s, %s, %s, %s)
-            ON DUPLICATE KEY UPDATE latitude=VALUES(latitude), longitude=VALUES(longitude),
-            timestamp=VALUES(timestamp), status=VALUES(status)
-        """
-        cursor.execute(query, (incident_id, lat, lon, timestamp, status))
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS training_log (
+                id TEXT PRIMARY KEY,
+                name TEXT,
+                date TEXT,
+                duration INTEGER,
+                notes TEXT
+            )
+        """)
         conn.commit()
-    except mysql.connector.Error as e:
-        QgsMessageLog.logMessage(f"Ошибка MySQL: {e}", "PoiskMore", Qgis.Critical)
-        return False
-    finally:
-        if conn.is_connected():
-            cursor.close()
-            conn.close()
-    return True
+        conn.close()
+    except Exception as e:
+        print(f"[Ошибка] Инициализация training_log: {e}")
 
-def get_training_data(incident_id):
-    """Получение данных учений по incident_id."""
+def insert_training_entry(entry, db_path="poiskmore.db"):
     try:
-        conn = mysql.connector.connect(**db_config)
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        query = "SELECT * FROM training_data WHERE incident_id = %s"
-        cursor.execute(query, (incident_id,))
-        return cursor.fetchall()
-    except mysql.connector.Error as e:
-        QgsMessageLog.logMessage(f"Ошибка MySQL: {e}", "PoiskMore", Qgis.Critical)
-        return []
-    finally:
-        if conn.is_connected():
-            cursor.close()
-            conn.close()
+        cursor.execute("""
+            INSERT INTO training_log (id, name, date, duration, notes)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            entry["id"],
+            entry["name"],
+            entry["date"],
+            entry.get("duration", 0),
+            entry.get("notes", "")
+        ))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"[Ошибка] Сохранение записи об учении: {e}")

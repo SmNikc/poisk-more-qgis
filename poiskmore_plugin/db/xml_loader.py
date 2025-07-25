@@ -1,20 +1,36 @@
-Загрузка XML. Улучшен: Добавлена try-
-except, проверка на наличие элементов.
+# Загрузка XML. Улучшен:
+# - Добавлена try-except
+# - Переписано на SQLite
+# - Сохраняет XML-данные в таблицу xml_data
+
+import sqlite3
 import xml.etree.ElementTree as ET
-def load_incidents_from_xml(path):
-try:
-tree = ET.parse(path)
-root = tree.getroot()
-incidents = []
-for item in root.findall(".//incident"):
-inc = {
-"id": item.findtext("id", ""),
-"datetime": item.findtext("datetime", ""),
-"description": item.findtext("description", "")
-}
-if all(inc.values()):  # Проверка на полноту
-incidents.append(inc)
-return incidents
-except ET.ParseError as e:
-print(f"Ошибка парсинга XML: {e}")
-return []
+
+def load_xml_to_sqlite(xml_path, db_path="poiskmore.db"):
+    try:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS xml_data (
+                id TEXT,
+                content TEXT
+            )
+        """)
+
+        for element in root.findall(".//record"):
+            rec_id = element.findtext("id") or ""
+            rec_data = ET.tostring(element, encoding="unicode")
+            cursor.execute(
+                "INSERT INTO xml_data (id, content) VALUES (?, ?)",
+                (rec_id, rec_data)
+            )
+
+        conn.commit()
+        conn.close()
+    except ET.ParseError as e:
+        print(f"[Ошибка] Парсинг XML: {e}")
+    except Exception as e:
+        print(f"[Ошибка] Загрузка XML в SQLite: {e}")

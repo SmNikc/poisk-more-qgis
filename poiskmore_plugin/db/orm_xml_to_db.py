@@ -1,25 +1,22 @@
-# Импорт XML в MySQL. Улучшен: Try-except, проверка элементов, миграция на MySQL.
+# Импорт XML в SQLite. Обновлено:
+# - Переход с MySQL на SQLite
+# - Автоматическое создание таблицы
+# - Парсинг XML с проверкой
 
-import mysql.connector
+import sqlite3
 import xml.etree.ElementTree as ET
-from mysql.connector import Error
 
-def xml_to_mysql(xml_path, host='localhost', user='root', password='password', db='poiskmore'):
+def xml_to_sqlite(xml_path, db_path="poiskmore.db"):
     try:
         tree = ET.parse(xml_path)
         root = tree.getroot()
 
-        conn = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password,
-            database=db
-        )
-        c = conn.cursor()
-        c.execute("""
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS incidents (
-                id VARCHAR(255),
-                datetime VARCHAR(255),
+                id TEXT,
+                datetime TEXT,
                 description TEXT
             )
         """)
@@ -29,12 +26,15 @@ def xml_to_mysql(xml_path, host='localhost', user='root', password='password', d
             dt = item.findtext("datetime")
             desc = item.findtext("description")
             if id_ and dt and desc:
-                c.execute("INSERT INTO incidents VALUES (%s, %s, %s)", (id_, dt, desc))
+                cursor.execute(
+                    "INSERT INTO incidents (id, datetime, description) VALUES (?, ?, ?)",
+                    (id_, dt, desc)
+                )
 
         conn.commit()
         conn.close()
 
     except ET.ParseError as e:
-        print(f"Ошибка парсинга XML: {e}")
-    except Error as e:
-        print(f"Ошибка работы с MySQL: {e}")
+        print(f"[Ошибка] Парсинг XML: {e}")
+    except Exception as e:
+        print(f"[Ошибка] Импорт в SQLite: {e}")

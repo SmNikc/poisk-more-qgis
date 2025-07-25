@@ -680,35 +680,40 @@ class ErrEditingDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\exercise_dialog.py ---</h3>
 <pre><code>
-# PyQt5.
-from PyQt5.QtWidgets import (
-# QDialog, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QDateEdit, QPushButton
-# )
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QDateEdit, QPushButton
 from PyQt5.QtCore import QDate
+
 class ExerciseDialog(QDialog):
-def init(self):
-# super().init()
-# self.setWindowTitle(&quot;Учение / Тренировка&quot;)
-# layout = QVBoxLayout()
-# self.name_edit = QLineEdit()
-# self.date_edit = QDateEdit(QDate.currentDate())
-# self.region_edit = QLineEdit()
-# self.units_edit = QTextEdit()
-# self.scenario_edit = QTextEdit()
-# layout.addWidget(QLabel(&quot;Название учения:&quot;))
-# layout.addWidget(self.name_edit)
-# layout.addWidget(QLabel(&quot;Дата проведения:&quot;))
-# layout.addWidget(self.date_edit)
-# layout.addWidget(QLabel(&quot;Район проведения:&quot;))
-# layout.addWidget(self.region_edit)
-# layout.addWidget(QLabel(&quot;Задействованные силы и средства (SRU):&quot;))
-# layout.addWidget(self.units_edit)
-# layout.addWidget(QLabel(&quot;Сценарий:&quot;))
-# layout.addWidget(self.scenario_edit)
-# self.ok_button = QPushButton(&quot;Сохранить&quot;)
-# self.ok_button.clicked.connect(self.accept)
-# layout.addWidget(self.ok_button)
-# self.setLayout(layout)
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle(&quot;Учение / Тренировка&quot;)
+        layout = QVBoxLayout()
+        self.name_edit = QLineEdit()
+        self.date_edit = QDateEdit(QDate.currentDate())
+        self.region_edit = QLineEdit()
+        self.units_edit = QTextEdit()
+        self.scenario_edit = QTextEdit()
+
+        layout.addWidget(QLabel(&quot;Название учения:&quot;))
+        layout.addWidget(self.name_edit)
+        layout.addWidget(QLabel(&quot;Дата проведения:&quot;))
+        layout.addWidget(self.date_edit)
+        layout.addWidget(QLabel(&quot;Район проведения:&quot;))
+        layout.addWidget(self.region_edit)
+        layout.addWidget(QLabel(&quot;Задействованные силы и средства (SRU):&quot;))
+        layout.addWidget(self.units_edit)
+        layout.addWidget(QLabel(&quot;Сценарий:&quot;))
+        layout.addWidget(self.scenario_edit)
+        self.ok_button = QPushButton(&quot;Сохранить&quot;)
+        self.ok_button.clicked.connect(self.accept)
+        layout.addWidget(self.ok_button)
+        self.setLayout(layout)
+
+    def accept(self):
+        if not self.name_edit.text() or not self.region_edit.text():
+            QMessageBox.warning(self, &quot;Ошибка&quot;, &quot;Заполните название и район!&quot;)
+            return
+        super().accept()
 </code></pre>
 <h3>--- FILE: dialogs\log_summary_dialog.py ---</h3>
 <pre><code>
@@ -772,39 +777,36 @@ def load_log(self):
 </code></pre>
 <h3>--- FILE: dialogs\probability_dialog.py ---</h3>
 <pre><code>
-# &gt; PyQt5, добавлена валидация.
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QSpinBox, 
-# QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QSpinBox, QPushButton
+from PyQt5.QtWidgets import QMessageBox
+
 class ProbabilityDialog(QDialog):
-def init(self):
-# super().init()
-# self.setWindowTitle(&quot;Параметры карты вероятности&quot;)
-# layout = QVBoxLayout()
-# self.radius_edit = QLineEdit()
-# self.count_spin = QSpinBox()
-# self.count_spin.setMinimum(10)
-# self.count_spin.setMaximum(10000)
-# layout.addWidget(QLabel(&quot;Радиус области (градусы):&quot;))
-# layout.addWidget(self.radius_edit)
-# layout.addWidget(QLabel(&quot;Количество точек:&quot;))
-# layout.addWidget(self.count_spin)
-# self.ok_button = QPushButton(&quot;Сгенерировать&quot;)
-# self.ok_button.clicked.connect(self.accept)
-# layout.addWidget(self.ok_button)
-# self.setLayout(layout)
-def get_parameters(self):
-# try:
-# return float(self.radius_edit.text()), self.count_spin.value()
-# except ValueError:
-# return 0.0, 10  # Дефолт при ошибке
- Лента публикации полного кода проекта &quot;Поиск-Море&quot; для QGIS (итоговый 
-# вариант) — Фрагмент 16/16 (третья группа файлов, завершение)
-# Комментарий к фрагменту: Завершение анализа третьей группы. 
-# incident_storage.py: Улучшен — добавлена try-except для JSON ошибок, 
-# ensure_ascii=False уже есть. Все файлы корректны после исправлений. Нет 
-# заглушек. Это завершает третью группу; полный проект теперь включает все три 
-# группы.
-# CopyEdit
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle(&quot;Параметры карты вероятности&quot;)
+        layout = QVBoxLayout()
+        self.radius_edit = QLineEdit()
+        self.count_spin = QSpinBox()
+        self.count_spin.setMinimum(10)
+        self.count_spin.setMaximum(10000)
+        layout.addWidget(QLabel(&quot;Радиус области (градусы):&quot;))
+        layout.addWidget(self.radius_edit)
+        layout.addWidget(QLabel(&quot;Количество точек:&quot;))
+        layout.addWidget(self.count_spin)
+        self.ok_button = QPushButton(&quot;Сгенерировать&quot;)
+        self.ok_button.clicked.connect(self.accept)
+        layout.addWidget(self.ok_button)
+        self.setLayout(layout)
+
+    def get_parameters(self):
+        try:
+            radius = float(self.radius_edit.text())
+            if radius &lt; 0:
+                raise ValueError(&quot;Радиус не может быть отрицательным!&quot;)
+            return radius, self.count_spin.value()
+        except ValueError as e:
+            QMessageBox.warning(self, &quot;Ошибка&quot;, str(e))
+            return 0.0, 10
 </code></pre>
 <h3>--- FILE: dialogs\region_dialog.py ---</h3>
 <pre><code>
@@ -897,16 +899,13 @@ def get_parameters(self):
 </code></pre>
 <h3>--- FILE: dialogs\sitrep_dialog.py ---</h3>
 <pre><code>
-# добавлена валидация.
-
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox,
     QLineEdit, QTextEdit, QPushButton, QFileDialog, QDateTimeEdit, QMessageBox
-# )
+)
 from PyQt5.QtCore import QDateTime
 from ..reports.sitrep_generator import generate_sitrep_pdf
 from ..reports.sitrep_generator_docx import generate_sitrep_docx
-
 
 class SitrepDialog(QDialog):
     def __init__(self, iface):
@@ -947,26 +946,32 @@ class SitrepDialog(QDialog):
 
     def generate_pdf(self):
         try:
-            generate_sitrep_pdf(
-                self.type_combo.currentText(),
-                self.datetime_edit.dateTime().toString(&quot;yyyy-MM-dd HH:mm:ss&quot;),
-                self.sru_edit.text(),
-                self.zone_edit.text(),
-                self.notes_edit.toPlainText()
-            )
+            data = {
+                &quot;type&quot;: self.type_combo.currentText(),
+                &quot;datetime&quot;: self.datetime_edit.dateTime().toString(&quot;yyyy-MM-dd HH:mm:ss&quot;),
+                &quot;sru&quot;: self.sru_edit.text(),
+                &quot;zone&quot;: self.zone_edit.text(),
+                &quot;notes&quot;: self.notes_edit.toPlainText()
+            }
+            if not all(data.values()):
+                raise ValueError(&quot;Заполните все обязательные поля!&quot;)
+            generate_sitrep_pdf(data)
             QMessageBox.information(self, &quot;Готово&quot;, &quot;Файл PDF успешно создан.&quot;)
         except Exception as e:
             QMessageBox.critical(self, &quot;Ошибка&quot;, str(e))
 
     def generate_docx(self):
         try:
-            generate_sitrep_docx(
-                self.type_combo.currentText(),
-                self.datetime_edit.dateTime().toString(&quot;yyyy-MM-dd HH:mm:ss&quot;),
-                self.sru_edit.text(),
-                self.zone_edit.text(),
-                self.notes_edit.toPlainText()
-            )
+            data = {
+                &quot;type&quot;: self.type_combo.currentText(),
+                &quot;datetime&quot;: self.datetime_edit.dateTime().toString(&quot;yyyy-MM-dd HH:mm:ss&quot;),
+                &quot;sru&quot;: self.sru_edit.text(),
+                &quot;zone&quot;: self.zone_edit.text(),
+                &quot;notes&quot;: self.notes_edit.toPlainText()
+            }
+            if not all(data.values()):
+                raise ValueError(&quot;Заполните все обязательные поля!&quot;)
+            generate_sitrep_docx(data)
             QMessageBox.information(self, &quot;Готово&quot;, &quot;Файл DOCX успешно создан.&quot;)
         except Exception as e:
             QMessageBox.critical(self, &quot;Ошибка&quot;, str(e))
@@ -1490,11 +1495,26 @@ def test_logging_creates_file(tmp_log):
 </code></pre>
 <h3>--- FILE: tests\test_probability_map.py ---</h3>
 <pre><code>
-# Тесты вероятностей с дрейфом. Улучшен: Тест на расчет дрейфа из методики.
-import pytest from ..controllers.probability_generator import generate_probability_points, calculate_drift
-def test_drift_calculation(): new_lat, new_lon = calculate_drift(60, 30, 6, 45, 2) assert pytest.approx(new_lat, 0.001) == 60.008 assert pytest.approx(new_lon, 0.001) == 30.016
-def test_point_generation_with_drift(): center = QgsPointXY(30, 60) points = generate_probability_points(center, 1.0, 10, wind_speed_ms=6, wind_dir_deg=45, time_hours=2) assert len(points) == 10 for f in points: pt = f.geometry().asPoint() dx = pt.x() - 30.016 # Пример drifted center dy = pt.y() - 60.008 assert math.sqrt(dx2 + dy2) &lt;= 1.0 + 0.01 # С учетом дрейфа
-# ✅ Миграция на MySQL/ESB завершена. Проект соответствует методике: расчет дрейфа по ветру/течению реализован, протестирован на примерах (результат: сдвиг ~1.8 км E, ~0.9 км N за 2 ч при 6 m/s NE). Функционал C# перенесен полностью (расчеты, UI, отчеты, тесты). ZIP с обновленным проектом готов.
+import pytest
+from ..controllers.probability_generator import generate_probability_points, calculate_drift
+from qgis.core import QgsPointXY
+import math
+
+def test_drift_calculation():
+    new_lat, new_lon = calculate_drift(60, 30, 6, 45, 2)
+    assert pytest.approx(new_lat, 0.001) == 60.008
+    assert pytest.approx(new_lon, 0.001) == 30.016
+
+def test_point_generation_with_drift():
+    center = QgsPointXY(30, 60)
+    points = generate_probability_points(center, 1.0, 10, wind_speed_ms=6, wind_dir_deg=45, time_hours=2)
+    assert len(points) == 10
+    drifted_center = calculate_drift(60, 30, 6, 45, 2)
+    for f in points:
+        pt = f.geometry().asPoint()
+        dx = pt.x() - drifted_center[1]
+        dy = pt.y() - drifted_center[0]
+        assert math.sqrt(dx**2 + dy**2) &lt;= 1.0 + 0.01
 </code></pre>
 <h3>--- FILE: tests\test_runner.py ---</h3>
 <pre><code>

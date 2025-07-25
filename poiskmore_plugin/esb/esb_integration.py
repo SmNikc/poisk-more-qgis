@@ -4,13 +4,13 @@ import configparser
 import time
 from stomp.exception import ConnectFailedException
 
-config = configparser.ConfigParser()
-config.read('config/default.ini')
+# config = configparser.ConfigParser()
+# config.read('config/default.ini')
 
-broker_host = config.get('ESB', 'broker_host', fallback='localhost')
-broker_port = config.getint('ESB', 'broker_port', fallback=61616)
-use_ssl = config.getboolean('ESB', 'use_ssl', fallback=False)
-queue_name = config.get('ESB', 'queue_name', fallback='/queue/sar.queue')
+# broker_host = config.get('ESB', 'broker_host', fallback='localhost')
+# broker_port = config.getint('ESB', 'broker_port', fallback=61616)
+# use_ssl = config.getboolean('ESB', 'use_ssl', fallback=False)
+# queue_name = config.get('ESB', 'queue_name', fallback='/queue/sar.queue')
 
 class ActiveMQListener(stomp.ConnectionListener):
     def on_error(self, frame):

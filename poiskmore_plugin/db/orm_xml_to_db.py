@@ -1,8 +1,3 @@
-# Импорт XML в SQLite. Обновлено:
-# - Переход с MySQL на SQLite
-# - Автоматическое создание таблицы
-# - Парсинг XML с проверкой
-
 import sqlite3
 import xml.etree.ElementTree as ET
 
@@ -15,11 +10,12 @@ def xml_to_sqlite(xml_path, db_path="poiskmore.db"):
         cursor = conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS incidents (
-                id TEXT,
+                id TEXT PRIMARY KEY,
                 datetime TEXT,
                 description TEXT
             )
         """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_incidents_id ON incidents(id)")
 
         for item in root.findall(".//incident"):
             id_ = item.findtext("id")
@@ -27,7 +23,7 @@ def xml_to_sqlite(xml_path, db_path="poiskmore.db"):
             desc = item.findtext("description")
             if id_ and dt and desc:
                 cursor.execute(
-                    "INSERT INTO incidents (id, datetime, description) VALUES (?, ?, ?)",
+                    "REPLACE INTO incidents (id, datetime, description) VALUES (?, ?, ?)",
                     (id_, dt, desc)
                 )
 
@@ -36,5 +32,5 @@ def xml_to_sqlite(xml_path, db_path="poiskmore.db"):
 
     except ET.ParseError as e:
         print(f"[Ошибка] Парсинг XML: {e}")
-    except Exception as e:
+    except sqlite3.Error as e:
         print(f"[Ошибка] Импорт в SQLite: {e}")

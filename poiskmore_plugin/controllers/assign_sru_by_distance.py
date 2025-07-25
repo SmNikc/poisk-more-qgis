@@ -1,7 +1,7 @@
 from qgis.core import (
     QgsVectorLayer, QgsFeatureIterator, QgsSpatialIndex,
     QgsPointXY, QgsFeature, QgsFeatureRequest
-)
+# )
 from PyQt5.QtWidgets import QMessageBox
 
 def assign_sru_by_distance(region_layer: QgsVectorLayer, sru_layer: QgsVectorLayer):

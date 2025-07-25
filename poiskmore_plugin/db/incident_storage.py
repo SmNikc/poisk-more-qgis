@@ -1,20 +1,29 @@
-# Хранение инцидентов в JSON. Улучшен:
-# Try-except для ошибок чтения/записи.
+# Хранение инцидентов в SQLite. Обновлено:
+# - Переход с MySQL на SQLite
+# - Автоматическое создание таблицы
+# - Использование `sqlite3.connect('poiskmore.db')`
 
-import json
-import os
+import sqlite3
 
-def save_incident_to_json(data, path="incident_log.json"):
+def save_incident_to_sqlite(data, db_path="poiskmore.db"):
     try:
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                all_data = json.load(f)
-        else:
-            all_data = []
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
 
-        all_data.append(data)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS incidents (
+                id TEXT,
+                datetime TEXT,
+                description TEXT
+            )
+        """)
 
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(all_data, f, ensure_ascii=False, indent=2)
+        cursor.execute(
+            "INSERT INTO incidents (id, datetime, description) VALUES (?, ?, ?)",
+            (data["id"], data["datetime"], data["description"])
+        )
+
+        conn.commit()
+        conn.close()
     except Exception as e:
         print(f"[Ошибка] Сохранение инцидента: {e}")

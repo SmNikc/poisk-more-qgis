@@ -11,7 +11,7 @@ def is_text_file(file_path, blocksize=512):
     mime, _ = mimetypes.guess_type(file_path)
     if mime is None:
         return False
-    return mime.startswith('text') or mime == 'application/xml' or mime == 'application/json'
+    return mime.startswith('text') or mime in ['application/xml', 'application/json']
 
 def read_file_content(file_path):
     """
@@ -35,7 +35,10 @@ def generate_html(root_dir, output_html_path, title="Содержимое про
     Генерирует HTML-файл, отображающий структуру директорий и содержимое текстовых файлов.
     """
     print(f"Начало генерации HTML файла: {output_html_path}...")
-    
+
+    # Убедимся, что директория для HTML-файла существует
+    os.makedirs(os.path.dirname(output_html_path), exist_ok=True)
+
     with open(output_html_path, 'w', encoding='utf-8') as f:
         # Запись заголовков HTML-документа
         f.write('<!DOCTYPE html>\n<html lang="ru">\n<head>\n')
@@ -50,9 +53,9 @@ def generate_html(root_dir, output_html_path, title="Содержимое про
         f.write('.directory { margin-left: 20px; }\n')
         f.write('</style>\n')
         f.write('</head>\n<body>\n')
-    
+
         f.write(f'<h1>{html.escape(title)}</h1>\n')
-    
+
         # Обход всех файлов и каталогов внутри корневой папки
         for dirpath, dirnames, filenames in os.walk(root_dir):
             # Получение относительного пути от корневой папки
@@ -62,7 +65,7 @@ def generate_html(root_dir, output_html_path, title="Содержимое про
             else:
                 f.write(f'<h2>Каталог: {html.escape(rel_dir)}</h2>\n')
                 f.write('<div class="directory">\n')
-    
+
             for filename in filenames:
                 file_path = os.path.join(dirpath, filename)
                 rel_file_path = os.path.join(rel_dir, filename)
@@ -77,15 +80,15 @@ def generate_html(root_dir, output_html_path, title="Содержимое про
                     f.write('<p><em>Бинарный файл или не текстовый формат. Содержимое не отображается.</em></p>\n')
             if rel_dir != "":
                 f.write('</div>\n')  # Закрытие блока каталога
-    
+
         # Завершение HTML-документа
         f.write('</body>\n</html>')
-    
+
     print("HTML файл успешно создан.")
 
 def main():
     # Укажите путь к корневой папке, которую нужно обработать
-    root_dir = r"C:\Projects\poisk-more-qgis\install\poiskmore_plugin.qgis\poiskmore_plugin"
+    root_dir = r"C:\Projects\poisk-more-qgis\poiskmore_plugin"
     
     # Проверьте, существует ли корневая папка
     if not os.path.isdir(root_dir):
@@ -93,11 +96,10 @@ def main():
         return
     
     # Определите путь к выходному HTML-файлу
-    # Например, сохранить его в корневой папке
-    output_html_path = os.path.join(root_dir, "Содержимое_проекта.html")
+    output_html_path = r"C:\Projects\poisk-more-qgis\install\Содержимое_проекта.html"
     
     # Генерация HTML-файла
     generate_html(root_dir, output_html_path, title="Содержимое проекта: poiskmore_plugin")
-    
+
 if __name__ == "__main__":
     main()

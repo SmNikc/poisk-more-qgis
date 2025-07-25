@@ -1,14 +1,16 @@
-# Назначение SRU. Полный код, улучшен:
-# использование QgsSpatialIndex для скорости.
-
 from qgis.core import (
     QgsVectorLayer, QgsFeatureIterator, QgsSpatialIndex,
-    QgsPointXY, QgsFeature
+    QgsPointXY, QgsFeature, QgsFeatureRequest
 )
 from PyQt5.QtWidgets import QMessageBox
 
 def assign_sru_by_distance(region_layer: QgsVectorLayer, sru_layer: QgsVectorLayer):
+    if not region_layer or not sru_layer:
+        QMessageBox.warning(None, "Ошибка", "Один из слоев пуст или не инициализирован!")
+        return
+
     sru_index = QgsSpatialIndex(sru_layer.getFeatures())
+    request = QgsFeatureRequest().setFlags(QgsFeatureRequest.NoGeometry)
 
     for region_feat in region_layer.getFeatures():
         region_centroid = region_feat.geometry().centroid()
@@ -22,7 +24,7 @@ def assign_sru_by_distance(region_layer: QgsVectorLayer, sru_layer: QgsVectorLay
             QMessageBox.warning(
                 None,
                 "Предупреждение",
-                "Нет ближайших SRU для региона ID " + str(region_feat.id())
+                f"Нет ближайших SRU для региона ID {region_feat.id()}"
             )
 
     region_layer.commitChanges()

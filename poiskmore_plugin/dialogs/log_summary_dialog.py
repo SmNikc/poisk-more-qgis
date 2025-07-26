@@ -1,4 +1,4 @@
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
 import os
 from ..reports.log_summary_generator import generate_log_summary
 

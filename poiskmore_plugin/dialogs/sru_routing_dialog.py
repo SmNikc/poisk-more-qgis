@@ -1,4 +1,4 @@
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
 from qgis.core import QgsPointXY
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QRegExpValidator

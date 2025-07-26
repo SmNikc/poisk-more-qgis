@@ -1,4 +1,4 @@
-pythonimport pytest
+import pytest
 import os
 from ..utils.operator_log import log_action
 

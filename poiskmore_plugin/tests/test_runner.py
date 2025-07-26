@@ -1,4 +1,4 @@
-pythonimport subprocess
+import subprocess
 
 def run_pytest_in_qgis_env():
     try:

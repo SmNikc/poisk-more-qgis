@@ -1,7 +1,6 @@
-from PyQt5.QtWidgets import (
-    QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
-# )
+pythonfrom PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
 from PyQt5.QtCore import QDateTime
+from PyQt5.QtWidgets import QMessageBox
 
 class ErrEditingDialog(QDialog):
     def __init__(self):
@@ -29,7 +28,8 @@ class ErrEditingDialog(QDialog):
 
         self.setLayout(layout)
 
-        # Валидация перед сохранением (пример)
+    def accept(self):
         if not self.id_edit.text() or not self.location_edit.text():
             QMessageBox.warning(self, "Ошибка", "Заполните ID и координаты!")
             return
+        super().accept()

@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QDateEdit, QPushButton
+pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QDateEdit, QPushButton
 from PyQt5.QtCore import QDate
+from PyQt5.QtWidgets import QMessageBox
 
 class ExerciseDialog(QDialog):
     def __init__(self):

@@ -1,0 +1,136 @@
+Ñòðóêòóðà ïàïîê
+Ñåðèéíûé íîìåð òîìà: D236-6A32
+C:\PROJECTS\POISK-MORE-QGIS
+¦   .gitignore
+¦   gitignore
+¦   LICENSE
+¦   metadata.txt
+¦   push_plugin.bat
+¦   README.md
+¦   
++---.github
+¦   L---workflows
+¦           ci.yml
+¦           
++---install
+¦   ¦   1.txt
+¦   ¦   build_plugin_zip_v2.bat
+¦   ¦   generate_html_from_directory.py
+¦   ¦   poiskmore_plugin.qgis.zip
+¦   ¦   
+¦   L---venv
+¦       ¦   pyvenv.cfg
+¦       ¦   
+¦       +---Include
+¦       +---Lib
+¦       ¦   L---site-packages
+¦       L---Scripts
+¦               python.exe
+¦               pythonw.exe
+¦               
+L---poiskmore_plugin
+    ¦   db.zip
+    ¦   metadata.txt
+    ¦   poiskmore.py
+    ¦   requirements.txt
+    ¦   __init__.py
+    ¦   
+    +---config
+    ¦       default.ini
+    ¦       
+    +---controllers
+    ¦       assign_sru_by_distance.py
+    ¦       heatmap_drawer.py
+    ¦       probability_generator.py
+    ¦       region_create.py
+    ¦       search_scheme.py
+    ¦       search_scheme_draw.py
+    ¦       sru_route_draw.py
+    ¦       sru_routing.py
+    ¦       zone_intersection.py
+    ¦       
+    +---data
+    ¦       boundaries.geojson
+    ¦       districts.geojson
+    ¦       russian_seas.geojson
+    ¦       sample_err.xml
+    ¦       test_sru.geojson
+    ¦       test_zones.geojson
+    ¦       
+    +---db
+    ¦       incident_storage.py
+    ¦       load_db_to_table.py
+    ¦       orm_xml_to_db.py
+    ¦       schema_init.py
+    ¦       training_db.py
+    ¦       xml_loader.py
+    ¦       __init__.py
+    ¦       
+    +---dialogs
+    ¦       err_editing_dialog.py
+    ¦       exercise_dialog.py
+    ¦       log_summary_dialog.py
+    ¦       operator_log_dialog.py
+    ¦       probability_dialog.py
+    ¦       region_dialog.py
+    ¦       search_scheme_dialog.py
+    ¦       sitrep_dialog.py
+    ¦       sru_routing_dialog.py
+    ¦       
+    +---docs
+    ¦       functional_blocks.md
+    ¦       install_instructions.txt
+    ¦       Poiskmore_Install_Update_v2.docx
+    ¦       README.md
+    ¦       README_GROK_MIGRATION.md
+    ¦       
+    +---esb
+    ¦       esb_integration.py
+    ¦       
+    +---projects
+    ¦       qgis_project.qgs
+    ¦       
+    +---reports
+    ¦       log_summary_generator.py
+    ¦       report_generator.py
+    ¦       sitrep_generator.py
+    ¦       sitrep_generator_docx.py
+    ¦       
+    +---styles
+    ¦       region_style.qml
+    ¦       search_scheme_style.qml
+    ¦       sru_style.qml
+    ¦       
+    +---templates
+    ¦       sitrep_template.docx
+    ¦       sitrep_template.docx.txt
+    ¦       
+    +---tests
+    ¦       test_assign_sru.py
+    ¦       test_exercise_input.json
+    ¦       test_heatmap_render.py
+    ¦       test_log_storage.py
+    ¦       test_probability_map.py
+    ¦       test_runner.py
+    ¦       test_sitrep_input.json
+    ¦       test_sitrep_validator.py
+    ¦       test_utils.py
+    ¦       
+    +---ui
+    ¦       icons.txt
+    ¦       icon_loader.py
+    ¦       
+    L---utils
+            bearing_calc.py
+            buffer_zone.py
+            export_geojson.py
+            geojson_validator.py
+            layout_template.py
+            map_snapshot.py
+            point_in_polygon.py
+            reset_plugin_state.py
+            sru_simulator.py
+            utils.py
+            util_coord.py
+            zone_splitter.py
+            

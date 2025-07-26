@@ -1,11 +1,12 @@
-import stomp
+import os
 import json
 import configparser
 import time
+import stomp
 from stomp.exception import ConnectFailedException
 
 config = configparser.ConfigParser()
-config_path = 'config/default.ini'
+config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'default.ini')
 if not os.path.exists(config_path):
     print(f"Конфигурационный файл {config_path} не найден. Используются значения по умолчанию.")
 config.read(config_path)

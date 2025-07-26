@@ -14,9 +14,6 @@ jobs:
     steps:
       - name: 📥 Checkout репозитория
         uses: actions/checkout@v4
-      - name: Установка базовых зависимостей
-        run: |
-          apt-get update && apt-get install -y python3-pip
       - name: 🧪 Проверка кода flake8
         run: |
           pip install flake8

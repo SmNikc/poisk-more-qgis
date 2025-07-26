@@ -106,9 +106,7 @@ class PoiskMorePlugin:
 </code></pre>
 <h3>--- FILE: requirements.txt ---</h3>
 <pre><code>
-mysql-connector-python
 stomp.py
-qgis
 PyQt5
 pytest
 reportlab
@@ -642,7 +640,7 @@ def load_xml_to_sqlite(xml_path, db_path=&quot;poiskmore.db&quot;):
 <div class="directory">
 <h3>--- FILE: dialogs\err_editing_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
+from PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtWidgets import QMessageBox
 
@@ -680,7 +678,7 @@ class ErrEditingDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\exercise_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QDateEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QDateEdit, QPushButton
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QMessageBox
 
@@ -718,7 +716,7 @@ class ExerciseDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\log_summary_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
 import os
 from ..reports.log_summary_generator import generate_log_summary
 
@@ -747,7 +745,7 @@ class LogSummaryDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\operator_log_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
 import os
 
 class OperatorLogDialog(QDialog):
@@ -807,7 +805,7 @@ class ProbabilityDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\region_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QDateTimeEdit, QLineEdit
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QDateTimeEdit, QLineEdit
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtGui import QDoubleValidator
 from ..controllers.region_create import RegionCreateController
@@ -851,7 +849,7 @@ class RegionDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\search_scheme_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QSpinBox
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QSpinBox
 from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtWidgets import QMessageBox
 
@@ -963,7 +961,7 @@ class SitrepDialog(QDialog):
 </code></pre>
 <h3>--- FILE: dialogs\sru_routing_dialog.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
 from qgis.core import QgsPointXY
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QRegExpValidator
@@ -1346,7 +1344,7 @@ CopyEdit
 <div class="directory">
 <h3>--- FILE: tests\test_assign_sru.py ---</h3>
 <pre><code>
-pythonimport pytest
+import pytest
 from ..controllers.assign_sru_by_distance import calculate_distance
 from qgis.core import QgsPointXY
 
@@ -1417,7 +1415,7 @@ CopyEdit
 </code></pre>
 <h3>--- FILE: tests\test_heatmap_render.py ---</h3>
 <pre><code>
-pythonimport pytest
+import pytest
 from qgis.core import QgsHeatmapRenderer, QgsColorRampShader
 
 @pytest.fixture
@@ -1436,7 +1434,7 @@ def test_heatmap_renderer(heatmap_renderer):
 </code></pre>
 <h3>--- FILE: tests\test_log_storage.py ---</h3>
 <pre><code>
-pythonimport pytest
+import pytest
 import os
 from ..utils.operator_log import log_action
 
@@ -1479,7 +1477,7 @@ def test_point_generation_with_drift():
 </code></pre>
 <h3>--- FILE: tests\test_runner.py ---</h3>
 <pre><code>
-pythonimport subprocess
+import subprocess
 
 def run_pytest_in_qgis_env():
     try:
@@ -1650,7 +1648,7 @@ def calculate_bearing(lat1, lon1, lat2, lon2):
 </code></pre>
 <h3>--- FILE: utils\buffer_zone.py ---</h3>
 <pre><code>
-pythonfrom qgis.core import QgsGeometry
+from qgis.core import QgsGeometry
 
 def create_buffer(geom: QgsGeometry, distance=0.05, segments=12):
     if not geom:
@@ -1691,7 +1689,7 @@ def validate_geojson(path):
 </code></pre>
 <h3>--- FILE: utils\icon_loader.py ---</h3>
 <pre><code>
-pythonfrom PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon
 import os
 
 def load_icon(name):
@@ -1704,7 +1702,7 @@ def load_icon(name):
 </code></pre>
 <h3>--- FILE: utils\layout_template.py ---</h3>
 <pre><code>
-pythonfrom qgis.core import QgsProject, QgsLayoutItemLabel, QgsLayoutPoint
+from qgis.core import QgsProject, QgsLayoutItemLabel, QgsLayoutPoint
 from qgis.PyQt.QtGui import QColor
 
 def create_layout(canvas, title=&quot;Поиск-Море&quot;):
@@ -1720,7 +1718,7 @@ def create_layout(canvas, title=&quot;Поиск-Море&quot;):
 </code></pre>
 <h3>--- FILE: utils\map_snapshot.py ---</h3>
 <pre><code>
-pythonfrom qgis.gui import QgsMapCanvas
+from qgis.gui import QgsMapCanvas
 from PyQt5.QtGui import QImage, QPainter
 
 def save_canvas_as_image(canvas: QgsMapCanvas, path=&quot;snapshot.png&quot;):
@@ -1736,7 +1734,7 @@ def save_canvas_as_image(canvas: QgsMapCanvas, path=&quot;snapshot.png&quot;):
 </code></pre>
 <h3>--- FILE: utils\point_in_polygon.py ---</h3>
 <pre><code>
-pythonfrom qgis.core import QgsGeometry, QgsPointXY
+from qgis.core import QgsGeometry, QgsPointXY
 
 def is_point_inside_zone(point: QgsPointXY, zone_geom: QgsGeometry):
     if not point or not zone_geom:
@@ -1746,7 +1744,7 @@ def is_point_inside_zone(point: QgsPointXY, zone_geom: QgsGeometry):
 </code></pre>
 <h3>--- FILE: utils\reset_plugin_state.py ---</h3>
 <pre><code>
-pythonimport os
+import os
 
 def reset_plugin_state(files=None):
     if files is None:

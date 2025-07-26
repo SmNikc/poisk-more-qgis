@@ -31,3 +31,15 @@ def create_region(name, start_time, daylight_duration):
     send_message_via_esb({"type": "REGION_CREATED", "data": data})
 
     return layer
+
+
+class RegionCreateController:
+    """Wrapper around :func:`create_region` used by dialogs."""
+
+    def __init__(self, iface, layer_manager):
+        self.iface = iface
+        self.layer_manager = layer_manager
+
+    def create_region(self, name, start_time, daylight_duration):
+        """Delegate to :func:`create_region`."""
+        return create_region(name, start_time, daylight_duration)

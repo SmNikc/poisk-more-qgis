@@ -1,4 +1,4 @@
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QDateTimeEdit, QLineEdit
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QDateTimeEdit, QLineEdit
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtGui import QDoubleValidator
 from ..controllers.region_create import RegionCreateController

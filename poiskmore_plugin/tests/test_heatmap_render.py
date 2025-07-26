@@ -1,4 +1,4 @@
-pythonimport pytest
+import pytest
 from qgis.core import QgsHeatmapRenderer, QgsColorRampShader
 
 @pytest.fixture

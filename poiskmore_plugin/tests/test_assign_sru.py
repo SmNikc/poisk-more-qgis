@@ -1,4 +1,4 @@
-pythonimport pytest
+import pytest
 from ..controllers.assign_sru_by_distance import calculate_distance
 from qgis.core import QgsPointXY
 

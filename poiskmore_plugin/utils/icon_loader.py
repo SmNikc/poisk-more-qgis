@@ -1,4 +1,4 @@
-pythonfrom PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon
 import os
 
 def load_icon(name):

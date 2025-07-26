@@ -1,4 +1,4 @@
-pythonimport os
+import os
 
 def reset_plugin_state(files=None):
     if files is None:

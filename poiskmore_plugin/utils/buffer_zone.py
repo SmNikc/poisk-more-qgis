@@ -1,4 +1,4 @@
-pythonfrom qgis.core import QgsGeometry
+from qgis.core import QgsGeometry
 
 def create_buffer(geom: QgsGeometry, distance=0.05, segments=12):
     if not geom:

@@ -1,4 +1,4 @@
-pythonfrom qgis.gui import QgsMapCanvas
+from qgis.gui import QgsMapCanvas
 from PyQt5.QtGui import QImage, QPainter
 
 def save_canvas_as_image(canvas: QgsMapCanvas, path="snapshot.png"):

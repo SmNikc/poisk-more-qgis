@@ -1,4 +1,4 @@
-pythonfrom PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
+from PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtWidgets import QMessageBox
 

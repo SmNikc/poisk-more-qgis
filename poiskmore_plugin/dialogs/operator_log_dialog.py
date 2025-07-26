@@ -1,4 +1,4 @@
-pythonfrom PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTextEdit, QPushButton
 import os
 
 class OperatorLogDialog(QDialog):

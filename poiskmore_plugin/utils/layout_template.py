@@ -1,4 +1,4 @@
-pythonfrom qgis.core import QgsProject, QgsLayoutItemLabel, QgsLayoutPoint
+from qgis.core import QgsProject, QgsLayoutItemLabel, QgsLayoutPoint
 from qgis.PyQt.QtGui import QColor
 
 def create_layout(canvas, title="Поиск-Море"):

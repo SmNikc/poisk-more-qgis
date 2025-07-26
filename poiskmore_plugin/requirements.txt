@@ -1,6 +1,4 @@
-mysql-connector-python
 stomp.py
-qgis
 PyQt5
 pytest
 reportlab

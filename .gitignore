@@ -1,1 +1,22 @@
-"__pycache__/\n*.pyc\n*.log\n.env\n.venv\n.idea/\n.vscode/\n*.zip" 
+# Python
+__pycache__/
+*.py[cod]
+*.log
+*.sqlite3
+*.db
+.env
+.venv
+*.egg-info/
+*.pytest_cache/
+
+# VS Code / JetBrains
+.vscode/
+.idea/
+
+# Плагины QGIS / архивы
+*.zip
+*.qgis.zip
+
+# Docker-контейнеры, кэш
+docker/qgis/apps/**/site-packages/
+docker/**/cache/

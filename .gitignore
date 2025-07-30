@@ -20,3 +20,25 @@ __pycache__/
 # Docker-контейнеры, кэш
 docker/qgis/apps/**/site-packages/
 docker/**/cache/
+
+# QGIS специфичные файлы
+*.qgs~
+*.qml~
+*.shp.xml
+.qgis2/
+.qgis/
+*.aux.xml
+*.ovr
+*.sld
+.cache/
+
+# ActiveMQ
+activemq-data/
+*.mq
+*.log
+
+# Генерируемые файлы
+*.bak
+*~
+Thumbs.db
+.DS_Store

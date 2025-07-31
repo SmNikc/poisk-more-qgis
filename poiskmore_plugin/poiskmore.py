@@ -1,7 +1,7 @@
 from qgis.PyQt.QtWidgets import QAction, QMenu
 from qgis.utils import iface
 
-from .dialogs.sitrep_dialog import SitrepDialog
+from .dialogs.dialog_sitrep import SitrepForm
 from .dialogs.region_dialog import RegionDialog
 from .dialogs.exercise_dialog import ExerciseDialog
 from .dialogs.err_editing_dialog import ErrEditingDialog
@@ -44,7 +44,7 @@ class PoiskMorePlugin:
             self.iface.removePluginMenu("Поиск-Море", action)
 
     def run_sitrep(self):
-        SitrepDialog(self.iface).exec_()
+        SitrepForm(self.iface.mainWindow()).exec_()
 
     def run_region(self):
         RegionDialog(self.iface, self.iface.mapCanvas()).exec_()

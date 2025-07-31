@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string translatable="yes">Координация с поисковыми единицами</string>
+   <string>Координация с поисковыми единицами</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -19,7 +19,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="labelSRUName">
        <property name="text">
-        <string translatable="yes">Имя SRU:</string>
+        <string>Имя SRU:</string>
        </property>
       </widget>
      </item>
@@ -27,17 +27,17 @@
       <widget class="QComboBox" name="sruSelector">
        <item>
         <property name="text">
-         <string translatable="yes">SRU-01</string>
+         <string>SRU-01</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string translatable="yes">SRU-02</string>
+         <string>SRU-02</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string translatable="yes">SRU-03</string>
+         <string>SRU-03</string>
         </property>
        </item>
       </widget>
@@ -45,7 +45,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="labelSRUStatus">
        <property name="text">
-        <string translatable="yes">Статус:</string>
+        <string>Статус:</string>
        </property>
       </widget>
      </item>
@@ -53,22 +53,22 @@
       <widget class="QComboBox" name="sruStatus">
        <item>
         <property name="text">
-         <string translatable="yes">На маршруте</string>
+         <string>На маршруте</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string translatable="yes">В районе поиска</string>
+         <string>В районе поиска</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string translatable="yes">Вне зоны</string>
+         <string>Вне зоны</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string translatable="yes">Не отвечает</string>
+         <string>Не отвечает</string>
         </property>
        </item>
       </widget>
@@ -76,7 +76,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="labelMessage">
        <property name="text">
-        <string translatable="yes">Сообщение для SRU:</string>
+        <string>Сообщение для SRU:</string>
        </property>
       </widget>
      </item>
@@ -86,7 +86,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="labelLastResponse">
        <property name="text">
-        <string translatable="yes">Последний ответ:</string>
+        <string>Последний ответ:</string>
        </property>
       </widget>
      </item>
@@ -100,14 +100,14 @@
      <item>
       <widget class="QPushButton" name="buttonSend">
        <property name="text">
-        <string translatable="yes">Отправить</string>
+        <string>Отправить</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonClose">
        <property name="text">
-        <string translatable="yes">Закрыть</string>
+        <string>Закрыть</string>
        </property>
       </widget>
      </item>

@@ -66,19 +66,19 @@
        <item row="3" column="1"><widget class="QLineEdit" name="editHullColor"/></item>
        <item row="4" column="0"><widget class="QLabel" name="labelSuperColor"><property name="text"><string>Цвет надстройки:</string></property></widget></item>
        <item row="4" column="1"><widget class="QLineEdit" name="editSuperstructureColor"/></item>
-       <item row="5" column="0"><widget class="QLabel" name="labelFuel"><property name="text"><string translatable=\"yes\">Запасы топлива:</string></property></widget></item>
+       <item row="5" column="0"><widget class="QLabel" name="labelFuel"><property name="text"><string>Запасы топлива:</string></property></widget></item>
        <item row="5" column="1"><widget class="QLineEdit" name="editFuel"/></item>
-       <item row="6" column="0"><widget class="QLabel" name="labelCrew"><property name="text"><string translatable=\"yes\">Число экипажа:</string></property></widget></item>
+       <item row="6" column="0"><widget class="QLabel" name="labelCrew"><property name="text"><string>Число экипажа:</string></property></widget></item>
        <item row="6" column="1"><widget class="QLineEdit" name="editCrewCount"/></item>
-       <item row="7" column="0"><widget class="QLabel" name="labelContacts"><property name="text"><string translatable=\"yes\">Контакты:</string></property></widget></item>
+       <item row="7" column="0"><widget class="QLabel" name="labelContacts"><property name="text"><string>Контакты:</string></property></widget></item>
        <item row="7" column="1"><widget class="QLineEdit" name="editContacts"/></item>
-       <item row="8" column="0"><widget class="QLabel" name="labelPort"><property name="text"><string translatable=\"yes\">Порт приписки:</string></property></widget></item>
+       <item row="8" column="0"><widget class="QLabel" name="labelPort"><property name="text"><string>Порт приписки:</string></property></widget></item>
        <item row="8" column="1"><widget class="QLineEdit" name="editPort"/></item>
-       <item row="9" column="0"><widget class="QLabel" name="labelOnboard"><property name="text"><string translatable=\"yes\">Людей на борту:</string></property></widget></item>
+       <item row="9" column="0"><widget class="QLabel" name="labelOnboard"><property name="text"><string>Людей на борту:</string></property></widget></item>
        <item row="9" column="1"><widget class="QLineEdit" name="editOnboardNo"/></item>
-       <item row="10" column="0"><widget class="QLabel" name="labelEquipment"><property name="text"><string translatable=\"yes\">Спасательное оборудование:</string></property></widget></item>
+       <item row="10" column="0"><widget class="QLabel" name="labelEquipment"><property name="text"><string>Спасательное оборудование:</string></property></widget></item>
        <item row="10" column="1"><widget class="QListWidget" name="listEquipment"/></item>
-       <item row="11" column="0" colspan="2"><widget class="QLabel" name="labelGNotes"><property name="text"><string translatable=\"yes\">Примечание G:</string></property></widget></item>
+       <item row="11" column="0" colspan="2"><widget class="QLabel" name="labelGNotes"><property name="text"><string>Примечание G:</string></property></widget></item>
        <item row="12" column="0" colspan="2"><widget class="QTextEdit" name="textGNotes"/></item>
       </layout>
      </widget>

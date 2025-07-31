@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SystemLogForm</class>
+ <widget class="QDialog" name="SystemLogForm">
+  <property name="windowTitle">
+   <string>Системный журнал</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QTableWidget" name="logTable"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="buttonExport">
+     <property name="text"><string>Экспорт</string></property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

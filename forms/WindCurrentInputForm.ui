@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WindCurrentInputForm</class>
+ <widget class="QDialog" name="WindCurrentInputForm">
+  <property name="windowTitle"><string>Ввод ветра и течения</string></property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <widget class="QWidget" name="tabWind">
+      <attribute name="title"><string>Ветер</string></attribute>
+      <layout class="QVBoxLayout" name="layoutWind">
+       <item><widget class="QPushButton" name="buttonWind"><property name="text"><string>Открыть форму ввода ветра</string></property></widget></item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabCurrent">
+      <attribute name="title"><string>Течение</string></attribute>
+      <layout class="QVBoxLayout" name="layoutCurrent">
+       <item><widget class="QPushButton" name="buttonCurrent"><property name="text"><string>Открыть форму ввода течения</string></property></widget></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

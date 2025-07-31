@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WindVectorForm</class>
+ <widget class="QDialog" name="WindVectorForm">
+  <property name="windowTitle">
+   <string>Редактировать вектор ветра</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+      <widget class="QLabel" name="labelType">
+        <property name="text"><string>Тип вектора:</string></property>
+      </widget>
+    </item>
+    <item row="0" column="1">
+      <widget class="QComboBox" name="comboType">
+        <item><property name="text"><string>Ветер</string></property></item>
+      </widget>
+    </item>
+    <item row="1" column="0">
+      <widget class="QLabel" name="labelSpeed">
+        <property name="text"><string>Скорость:</string></property>
+      </widget>
+    </item>
+    <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="spinSpeed">
+        <property name="suffix"><string> узлы</string></property>
+      </widget>
+    </item>
+    <item row="2" column="0">
+      <widget class="QLabel" name="labelDir">
+        <property name="text"><string>Направление:</string></property>
+      </widget>
+    </item>
+    <item row="2" column="1">
+      <widget class="QSpinBox" name="spinDirection">
+        <property name="suffix"><string> °</string></property>
+      </widget>
+    </item>
+    <item row="3" column="0">
+      <widget class="QLabel" name="labelFrom">
+        <property name="text"><string>Период воздействия – с:</string></property>
+      </widget>
+    </item>
+    <item row="3" column="1">
+      <widget class="QDateTimeEdit" name="dateFrom">
+        <property name="calendarPopup"><bool>true</bool></property>
+        <property name="displayFormat"><string>dd.MM.yy HH:mm</string></property>
+      </widget>
+    </item>
+    <item row="4" column="0">
+      <widget class="QLabel" name="labelTo">
+        <property name="text"><string>по:</string></property>
+      </widget>
+    </item>
+    <item row="4" column="1">
+      <widget class="QDateTimeEdit" name="dateTo">
+        <property name="calendarPopup"><bool>true</bool></property>
+        <property name="displayFormat"><string>dd.MM.yy HH:mm</string></property>
+      </widget>
+    </item>
+    <item row="5" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="buttonLayout">
+        <item>
+          <widget class="QPushButton" name="buttonEdit">
+            <property name="text"><string>Редактировать</string></property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QPushButton" name="buttonClose">
+            <property name="text"><string>Закрыть</string></property>
+          </widget>
+        </item>
+      </layout>
+    </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

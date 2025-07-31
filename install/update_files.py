@@ -3,7 +3,7 @@ import re
 import sys
 
 # Путь к исходному HTML-файлу с правками
-source_file = r"C:\Users\Admin\Downloads\исправление файлов от GROK.html"
+source_file = r"C:\Users\Admin\Downloads\Исправленные_файлы.html"
 
 # Папка назначения для перезаписи файлов
 target_dir = r"C:\Projects\poisk-more-qgis\poiskmore_plugin"

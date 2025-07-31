@@ -7,7 +7,12 @@ def is_text_file(file_path, blocksize=512):
     """
     Определяет, является ли файл текстовым.
     Метод основан на анализе MIME-типа файла.
+    Также исключает файлы с расширением '.zip' как бинарные.
     """
+    # Явное исключение ZIP-файлов
+    if file_path.lower().endswith('.zip'):
+        return False
+
     mime, _ = mimetypes.guess_type(file_path)
     if mime is None:
         return False
@@ -33,6 +38,7 @@ def read_file_content(file_path):
 def generate_html(root_dir, output_html_path, title="Содержимое проекта"):
     """
     Генерирует HTML-файл, отображающий структуру директорий и содержимое текстовых файлов.
+    При обнаружении ZIP-файлов указывает их как бинарные без отображения содержимого.
     """
     print(f"Начало генерации HTML файла: {output_html_path}...")
 
@@ -77,7 +83,11 @@ def generate_html(root_dir, output_html_path, title="Содержимое про
                     f.write('\n</code></pre>\n')
                 else:
                     f.write(f'<h3>--- FILE: {html.escape(rel_file_path)} ---</h3>\n')
-                    f.write('<p><em>Бинарный файл или не текстовый формат. Содержимое не отображается.</em></p>\n')
+                    # Отображение ZIP-файлов как бинарных
+                    if file_path.lower().endswith('.zip'):
+                        f.write('<p><em>Бинарный файл: ZIP-архив. Содержимое не отображается.</em></p>\n')
+                    else:
+                        f.write('<p><em>Бинарный файл или не текстовый формат. Содержимое не отображается.</em></p>\n')
             if rel_dir != "":
                 f.write('</div>\n')  # Закрытие блока каталога
 
@@ -88,7 +98,7 @@ def generate_html(root_dir, output_html_path, title="Содержимое про
 
 def main():
     # Укажите путь к корневой папке, которую нужно обработать
-    root_dir = r"C:\Projects\poisk-more-qgis\poiskmore_plugin"
+    root_dir = r"C:\Projects\poisk-more-qgis"
     
     # Проверьте, существует ли корневая папка
     if not os.path.isdir(root_dir):
@@ -99,7 +109,7 @@ def main():
     output_html_path = r"C:\Projects\poisk-more-qgis\install\Содержимое_проекта.html"
     
     # Генерация HTML-файла
-    generate_html(root_dir, output_html_path, title="Содержимое проекта: poiskmore_plugin")
+    generate_html(root_dir, output_html_path, title="Содержимое проекта: poisk-more-qgis")
 
 if __name__ == "__main__":
     main()

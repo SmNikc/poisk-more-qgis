@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CleanupUtilityForm</class>
+ <widget class="QDialog" name="CleanupUtilityForm">
+  <property name="windowTitle">
+   <string>Очистка данных и логов</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QCheckBox" name="clearLogs">
+     <property name="text"><string>Удалить логи</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="clearTemp">
+     <property name="text"><string>Очистить временные файлы</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="clearDatabase">
+     <property name="text"><string>Сбросить данные проекта (база)</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="buttonRunCleanup">
+     <property name="text"><string>Выполнить очистку</string></property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

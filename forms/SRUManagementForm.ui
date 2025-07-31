@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SRUManagementForm</class>
+ <widget class="QDialog" name="SRUManagementForm">
+  <property name="windowTitle">
+   <string>Управление поисковыми единицами (SRU)</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <layout class="QHBoxLayout" name="topLayout">
+     <item>
+      <widget class="QPushButton" name="buttonAdd">
+       <property name="text"><string>Добавить SRU</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonRemove">
+       <property name="text"><string>Удалить</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableSRUs">
+     <column>
+      <property name="text"><string>Имя</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Тип</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Координаты</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Статус</string></property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="buttonClose">
+     <property name="text"><string>Закрыть</string></property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

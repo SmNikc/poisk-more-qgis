@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SitrepForm</class>
+ <widget class="QDialog" name="SitrepForm">
+  <property name="windowTitle">
+   <string>Создание SITREP</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelTime">
+       <property name="text"><string>Дата и время:</string></property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDateTimeEdit" name="timeStamp"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelLocation">
+       <property name="text"><string>Координаты:</string></property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="location"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelMessage">
+       <property name="text"><string>Сообщение:</string></property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QTextEdit" name="messageText"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonLayout">
+     <item>
+      <widget class="QPushButton" name="buttonSend">
+       <property name="text"><string>Отправить</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonCancel">
+       <property name="text"><string>Отмена</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

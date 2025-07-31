@@ -1,0 +1,20 @@
+xml<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlanSearchForm</class>
+ <widget class="QDialog" name="PlanSearchForm">
+  <property name="windowTitle"><string>План поиска</string></property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0"><widget class="QLabel" name="labelStartLat"><property name="text"><string>Начальная широта:</string></property></widget></item>
+   <item row="0" column="1"><widget class="QDoubleSpinBox" name="spinStartLat"/></item>
+   <item row="1" column="0"><widget class="QLabel" name="labelStartLon"><property name="text"><string>Начальная долгота:</string></property></widget></item>
+   <item row="1" column="1"><widget class="QDoubleSpinBox" name="spinStartLon"/></item>
+   <item row="2" column="0"><widget class="QLabel" name="labelEndLat"><property name="text"><string>Конечная широта:</string></property></widget></item>
+   <item row="2" column="1"><widget class="QDoubleSpinBox" name="spinEndLat"/></item>
+   <item row="3" column="0"><widget class="QLabel" name="labelEndLon"><property name="text"><string>Конечная долгота:</string></property></widget></item>
+   <item row="3" column="1"><widget class="QDoubleSpinBox" name="spinEndLon"/></item>
+   <item row="4" column="1"><widget class="QPushButton" name="buttonGenerate"><property name="text"><string>Сгенерировать план</string></property></widget></item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

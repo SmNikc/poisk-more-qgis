@@ -1,28 +1,24 @@
+# -*- coding: utf-8 -*-
 import os
 import html
-from pathlib import Path
 import mimetypes
+import shutil
+import sys
 
-def is_text_file(file_path, blocksize=512):
-    """
-    Определяет, является ли файл текстовым.
-    Метод основан на анализе MIME-типа файла.
-    Также исключает файлы с расширением '.zip' как бинарные.
-    """
-    # Явное исключение ZIP-файлов
+TEXT_EXTENSIONS = {
+    '.py', '.ui', '.ts', '.js', '.html', '.json', '.xml', '.txt', '.md',
+    '.ini', '.cfg', '.yml', '.yaml', '.qgs', '.qml', '.geojson', '.sql',
+    '.bat', '.sh', '.docx.txt', '.csproj', '.qrc'
+}
+
+def is_text_file(file_path):
     if file_path.lower().endswith('.zip'):
         return False
-
     mime, _ = mimetypes.guess_type(file_path)
-    if mime is None:
-        return False
-    return mime.startswith('text') or mime in ['application/xml', 'application/json']
+    ext = os.path.splitext(file_path)[1].lower()
+    return mime and mime.startswith('text') or ext in TEXT_EXTENSIONS
 
 def read_file_content(file_path):
-    """
-    Читает содержимое файла, если он является текстовым.
-    Возвращает содержимое как строку или сообщение о невозможности чтения.
-    """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             return f.read()
@@ -31,85 +27,55 @@ def read_file_content(file_path):
             with open(file_path, 'r', encoding='cp1251') as f:
                 return f.read()
         except UnicodeDecodeError:
-            return '<em>Невозможно прочитать содержимое файла (неизвестная кодировка).</em>'
+            return '<em>Невозможно прочитать файл (неизвестная кодировка).</em>'
     except Exception as e:
-        return f'<em>Ошибка при чтении файла: {e}</em>'
+        return f'<em>Ошибка: {e}</em>'
 
-def generate_html(root_dir, output_html_path, title="Содержимое проекта"):
-    """
-    Генерирует HTML-файл, отображающий структуру директорий и содержимое текстовых файлов.
-    При обнаружении ZIP-файлов указывает их как бинарные без отображения содержимого.
-    """
-    print(f"Начало генерации HTML файла: {output_html_path}...")
+def generate_html(root_dir, output_html_path, exclude_dirs=None):
+    if exclude_dirs is None:
+        exclude_dirs = ['docker']
 
-    # Убедимся, что директория для HTML-файла существует
+    # Простой и безопасный способ создания резервной копии
+    bak_path = output_html_path.replace(".html", "_BAK.html")
+    if os.path.exists(output_html_path):
+        if os.path.exists(bak_path):
+            os.remove(bak_path)
+        shutil.move(output_html_path, bak_path)
+
     os.makedirs(os.path.dirname(output_html_path), exist_ok=True)
+    output_dir = os.path.abspath(os.path.dirname(output_html_path))
 
     with open(output_html_path, 'w', encoding='utf-8') as f:
-        # Запись заголовков HTML-документа
-        f.write('<!DOCTYPE html>\n<html lang="ru">\n<head>\n')
-        f.write('<meta charset="UTF-8">\n')
-        f.write(f'<title>{html.escape(title)}</title>\n')
-        f.write('<style>\n')
-        f.write('body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; }\n')
-        f.write('pre { background-color: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 5px; overflow-x: auto; }\n')
-        f.write('h1 { color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px; }\n')
-        f.write('h2 { color: #555; margin-top: 40px; }\n')
-        f.write('h3 { color: #666; margin-top: 20px; }\n')
-        f.write('.directory { margin-left: 20px; }\n')
-        f.write('</style>\n')
-        f.write('</head>\n<body>\n')
+        f.write('<!DOCTYPE html><html lang="ru"><head>')
+        f.write('<meta charset="UTF-8"><title>Содержимое проекта</title></head><body>')
+        f.write('<h1>Содержимое проекта</h1>')
 
-        f.write(f'<h1>{html.escape(title)}</h1>\n')
-
-        # Обход всех файлов и каталогов внутри корневой папки
         for dirpath, dirnames, filenames in os.walk(root_dir):
-            # Получение относительного пути от корневой папки
+            abs_dirpath = os.path.abspath(dirpath)
+            if abs_dirpath.startswith(output_dir):
+                dirnames.clear()
+                continue
+
+            dirnames[:] = [d for d in dirnames if d not in exclude_dirs]
             rel_dir = os.path.relpath(dirpath, root_dir)
-            if rel_dir == ".":
-                rel_dir = ""
-            else:
-                f.write(f'<h2>Каталог: {html.escape(rel_dir)}</h2>\n')
-                f.write('<div class="directory">\n')
+
+            if rel_dir != ".":
+                f.write(f'<h2>{html.escape(rel_dir)}</h2>')
 
             for filename in filenames:
                 file_path = os.path.join(dirpath, filename)
                 rel_file_path = os.path.join(rel_dir, filename)
                 if is_text_file(file_path):
                     content = read_file_content(file_path)
-                    f.write(f'<h3>--- FILE: {html.escape(rel_file_path)} ---</h3>\n')
-                    f.write('<pre><code>\n')
-                    f.write(html.escape(content))
-                    f.write('\n</code></pre>\n')
+                    f.write(f'<h3>{html.escape(rel_file_path)}</h3><pre>{html.escape(content)}</pre>')
                 else:
-                    f.write(f'<h3>--- FILE: {html.escape(rel_file_path)} ---</h3>\n')
-                    # Отображение ZIP-файлов как бинарных
-                    if file_path.lower().endswith('.zip'):
-                        f.write('<p><em>Бинарный файл: ZIP-архив. Содержимое не отображается.</em></p>\n')
-                    else:
-                        f.write('<p><em>Бинарный файл или не текстовый формат. Содержимое не отображается.</em></p>\n')
-            if rel_dir != "":
-                f.write('</div>\n')  # Закрытие блока каталога
+                    f.write(f'<h3>{html.escape(rel_file_path)}</h3><em>Бинарный файл.</em>')
 
-        # Завершение HTML-документа
-        f.write('</body>\n</html>')
-
-    print("HTML файл успешно создан.")
-
-def main():
-    # Укажите путь к корневой папке, которую нужно обработать
-    root_dir = r"C:\Projects\poisk-more-qgis"
-    
-    # Проверьте, существует ли корневая папка
-    if not os.path.isdir(root_dir):
-        print(f"Ошибка: Корневая папка не найдена по пути: {root_dir}")
-        return
-    
-    # Определите путь к выходному HTML-файлу
-    output_html_path = r"C:\Projects\poisk-more-qgis\install\Содержимое_проекта.html"
-    
-    # Генерация HTML-файла
-    generate_html(root_dir, output_html_path, title="Содержимое проекта: poisk-more-qgis")
+        f.write('</body></html>')
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 3:
+        print("Использование: python script.py <исходная_папка> <выходной_html>")
+        sys.exit(1)
+
+    generate_html(sys.argv[1], sys.argv[2])

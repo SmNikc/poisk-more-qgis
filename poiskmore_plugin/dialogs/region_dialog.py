@@ -1,24 +1,14 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QDateTimeEdit, QLineEdit
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtGui import QDoubleValidator
-try:
-    from ..controllers.region_create import RegionCreateController
-    CREATE_FUNC = None
-except ImportError:  # support old plugin builds without the controller class
-    from ..controllers.region_create import create_region as CREATE_FUNC
-    RegionCreateController = None
+from ..controllers.region_create import RegionCreateController
 from PyQt5.QtWidgets import QMessageBox
 
 class RegionDialog(QDialog):
     def __init__(self, iface, layer_manager):
         super().__init__()
         self.setWindowTitle("Создание района поиска")
-        if RegionCreateController is not None:
-            self.controller = RegionCreateController(iface, layer_manager)
-        else:
-            self.controller = None
-            self.iface = iface
-            self.layer_manager = layer_manager
+        self.controller = RegionCreateController(iface, layer_manager)
         self.name_edit = QLineEdit(self)
         self.start_time = QDateTimeEdit(QDateTime.currentDateTime(), self)
         self.daylight_edit = QLineEdit(self)
@@ -45,10 +35,7 @@ class RegionDialog(QDialog):
             return
         try:
             daylight = float(daylight_text)
-            if self.controller is not None:
-                self.controller.create_region(name, start, daylight)
-            else:
-                CREATE_FUNC(name, start, daylight)
+            self.controller.create_region(name, start, daylight)
             self.accept()
         except ValueError:
             QMessageBox.warning(self, "Ошибка", "Неверный формат для светового дня!")

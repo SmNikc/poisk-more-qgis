@@ -4,8 +4,8 @@ description=Плагин для SAR операций по IAMSAR и "Поиск-
 version=1.0.1
 qgisMinimumVersion=3.40
 qgisMaximumVersion=3.40
-author=MorSpasService & AI Adaptation (Grok)
-email=support@poisk-more.ru
+author= Кurudjin & SmNikc & AI Adaptation
+
 repository=https://github.com/poisk-more/qgis-plugin
 experimental=False
 deprecated=False

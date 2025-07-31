@@ -1,122 +1,101 @@
-python
-
-Свернуть
-
-Перенос
-
-Исполнить
-
-Копировать
+# dialogs/dialog_searcharea.py
 from PyQt5 import uic
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog
+from qgis.core import (
+    QgsProject, QgsVectorLayer, QgsFeature, QgsGeometry,
+    QgsPointXY, QgsVectorFileWriter, QgsCoordinateTransformContext
+)
 import os
-from qgis.core import QgsTask, QgsMessageLog, Qgis, QgsPointXY, QgsGeometry, QgsFeature, QgsVectorLayer, QgsProject
-from qgis.PyQt.QtCore import QVariant
-import math
+from services.logic import build_expanding_spiral, build_sector_search
 
 class SearchAreaForm(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi(os.path.join(os.path.dirname(__file__), "forms/SearchAreaForm.ui"), self)
+        uic.loadUi(os.path.join(os.path.dirname(__file__), "../forms/SearchAreaForm.ui"), self)
 
-        self.buttonCreate.clicked.connect(self.start_async_search)
+        # Привязка кнопок
+        self.buttonCreate.clicked.connect(self.on_create)
+        self.buttonExport.clicked.connect(self.on_export)
 
-    def start_async_search(self):
+        # Заполняем типы поиска
+        methods = ["Expanding Spiral", "Sector", "Parallel Sweep"]
+        for m in methods:
+            self.searchType.addItem(m)
+
+        self.canvas = None  # будет передан из main plugin
+
+        # Накопленные результаты (список списков точек)
+        self.current_geoms = None
+
+    def on_create(self):
+        """Построить район поиска и отрисовать его на карте."""
         try:
-            area_name = self.areaName.text()
-            prefix = self.prefix.text()
-            search_type = self.searchType.currentText()
-            start_time = self.startTime.dateTime().toString("yyyy-MM-dd hh:mm:ss")
-            duration = self.duration.value()
+            name = self.areaName.text().strip()
+            prefix = self.prefix.text().strip()
+            method = self.searchType.currentText()
+            start_dt = self.startTime.dateTime().toPyDateTime()
+            duration_hours = self.duration.value()
             sru_method = self.sruMethod.currentText()
 
-            if not area_name:
-                QMessageBox.warning(self, "Ошибка", "Необходимо указать название района.")
+            if not name:
+                QMessageBox.warning(self, "Ошибка", "Укажите наименование района.")
                 return
 
-            task = SearchAreaTask("Расчёт схемы поиска", area_name, prefix, search_type, start_time, duration, sru_method, self)
-            QgsApplication.taskManager().addTask(task)
-        except Exception as e:
-            QMessageBox.critical(self, "Ошибка", f"Ошибка при запуске расчёта схемы: {str(e)}")
-
-class SearchAreaTask(QgsTask):
-    def __init__(self, description, area_name, prefix, search_type, start_time, duration, sru_method, dialog):
-        super().__init__(description, QgsTask.CanCancel)
-        self.area_name = area_name
-        self.prefix = prefix
-        self.search_type = search_type
-        self.start_time = start_time
-        self.duration = duration
-        self.sru_method = sru_method
-        self.dialog = dialog
-        self.exception = None
-        self.layer = None
-
-    def run(self):
-        try:
-            center = QgsPointXY(30, 60)  # Пример LKP
-            radius = self.duration * 10  # Пример радиуса в NM
-
-            if self.search_type == "Expanding Square":
-                geometry = self.calculate_expanding_square(center, radius)
-            elif self.search_type == "Sector Search":
-                geometry = self.calculate_sector_search(center, radius)
-            elif self.search_type == "Parallel Sweep":
-                geometry = self.calculate_parallel_sweep(center, radius)
+            # Вычисляем геометрию
+            if method == "Expanding Spiral":
+                geom = build_expanding_spiral(start_dt, duration_hours, sru_method)
+            elif method == "Sector":
+                geom = build_sector_search(start_dt, duration_hours, sru_method)
             else:
-                raise ValueError("Неизвестный тип поиска")
+                QMessageBox.critical(self, "Ошибка", f"Метод {method} ещё не реализован.")
+                return
 
-            self.layer = QgsVectorLayer("Polygon?crs=epsg:4326", f"{self.area_name} (Схема поиска)", "memory")
-            pr = self.layer.dataProvider()
-            pr.addAttributes([QgsField("id", QVariant.Int), QgsField("name", QVariant.String)])
-            self.layer.updateFields()
+            # Очищаем предыдущий слой (по желанию)
+            QgsProject.instance().removeMapLayers([l.id() for l in QgsProject.instance().mapLayers().values()
+                                                   if l.name().startswith(prefix)])
 
+            # Создаём в памяти слой линий
+            layer = QgsVectorLayer("LineString?crs=EPSG:4326", f"{prefix}_{name}", "memory")
+            prov = layer.dataProvider()
             feat = QgsFeature()
-            feat.setAttributes([1, self.area_name])
-            feat.setGeometry(geometry)
-            pr.addFeature(feat)
-            self.layer.updateExtents()
+            # geom — список QgsPointXY
+            feat.setGeometry(QgsGeometry.fromPolylineXY(geom))
+            prov.addFeatures([feat])
+            layer.updateExtents()
+            QgsProject.instance().addMapLayer(layer)
 
-            return True
+            # Масштабируем Canvas (если передали)
+            if self.canvas:
+                self.canvas.setLayers([layer])
+                self.canvas.zoomToFullExtent()
+
+            # Сохраняем текущую геометрию для экспорта
+            self.current_geoms = (layer, prefix, name)
+
+            QMessageBox.information(self, "Готово", "Район поиска построен и отрисован.")
+
         except Exception as e:
-            self.exception = e
-            QgsMessageLog.logMessage(f"Ошибка в задаче схемы поиска: {str(e)}", "Поиск-Море", Qgis.Critical)
-            return False
+            QMessageBox.critical(self, "Ошибка", f"При построении района поиска:\n{str(e)}")
 
-    def calculate_expanding_square(self, center, radius):
-        points = []
-        step = radius / 4
-        for i in range(4):
-            dx = step * (i + 1)
-            dy = step * (i + 1)
-            points.append(QgsPointXY(center.x() - dx, center.y() - dy))
-            points.append(QgsPointXY(center.x() + dx, center.y() - dy))
-            points.append(QgsPointXY(center.x() + dx, center.y() + dy))
-            points.append(QgsPointXY(center.x() - dx, center.y() + dy))
-        return QgsGeometry.fromPolygonXY([points])
+    def on_export(self):
+        """Экспорт текущего района в GeoJSON."""
+        if not self.current_geoms:
+            QMessageBox.warning(self, "Ошибка", "Сначала постройте район поиска.")
+            return
 
-    def calculate_sector_search(self, center, radius):
-        points = []
-        for angle in range(0, 360, 120):
-            x = center.x() + radius * math.cos(math.radians(angle))
-            y = center.y() + radius * math.sin(math.radians(angle))
-            points.append(QgsPointXY(x, y))
-        points.append(points[0])
-        return QgsGeometry.fromPolylineXY(points)
+        layer, prefix, name = self.current_geoms
+        save_path, _ = QFileDialog.getSaveFileName(
+            self, "Сохранить GeoJSON", f"{prefix}_{name}.geojson", "GeoJSON (*.geojson)"
+        )
+        if not save_path:
+            return
 
-    def calculate_parallel_sweep(self, center, radius):
-        lines = []
-        for i in range(-2, 3):
-            start = QgsPointXY(center.x() - radius, center.y() + i * (radius / 2))
-            end = QgsPointXY(center.x() + radius, center.y() + i * (radius / 2))
-            lines.append(QgsGeometry.fromPolylineXY([start, end]))
-        return QgsGeometry.collectGeometry(lines)
-
-    def finished(self, result):
-        if result and self.layer:
-            QgsProject.instance().addMapLayer(self.layer)
-            QMessageBox.information(self.dialog, "Результат", f"Схема поиска '{self.area_name}' создана и добавлена на карту.")
-        elif self.exception:
-            QMessageBox.critical(self.dialog, "Ошибка", f"Ошибка при выполнении расчёта схемы: {str(self.exception)}.")
-        else:
-            QMessageBox.critical(self.dialog, "Ошибка", "Расчёт схемы поиска не выполнен.")
+        try:
+            options = QgsVectorFileWriter.SaveVectorOptions()
+            options.driverName = "GeoJSON"
+            QgsVectorFileWriter.writeAsVectorFormatV2(
+                layer, save_path, QgsCoordinateTransformContext(), options
+            )
+            QMessageBox.information(self, "Успех", f"GeoJSON сохранён в:\n{save_path}")
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка", f"Ошибка при экспорте:\n{str(e)}")

@@ -1,31 +1,17 @@
-python
-
-Свернуть
-
-Перенос
-
-Исполнить
-
-Копировать
-from PyQt5.QtWidgets import QDialog, QLabel, QVBoxLayout, QTimer
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+# dialogs/splash_dialog.py
+from PyQt5.QtWidgets import QDialog, QLabel
+from PyQt5.QtCore import Qt, QTimer
+from qgis.PyQt import uic
 import os
-import resources  # Скомпилированный resources.py
 
 class SplashDialog(QDialog):
     def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.setFixedSize(600, 400)
-
-        layout = QVBoxLayout()
-        label = QLabel(self)
-        pixmap = QPixmap(":/images/splash.png")  # Из resources.qrc
-        label.setPixmap(pixmap)
-        label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label)
-        self.setLayout(layout)
-
-        # Автозакрытие через 3 сек
-        QTimer.singleShot(3000, self.close)
+        super().__init__(parent, flags=Qt.SplashScreen | Qt.FramelessWindowHint)
+        # Подгружаем UI, если сделали .ui форму, иначе создаём QLabel
+        lbl = QLabel(self)
+        pix = QPixmap(os.path.join(os.path.dirname(__file__), "../resources/splash.png"))
+        lbl.setPixmap(pix)
+        lbl.setAlignment(Qt.AlignCenter)
+        self.setFixedSize(pix.size())
+        # Закрываем через 3 секунды
+        QTimer.singleShot(3000, self.accept)

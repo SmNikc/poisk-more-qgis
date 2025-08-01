@@ -1,14 +1,30 @@
-# Генератор SITREP PDF. Улучшен: Обработка
-# ошибок, динамический y с отступами.
+"""Simple PDF generator for SITREP reports."""
 
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
 import os
 from datetime import datetime
 
-def generate_sitrep_pdf(data):
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+
+
+def generate_sitrep_pdf(data: dict) -> str:
+    """Generate a PDF file with basic SITREP information.
+
+    Parameters
+    ----------
+    data: dict
+        Dictionary containing keys: type, datetime, sru, zone, notes.
+
+    Returns
+    -------
+    str
+        Path to the generated PDF file.
+    """
     try:
-        filename = f"SITREP_{data.get('type', 'UNKNOWN')}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}.pdf"
+        filename = (
+            f"SITREP_{data.get('type', 'UNKNOWN')}_"
+            f"{datetime.utcnow().strftime('%Y%m%d%H%M%S')}.pdf"
+        )
         filepath = os.path.join(os.path.expanduser("~"), "Documents", filename)
 
         c = canvas.Canvas(filepath, pagesize=A4)
@@ -21,5 +37,7 @@ def generate_sitrep_pdf(data):
         c.drawString(100, 720, f"Дополнительно: {data.get('notes', '')}")
 
         c.save()
-    except Exception as e:
+        return filepath
+    except Exception as e:  # pragma: no cover - simple wrapper
         raise RuntimeError(f"Ошибка при генерации PDF: {str(e)}")
+

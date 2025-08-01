@@ -1,2 +1,2 @@
-xml
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0"> <class>GeoMapViewerForm</class> <widget class="QDialog" name="GeoMapViewerForm"> <property name="windowTitle"> <string>Просмотр карты</string> </property> <layout class="QVBoxLayout" name="mainLayout"> <item> <widget class="QWidget" name="mapWidget" native="true"> </widget></item> <item> <widget class="QPushButton" name="buttonClose"> <property name="text"><string>Закрыть</string></property> </widget> </item> </layout> </widget> <resources> <connections> </connections></resources></ui>

@@ -7,8 +7,7 @@
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="QWidget" name="mapWidget" native="true">
-    </widget>
+    <widget class="QWidget" name="mapWidget" native="true"/>
    </item>
    <item>
     <widget class="QPushButton" name="buttonClose">

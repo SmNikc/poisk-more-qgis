@@ -1,0 +1,6 @@
+stomp.py
+PyQt5
+pytest
+reportlab
+python-docx
+sqlalchemy

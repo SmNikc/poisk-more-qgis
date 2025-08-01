@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AISImportForm</class>
+ <widget class="QDialog" name="AISImportForm">
+  <property name="windowTitle">
+   <string>Импорт AIS</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelFile">
+       <property name="text"><string>Файл AIS (CSV/NMEA):</string></property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="filePath"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="buttonBrowse">
+       <property name="text"><string>Обзор</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="buttonImport">
+     <property name="text"><string>Импортировать</string></property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

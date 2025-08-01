@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WindSummaryForm</class>
+ <widget class="QDialog" name="WindSummaryForm">
+  <property name="windowTitle">
+   <string>Расчёт среднего ветра (ASW)</string>
+  </property>
+   <layout class="QVBoxLayout" name="vboxMain">
+     <item>
+      <widget class="QLabel" name="labelPeriod">
+      <property name="text"><string>Период дрейфа: 22.07.2025 21:02 – 23.07.2025 10:02</string></property>
+     </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableVectors">
+      <property name="columnCount"><number>4</number></property>
+      <column>
+        <property name="text"><string>Скорость, узлы</string></property>
+      </column>
+      <column>
+        <property name="text"><string>Направление</string></property>
+      </column>
+      <column>
+        <property name="text"><string>Актуально с</string></property>
+      </column>
+      <column>
+        <property name="text"><string>Актуально по</string></property>
+      </column>
+     </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="boxSummary">
+      <property name="title"><string>Средний приземный ветер</string></property>
+      <layout class="QFormLayout" name="formSummary">
+        <item row="0" column="0">
+          <widget class="QLabel" name="labelSpeed">
+            <property name="text"><string>Скорость, узлы:</string></property>
+          </widget>
+        </item>
+        <item row="0" column="1">
+          <widget class="QLabel" name="labelSpeedValue">
+            <property name="text"><string>38,9000</string></property>
+          </widget>
+        </item>
+        <item row="1" column="0">
+          <widget class="QLabel" name="labelDir">
+            <property name="text"><string>Направление:</string></property>
+          </widget>
+        </item>
+        <item row="1" column="1">
+          <widget class="QLabel" name="labelDirValue">
+            <property name="text"><string>90</string></property>
+          </widget>
+        </item>
+        <item row="2" column="0">
+          <widget class="QLabel" name="labelImpact">
+            <property name="text"><string>Воздействие, м. мили:</string></property>
+          </widget>
+        </item>
+        <item row="2" column="1">
+          <widget class="QLabel" name="labelImpactValue">
+            <property name="text"><string>505,70</string></property>
+          </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+          <layout class="QHBoxLayout" name="buttons">
+            <item>
+              <widget class="QPushButton" name="buttonCancel">
+                <property name="text"><string>Отмена</string></property>
+              </widget>
+            </item>
+            <item>
+              <widget class="QPushButton" name="buttonSave">
+                <property name="text"><string>Сохранить</string></property>
+              </widget>
+            </item>
+          </layout>
+        </item>
+        </layout>
+      </widget>
+      </item>
+    </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

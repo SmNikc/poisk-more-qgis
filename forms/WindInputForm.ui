@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WindInputForm</class>
+ <widget class="QDialog" name="WindInputForm">
+  <property name="windowTitle"><string>Ввод данных по ветру</string></property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <widget class="QWidget" name="tabState1">
+      <attribute name="title"><string>Состояние №1</string></attribute>
+      <layout class="QGridLayout" name="gridState1">
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelPeriod">
+         <property name="text"><string>Период: С</string></property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDateTimeEdit" name="dateFrom"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="labelTo">
+         <property name="text"><string>По</string></property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QDateTimeEdit" name="dateTo"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelType">
+         <property name="text"><string>Тип: Ветер (м/с)</string></property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelDir">
+         <property name="text"><string>Направление (градусы)</string></property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="spinDir">
+         <property name="maximum"><number>360</number></property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelSpeed">
+         <property name="text"><string>Скорость (м/с)</string></property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QDoubleSpinBox" name="spinSpeed"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="buttonCalc">
+         <property name="text"><string>Расчёт</string></property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabState2">
+      <attribute name="title"><string>Состояние №2</string></attribute>
+      <layout class="QGridLayout" name="gridState2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelASW">
+         <property name="text"><string>Расчёт среднего ветра (ASW)</string></property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelASWSpeed">
+         <property name="text"><string>Скорость (узлы)</string></property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="spinASWSpeed">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelASWDir">
+         <property name="text"><string>Направление (градусы)</string></property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="spinASWDir">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelASWDe">
+         <property name="text"><string>ASWDe</string></property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QDoubleSpinBox" name="spinASWDe">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,2 @@
+python from PyQt5.QtWidgets import QDialog from PyQt5 import uic import os
+class GeoMapViewerForm(QDialog): def init(self, parent=None): super().init(parent) uic.loadUi(os.path.join(os.path.dirname(file), '../forms/GeoMapViewerForm.ui'), self) self.buttonClose.clicked.connect(self.accept)

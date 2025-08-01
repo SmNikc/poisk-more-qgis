@@ -1,0 +1,2 @@
+python import datetime
+def optimize_search_time(wind_speed, current_speed, sru_count): base_time = datetime.timedelta(hours=2) adjustment = wind_speed * 0.1 + current_speed * 0.15 - sru_count * 0.5 return base_time + datetime.timedelta(hours=adjustment)

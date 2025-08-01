@@ -1,0 +1,2 @@
+python import logging import os
+def test_log_file_creation(tmpdir): log_path = os.path.join(tmpdir, 'test.log') logging.basicConfig(filename=log_path, level=logging.INFO) logging.info("Test") assert os.path.exists(log_path)

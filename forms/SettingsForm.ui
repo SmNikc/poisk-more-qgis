@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsForm</class>
+ <widget class="QDialog" name="SettingsForm">
+  <property name="windowTitle">
+   <string>Настройки системы</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelUnits">
+       <property name="text"><string>Единицы измерения:</string></property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="unitsComboBox">
+       <item><property name="text"><string>Метрические (м, км, °C)</string></property></item>
+       <item><property name="text"><string>Имперские (ft, NM, °F)</string></property></item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelLanguage">
+       <property name="text"><string>Язык интерфейса:</string></property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="languageComboBox">
+       <item><property name="text"><string>Русский</string></property></item>
+       <item><property name="text"><string>English</string></property></item>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelAutoSave">
+       <property name="text"><string>Автосохранение (мин):</string></property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="autosaveInterval">
+       <property name="minimum"><number>1</number></property>
+       <property name="maximum"><number>60</number></property>
+       <property name="value"><number>10</number></property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="labelBackupPath">
+       <property name="text"><string>Путь к резервной копии:</string></property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="backupPath"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonLayout">
+     <item>
+      <widget class="QPushButton" name="buttonSave">
+       <property name="text"><string>Сохранить</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonCancel">
+       <property name="text"><string>Отмена</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

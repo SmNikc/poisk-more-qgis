@@ -1,0 +1,2 @@
+python from math import sqrt
+def calculate_sru_path(start_lat, start_lon, end_lat, end_lon, speed_knots): distance_nm = sqrt((start_lat - end_lat)**2 + (start_lon - end_lon)**2) * 60.0 time_hr = distance_nm / speed_knots if speed_knots > 0 else 0 return round(distance_nm, 2), round(time_hr, 2)

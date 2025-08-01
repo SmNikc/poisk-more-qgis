@@ -5,13 +5,16 @@
   <property name="windowTitle">
    <string>Расчёт суммарного течения (TWC)</string>
   </property>
-  <layout class="QVBoxLayout" name="vboxMain">
-    <widget class="QLabel" name="labelPeriod">
+   <layout class="QVBoxLayout" name="vboxMain">
+     <item>
+      <widget class="QLabel" name="labelPeriod">
       <property name="text">
        <string>Рассматриваемый период: 22.07.2025 21:02 – 23.07.2025 10:02</string>
       </property>
-    </widget>
-    <widget class="QTableWidget" name="tableVectors">
+     </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableVectors">
       <property name="columnCount"><number>5</number></property>
       <column>
         <property name="text"><string>Тип</string></property>
@@ -28,8 +31,10 @@
       <column>
         <property name="text"><string>Актуально по</string></property>
       </column>
-    </widget>
-    <widget class="QGroupBox" name="boxSummary">
+     </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="boxSummary">
       <property name="title"><string>Расчёт суммарного течения</string></property>
       <layout class="QFormLayout" name="formSummary">
         <item row="0" column="0">
@@ -95,8 +100,9 @@
           </layout>
         </item>
       </layout>
-    </widget>
-  </layout>
+      </widget>
+     </item>
+    </layout>
  </widget>
  <resources/>
  <connections/>

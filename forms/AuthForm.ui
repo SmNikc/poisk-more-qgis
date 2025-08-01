@@ -1,1 +1,44 @@
-<ui version="4.0"> <class>AuthForm</class> <widget class="QDialog" name="AuthForm"> <property name="windowTitle"> <string>Авторизация</string> </property> <layout class="QFormLayout"> <item row="0" column="0"><widget class="QLabel"><property name="text"><string>Логин:</string></property></widget></item> <item row="0" column="1"><widget class="QLineEdit" name="editUser"></widget></item> <item row="1" column="0"><widget class="QLabel"><property name="text"><string>Пароль:</string></property></widget></item> <item row="1" column="1"><widget class="QLineEdit" name="editPassword"><property name="echoMode"><enum>QLineEdit::Password</enum></property></widget></item> <item row="2" column="1"><widget class="QPushButton" name="buttonLogin"><property name="text"><string>Войти</string></property></widget></item> </layout> </widget> <resources> <connections> </connections></resources></ui>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AuthForm</class>
+ <widget class="QDialog" name="AuthForm">
+  <property name="windowTitle">
+   <string>Авторизация</string>
+  </property>
+  <layout class="QFormLayout">
+   <item row="0" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Логин:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="editUser"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Пароль:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="editPassword">
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="buttonLogin">
+     <property name="text">
+      <string>Войти</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

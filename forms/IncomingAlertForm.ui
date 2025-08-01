@@ -1,1 +1,34 @@
-<ui version="4.0"> <class>IncomingAlertForm</class> <widget class="QDialog" name="IncomingAlertForm"> <property name="windowTitle"> <string>Поступившая тревога</string> </property> <layout class="QVBoxLayout" name="mainLayout"> <item> <widget class="QTextEdit" name="textAlertContent"> </widget></item> <item> <layout class="QHBoxLayout"> <item> <widget class="QPushButton" name="buttonAcknowledge"> <property name="text"><string>Принято</string></property> </widget> </item> <item> <widget class="QPushButton" name="buttonIgnore"> <property name="text"><string>Игнорировать</string></property> </widget> </item> </layout> </item> </layout> </widget> <resources> <connections> </connections></resources></ui>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IncomingAlertForm</class>
+ <widget class="QDialog" name="IncomingAlertForm">
+  <property name="windowTitle">
+   <string>Поступившая тревога</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QTextEdit" name="textAlertContent"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="buttonAcknowledge">
+       <property name="text">
+        <string>Принято</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonIgnore">
+       <property name="text">
+        <string>Игнорировать</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

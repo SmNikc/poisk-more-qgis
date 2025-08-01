@@ -1,1 +1,90 @@
-<ui version="4.0"> <class>ProbabilityForm</class> <widget class="QDialog" name="ProbabilityForm"> <property name="windowTitle"> <string>Вероятность (параметры карты вероятности)</string> </property> <layout class="QFormLayout"> <item row="0" column="0"><widget class="QLabel"><property name="text"><string>LKP (Lat):</string></property></widget></item> <item row="0" column="1"><widget class="QDoubleSpinBox" name="spinLkpLat"></widget></item> <item row="1" column="0"><widget class="QLabel"><property name="text"><string>LKP (Lon):</string></property></widget></item> <item row="1" column="1"><widget class="QDoubleSpinBox" name="spinLkpLon"></widget></item> <item row="2" column="0"><widget class="QLabel"><property name="text"><string>Радиус (км):</string></property></widget></item> <item row="2" column="1"><widget class="QDoubleSpinBox" name="spinRadius"></widget></item> <item row="3" column="0"><widget class="QLabel"><property name="text"><string>Разрешение (км):</string></property></widget></item> <item row="3" column="1"><widget class="QDoubleSpinBox" name="spinResolution"></widget></item> <item row="4" column="0"><widget class="QLabel"><property name="text"><string>Скорость ветра (м/с):</string></property></widget></item> <item row="4" column="1"><widget class="QDoubleSpinBox" name="spinWindSpeed"></widget></item> <item row="5" column="0"><widget class="QLabel"><property name="text"><string>Направление ветра (°):</string></property></widget></item> <item row="5" column="1"><widget class="QSpinBox" name="spinWindDir"></widget></item> <item row="6" column="0"><widget class="QLabel"><property name="text"><string>Время (ч):</string></property></widget></item> <item row="6" column="1"><widget class="QDoubleSpinBox" name="spinTime"></widget></item> <item row="7" column="1"><widget class="QPushButton" name="buttonGenerate"><property name="text"><string>Сгенерировать карту</string></property></widget></item> </layout> </widget> <resources> <connections> </connections></resources></ui>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProbabilityForm</class>
+ <widget class="QDialog" name="ProbabilityForm">
+  <property name="windowTitle">
+   <string>Вероятность (параметры карты вероятности)</string>
+  </property>
+  <layout class="QFormLayout">
+   <item row="0" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>LKP (Lat):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QDoubleSpinBox" name="spinLkpLat"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>LKP (Lon):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QDoubleSpinBox" name="spinLkpLon"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Радиус (км):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QDoubleSpinBox" name="spinRadius"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Разрешение (км):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QDoubleSpinBox" name="spinResolution"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Скорость ветра (м/с):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QDoubleSpinBox" name="spinWindSpeed"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Направление ветра (°):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QSpinBox" name="spinWindDir"/>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Время (ч):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QDoubleSpinBox" name="spinTime"/>
+   </item>
+   <item row="7" column="1">
+    <widget class="QPushButton" name="buttonGenerate">
+     <property name="text">
+      <string>Сгенерировать карту</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

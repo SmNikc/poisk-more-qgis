@@ -2,492 +2,97 @@
 <ui version="4.0">
  <class>SitrepForm</class>
  <widget class="QDialog" name="SitrepForm">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>603</width>
-    <height>849</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Создание SITREP</string>
   </property>
-  <layout class="QVBoxLayout" name="mainLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>4</number>
+    <widget class="QLabel" name="labelType">
+     <property name="text">
+      <string>Тип донесения:</string>
      </property>
-     <widget class="QWidget" name="tabHeader">
-      <attribute name="title">
-       <string>Заголовок</string>
-      </attribute>
-      <layout class="QFormLayout" name="layoutHeader">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelCategory">
-         <property name="text">
-          <string>Категория сообщения:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="comboCategory">
-         <item>
-          <property name="text">
-           <string>Бедствие</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Тренировка</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelDateTime">
-         <property name="text">
-          <string>Дата / Время (UTC) *:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QDateTimeEdit" name="dateTimeUtc">
-         <property name="displayFormat">
-          <string>dd.MM.yyyy HH:mm</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelFrom">
-         <property name="text">
-          <string>От кого:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="editFrom"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelProfile">
-         <property name="text">
-          <string>Профиль:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="comboProfile"/>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QGroupBox" name="boxRecipients">
-         <property name="title">
-          <string>Кому:</string>
-         </property>
-         <layout class="QVBoxLayout" name="layoutRecipients">
-          <item>
-           <widget class="QListWidget" name="listRecipients"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QLabel" name="labelNotes">
-         <property name="text">
-          <string>Дополнительно:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QTextEdit" name="textNotes"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabMainInfo">
-      <attribute name="title">
-       <string>Основная информация</string>
-      </attribute>
-      <layout class="QFormLayout" name="layoutMain">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelObject">
-         <property name="text">
-          <string>Объект АС / ЧС:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="editObject"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelLocation">
-         <property name="text">
-          <string>Местоположение / Район аварии:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLineEdit" name="editLocation"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelCoords">
-         <property name="text">
-          <string>Координаты *:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QDoubleSpinBox" name="spinLat">
-         <property name="suffix">
-          <string> °</string>
-         </property>
-         <property name="decimals">
-          <number>6</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelSituation">
-         <property name="text">
-          <string>Ситуация:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QTextEdit" name="textSituation"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="labelSourceInfo">
-         <property name="text">
-          <string>Источник информации:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QLineEdit" name="editSourceInfo"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="labelEventTime">
-         <property name="text">
-          <string>Время происшествия UTC:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QDateTimeEdit" name="dateEventTime">
-         <property name="displayFormat">
-          <string>dd.MM.yyyy HH:mm</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="labelPersons">
-         <property name="text">
-          <string>Число лиц в опасности:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="spinPersons"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelAssistance">
-         <property name="text">
-          <string>Требуемая помощь:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QTextEdit" name="textAssistance"/>
-       </item>
-      </layout>
-      <widget class="QLabel" name="labelCallsign">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Позывной:</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="editCallsign">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>30</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="comboLatDir">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <item>
-        <property name="text">
-         <string>С.Ш.</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Ю.Ш.</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QDoubleSpinBox" name="spinLon">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <property name="suffix">
-        <string> °</string>
-       </property>
-       <property name="decimals">
-        <number>6</number>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="comboLonDir">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>100</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <item>
-        <property name="text">
-         <string>В.Д.</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>З.Д.</string>
-        </property>
-       </item>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="tabAdditionalG">
-      <attribute name="title">
-       <string>Доп. информация (G)</string>
-      </attribute>
-      <layout class="QGridLayout" name="layoutG">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelDim">
-         <property name="text">
-          <string>Размерение (Д×Ш×Осадка):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="editDim"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelMMSI">
-         <property name="text">
-          <string>MMSI:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="editMMSI"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelIMO">
-         <property name="text">
-          <string>IMO:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="editIMO"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelHullColor">
-         <property name="text">
-          <string>Цвет корпуса:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="editHullColor"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="labelSuperColor">
-         <property name="text">
-          <string>Цвет надстройки:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="editSuperstructureColor"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="labelFuel">
-         <property name="text">
-          <string>Запасы топлива:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="editFuel"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="labelCrew">
-         <property name="text">
-          <string>Число экипажа:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="editCrewCount"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelContacts">
-         <property name="text">
-          <string>Контакты:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="editContacts"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="labelPort">
-         <property name="text">
-          <string>Порт приписки:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="editPort"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="labelOnboard">
-         <property name="text">
-          <string>Людей на борту:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="editOnboardNo"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="labelEquipment">
-         <property name="text">
-          <string>Спасательное оборудование:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QListWidget" name="listEquipment"/>
-       </item>
-       <item row="11" column="0" colspan="2">
-        <widget class="QLabel" name="labelGNotes">
-         <property name="text">
-          <string>Примечание G:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="0" colspan="2">
-        <widget class="QTextEdit" name="textGNotes"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabAdditionalHJ">
-      <attribute name="title">
-       <string>Доп. информация (H/J)</string>
-      </attribute>
-      <layout class="QFormLayout" name="layoutHJ">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelWeatherSource">
-         <property name="text">
-          <string>Источник погоды:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="editWeatherSource"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelActionsJ">
-         <property name="text">
-          <string>Начальные действия (J):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QTextEdit" name="textActionsJ"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabAdditionalKLMN">
-      <attribute name="title">
-       <string>K, L, M, N</string>
-      </attribute>
-      <layout class="QFormLayout" name="layoutKLMN">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelK">
-         <property name="text">
-          <string>Район поиска (K):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QTextEdit" name="textK"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelL">
-         <property name="text">
-          <string>Инструкции по координации (L):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QTextEdit" name="textL"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelM">
-         <property name="text">
-          <string>Планы на будущее (M):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QTextEdit" name="textM"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelN">
-         <property name="text">
-          <string>Дополнительная информация (N):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QTextEdit" name="textN"/>
-       </item>
-      </layout>
-     </widget>
     </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="comboBoxType">
+     <item>
+      <property name="text">
+       <string>INITIAL</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AMPLIFYING</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>FINAL</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelDateTime">
+     <property name="text">
+      <string>Дата и время:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDateTimeEdit" name="dateTimeEdit">
+     <property name="displayFormat">
+      <string>yyyy-MM-dd HH:mm:ss</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelSRU">
+     <property name="text">
+      <string>SRU:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="lineEditSRU"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelZone">
+     <property name="text">
+      <string>Зона поиска:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="lineEditZone"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelNotes">
+     <property name="text">
+      <string>Дополнительно:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="textEditNotes"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutButtons">
+     <item>
+      <widget class="QPushButton" name="pushButtonPDF">
+       <property name="text">
+        <string>PDF</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonDOCX">
+       <property name="text">
+        <string>DOCX</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

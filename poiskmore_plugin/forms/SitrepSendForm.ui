@@ -10,7 +10,16 @@
       <attribute name="title"><string>Заголовок</string></attribute>
       <layout class="QFormLayout" name="layoutHeader">
        <item row="0" column="0"><widget class="QLabel" name="labelCategory"><property name="text"><string>Категория сообщения:</string></property></widget></item>
-       <item row="0" column="1"><widget class="QComboBox" name="comboCategory"><item><string>Бедствие</string></item><item><string>Тренировка</string></item></widget></item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboCategory">
+         <item>
+          <property name="text"><string>Бедствие</string></property>
+         </item>
+         <item>
+          <property name="text"><string>Тренировка</string></property>
+         </item>
+        </widget>
+       </item>
        <item row="1" column="0"><widget class="QLabel" name="labelDateTime"><property name="text"><string>Дата / Время (UTC) *:</string></property></widget></item>
        <item row="1" column="1"><widget class="QDateTimeEdit" name="dateTimeUtc"><property name="displayFormat"><string>dd MMMM yyyy г. HH:mm</string></property><property name="calendarPopup"><bool>true</bool></property></widget></item>
        <item row="2" column="0"><widget class="QLabel" name="labelFrom"><property name="text"><string>От кого:</string></property></widget></item>
@@ -33,9 +42,27 @@
        <item row="1" column="1" colspan="3"><widget class="QLineEdit" name="editLocation"/></item>
        <item row="2" column="0"><widget class="QLabel" name="labelCoords"><property name="text"><string>Координаты *:</string></property></widget></item>
        <item row="2" column="1"><widget class="QDoubleSpinBox" name="spinLat"><property name="suffix"><string> °</string></property><property name="decimals"><number>6</number></property></widget></item>
-       <item row="2" column="2"><widget class="QComboBox" name="comboLatDir"><item><string>С.Ш.</string></item><item><string>Ю.Ш.</string></item></widget></item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="comboLatDir">
+           <item>
+            <property name="text"><string>С.Ш.</string></property>
+           </item>
+           <item>
+            <property name="text"><string>Ю.Ш.</string></property>
+           </item>
+          </widget>
+         </item>
        <item row="2" column="3"><widget class="QDoubleSpinBox" name="spinLon"><property name="suffix"><string> °</string></property><property name="decimals"><number>6</number></property></widget></item>
-       <item row="2" column="4"><widget class="QComboBox" name="comboLonDir"><item><string>В.Д.</string></item><item><string>З.Д.</string></item></widget></item>
+         <item row="2" column="4">
+          <widget class="QComboBox" name="comboLonDir">
+           <item>
+            <property name="text"><string>В.Д.</string></property>
+           </item>
+           <item>
+            <property name="text"><string>З.Д.</string></property>
+           </item>
+          </widget>
+         </item>
        <item row="3" column="0"><widget class="QLabel" name="labelSituation"><property name="text"><string>Ситуация:</string></property></widget></item>
        <item row="3" column="1" colspan="4"><widget class="QTextEdit" name="textSituation"/></item>
        <item row="4" column="0"><widget class="QLabel" name="labelSourceInfo"><property name="text"><string>Источник информации:</string></property></widget></item>

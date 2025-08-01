@@ -93,7 +93,19 @@
       <layout class="QFormLayout" name="layoutState4">
        <!-- Поля для состояния №4: Тип объекта, Метод симуляции, Расстояние DR, Время от определения -->
        <item row="0" column="0"><widget class="QLabel" name="labelObjectType"><property name="text"><string>Тип объекта:</string></property></widget></item>
-       <item row="0" column="1"><widget class="QComboBox" name="comboObjectType"><item><string>Аварийный сигнал (ha 4-6 человек)</string></item><item><string>6-местный спас. плот</string></item><item><string>GNSS</string></item></widget></item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboObjectType">
+         <item>
+          <property name="text"><string>Аварийный сигнал (ha 4-6 человек)</string></property>
+         </item>
+         <item>
+          <property name="text"><string>6-местный спас. плот</string></property>
+         </item>
+         <item>
+          <property name="text"><string>GNSS</string></property>
+         </item>
+        </widget>
+       </item>
        <item row="1" column="0"><widget class="QCheckBox" name="checkSimulate"><property name="text"><string>Использовать метод симуляции пути</string></property></widget></item>
        <item row="2" column="0"><widget class="QLabel" name="labelDR"><property name="text"><string>Расстояние DR:</string></property></widget></item>
        <item row="2" column="1"><widget class="QDoubleSpinBox" name="spinDR"/></item>

@@ -6,7 +6,8 @@
    <string>Параметры района поиска</string>
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
-   <widget class="QTabWidget" name="tabWidget">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
     <!-- Вкладка «Район 1» -->
     <widget class="QWidget" name="tabArea1">
      <attribute name="title">
@@ -76,7 +77,8 @@
       <string>Итоги</string>
      </attribute>
      <layout class="QVBoxLayout" name="vboxSummary">
-      <widget class="QGroupBox" name="boxErrors">
+      <item>
+       <widget class="QGroupBox" name="boxErrors">
        <property name="title"><string>Расчёт продолжительности поиска</string></property>
        <layout class="QFormLayout" name="formErrors">
         <item row="0" column="0">
@@ -139,9 +141,11 @@
         </item>
        </layout>
       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

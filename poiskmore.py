@@ -1,5 +1,4 @@
 from qgis.PyQt.QtWidgets import QAction, QMenu
-from qgis.utils import iface
 
 from .dialogs.dialog_sitrep import SitrepForm
 from .dialogs.region_dialog import RegionDialog
@@ -12,8 +11,11 @@ from .dialogs.search_scheme_dialog import SearchSchemeDialog
 
 
 class PoiskMorePlugin:
+    """Главный класс плагина."""
+
     def __init__(self, iface):
         self.iface = iface
+        self.menu = None
         self.actions = []
 
     def initGui(self):

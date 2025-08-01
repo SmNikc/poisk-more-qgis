@@ -1,5 +1,64 @@
-# (Интеграция с БД для сохранения SITREP) python from PyQt5.QtWidgets import QDialog, QMessageBox from PyQt5 import uic import os from .db_manager import DBManager
-class SitrepForm(QDialog): def init(self, parent=None): super().init(parent) uic.loadUi(os.path.join(os.path.dirname(file), '../forms/SitrepForm.ui'), self) self.db = DBManager() self.buttonSend.clicked.connect(self.send_sitrep)
-def send_sitrep(self): category = self.comboCategory.currentText() date_utc = self.dateTimeUtc.dateTime().toString() from_field = self.editFrom.text() to_field = self.editTo.text() object = self.editObject.text() location = self.editLocation.text() lat = self.editLat.text() lon = self.editLon.text() situation = self.textSituation.toPlainText() weather = self.textWeather.toPlainText() search_area = self.textSearchArea.toPlainText()
-if not all([category, date_utc, from_field, to_field, object, location, lat, lon, situation, weather, search_area]): QMessageBox.warning(self, "Ошибка", "Заполните все поля A-N") return
-from .report_generator import generate_sitrep_pdf data = { "type": category, "datetime": date_utc, "sru": from_field, "zone": search_area, "notes": situation } generate_sitrep_pdf(data) self.db.save_sitrep(category, date_utc, from_field, search_area, situation) QMessageBox.information(self, "Успех", "SITREP отправлен и сохранён в БД")
+from PyQt5 import uic
+from PyQt5.QtWidgets import QDialog, QMessageBox
+import os
+
+from ..utils.db_manager import DBManager
+from ..reports.sitrep_generator import generate_sitrep_pdf
+
+FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(os.path.dirname(__file__), '../forms/SitrepForm.ui')
+)
+
+
+class SitrepForm(QDialog, FORM_CLASS):
+    """Диалоговое окно для ввода данных SITREP."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
+        self.db = DBManager()
+        self.buttonSend.clicked.connect(self.send_sitrep)
+
+    def send_sitrep(self):
+        """Собирает данные с формы и сохраняет отчёт."""
+        category = self.comboCategory.currentText()
+        date_utc = self.dateTimeUtc.dateTime().toString()
+        from_field = self.editFrom.text()
+        to_field = self.editTo.text()
+        obj = self.editObject.text()
+        location = self.editLocation.text()
+        lat = self.editLat.text()
+        lon = self.editLon.text()
+        situation = self.textSituation.toPlainText()
+        weather = self.textWeather.toPlainText()
+        search_area = self.textSearchArea.toPlainText()
+
+        if not all(
+            [
+                category,
+                date_utc,
+                from_field,
+                to_field,
+                obj,
+                location,
+                lat,
+                lon,
+                situation,
+                weather,
+                search_area,
+            ]
+        ):
+            QMessageBox.warning(self, "Ошибка", "Заполните все поля A-N")
+            return
+
+        data = {
+            "type": category,
+            "datetime": date_utc,
+            "sru": from_field,
+            "zone": search_area,
+            "notes": situation,
+        }
+
+        generate_sitrep_pdf(data)
+        self.db.save_sitrep(category, date_utc, from_field, search_area, situation)
+        QMessageBox.information(self, "Успех", "SITREP отправлен и сохранён в БД")

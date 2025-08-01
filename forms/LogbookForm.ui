@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0"> <class>LogbookForm</class> <widget class="QDialog" name="LogbookForm"> <property name="windowTitle"> <string>Журнал действий</string> </property> <layout class="QVBoxLayout"> <item> <widget class="QTableView" name="tableLog"> </widget></item> </layout> </widget> <resources> <connections> </connections></resources></ui>
+<ui version="4.0">
+ <class>LogbookForm</class>
+ <widget class="QDialog" name="LogbookForm">
+  <property name="windowTitle">
+   <string>Журнал действий</string>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <widget class="QTableView" name="tableLog"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

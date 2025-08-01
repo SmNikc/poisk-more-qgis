@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 cd /d C:\Projects\poisk-more-qgis\install
-"C:\Python313\python.exe" "C:\Projects\poisk-more-qgis\install\generate_html_from_directory.py"
+C:\Users\Admin\AppData\Local\Programs\Python\Python313\python.exe "C:\Projects\poisk-more-qgis\install\generate_html_from_directory.py"
 pause
 
 cd /d C:\Projects\poisk-more-qgis

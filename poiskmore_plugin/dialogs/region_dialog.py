@@ -3,7 +3,7 @@
 import os
 from PyQt5.QtWidgets import QDialog
 from PyQt5 import uic
-from qgis.core import QgsMapCanvas
+from qgis.gui import QgsMapCanvas
 
 
 class RegionDialog(QDialog):

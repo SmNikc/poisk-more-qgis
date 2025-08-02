@@ -1,0 +1,75 @@
+# Игнорировать всю папку docker/
+docker/
+
+# Python
+__pycache__/
+*.py[cod]
+*.log
+*.sqlite3
+*.db
+.env
+.venv
+*.egg-info/
+*.pytest_cache/
+
+# VS Code / JetBrains
+.vscode/
+.idea/
+
+# QGIS/плагины/инсталляторы
+*.zip
+*.qgis.zip
+
+# Mac/Windows системный мусор
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+
+# Сборка/артефакты
+build/
+dist/
+*.egg
+.eggs/
+*.whl
+Pipfile.lock
+
+# Тесты/репорты
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Sphinx/Docs
+docs/_build/
+site/
+
+# pipenv
+Pipfile.lock
+
+# mypy/pyright/pytype
+.mypy_cache/
+.dmypy.json
+.pytype/
+.pyre/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Local environment files
+*.env
+
+# Spyder
+.spyderproject
+.spyderproject.light
+
+# Rope
+.ropeproject

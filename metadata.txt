@@ -1,11 +1,4 @@
-plaintext
-
-Свернуть
-
-Перенос
-
-Копировать
-[GENERAL]
+[general]
 name=Поиск-Море
 qgisMinimumVersion=3.0
 description=Плагин для поисково-спасательных операций на море по IAMSAR
@@ -18,6 +11,6 @@ about=Расчёты дрейфа, зон поиска, отчёты SITREP, и�
 hasProcessingProvider=no
 homepage=https://yourwebsite.com
 tracker=https://github.com/yourrepo/issues
-icon=:/images/icon.png
+icon=resources/icon.png
 category=Plugins
 tags=search, rescue, marine, IAMSAR

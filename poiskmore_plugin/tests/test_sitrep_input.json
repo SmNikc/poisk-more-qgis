@@ -1,0 +1,10 @@
+{
+"type": "AMPLIFYING",
+"datetime": "2025-07-25 14:30:00",
+"sru": "SRU-1",
+"coords": "60.123, 30.456",
+"weather": "Cloudy, NE wind 6 m/s",
+"situation": "Search continued in sector 3",
+"actions": "SRU-1 completed pattern with no result",
+"attachment": ""
+}

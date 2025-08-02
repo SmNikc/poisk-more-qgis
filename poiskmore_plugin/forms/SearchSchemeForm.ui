@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchSchemeForm</class>
+ <widget class="QDialog" name="SearchSchemeForm">
+  <property name="windowTitle">
+   <string>Схема поиска (расширяющийся квадрат)</string>
+  </property>
+  <layout class="QFormLayout">
+   <item row="0" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Центр:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="editCenter"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel">
+     <property name="text">
+      <string>Шаг (NM):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QDoubleSpinBox" name="spinStep"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="buttonGenerate">
+     <property name="text">
+      <string>Сгенерировать схему</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -62,4 +62,3 @@ if __name__ == "__main__":
     print(f"Найдено файлов: {len(blocks)}")
     save_code_blocks(blocks, plugin_dir)
     print("✅ Все файлы успешно сохранены с авто-комментированием не-кода в .py/.js/.ts.")
-

@@ -1,0 +1,7 @@
+1. Установите QGIS 3.40.9 LTR
+2. Скопируйте папку poiskmore_plugin в:
+%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins\
+3. Активируйте плагин через меню "Плагины"
+4. Убедитесь, что установлены зависимости: pip install reportlab python-docx
+sqlalchemy PyQt5
+5. Для редактирования форм откройте: Qt Designer with QGIS Custom Widgets

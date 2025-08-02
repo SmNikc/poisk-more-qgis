@@ -1,4 +1,0 @@
-python from PyQt5.QtWidgets import QDialog, QMessageBox from PyQt5 import uic import os from .alg.alg_drift import calculate_drift
-class DriftCalculationForm(QDialog): def init(self, parent=None): super().init(parent) uic.loadUi(os.path.join(os.path.dirname(file), '../forms/DriftCalculationForm.ui'), self) self.buttonCalculate.clicked.connect(self.perform_calculation)
-def perform_calculation(self): lat = self.spinLat.value() lon = self.spinLon.value() wind_speed = self.spinWindSpeed.value() wind_dir = self.spinWindDir.value() current_speed = self.spinCurrentSpeed.value() current_dir = self.spinCurrentDir.value() time = self.spinTime.value()
-# new_lat, new_lon = calculate_drift(lat, lon, wind_speed, wind_dir, current_speed, current_dir, time) QMessageBox.information(self, "Результат", f"Новый Lat: {new_lat}\nНовый Lon: {new_lon}")

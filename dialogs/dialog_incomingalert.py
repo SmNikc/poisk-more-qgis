@@ -1,2 +1,0 @@
-python from PyQt5.QtWidgets import QDialog from PyQt5 import uic import os
-class IncomingAlertForm(QDialog): def init(self, parent=None, message=""): super().init(parent) uic.loadUi(os.path.join(os.path.dirname(file), '../forms/IncomingAlertForm.ui'), self) self.textAlertContent.setPlainText(message) self.buttonAcknowledge.clicked.connect(self.accept) self.buttonIgnore.clicked.connect(self.reject)

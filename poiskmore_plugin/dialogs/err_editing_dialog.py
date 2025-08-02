@@ -1,35 +1,20 @@
-from PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QTextEdit, QPushButton, QVBoxLayout, QDateTimeEdit
-from PyQt5.QtCore import QDateTime
-from PyQt5.QtWidgets import QMessageBox
-
+from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5 import uic
+import os
+from ..utils.db_manager import DBManager
 class ErrEditingDialog(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Редактирование происшествия")
-        layout = QVBoxLayout()
-
-        self.id_edit = QLineEdit()
-        self.datetime_edit = QDateTimeEdit(QDateTime.currentDateTime())
-        self.location_edit = QLineEdit()
-        self.description_edit = QTextEdit()
-
-        layout.addWidget(QLabel("ID происшествия:"))
-        layout.addWidget(self.id_edit)
-        layout.addWidget(QLabel("Дата и время:"))
-        layout.addWidget(self.datetime_edit)
-        layout.addWidget(QLabel("Координаты (lat/lon):"))
-        layout.addWidget(self.location_edit)
-        layout.addWidget(QLabel("Описание:"))
-        layout.addWidget(self.description_edit)
-
-        self.save_button = QPushButton("Сохранить изменения")
-        self.save_button.clicked.connect(self.accept)
-        layout.addWidget(self.save_button)
-
-        self.setLayout(layout)
-
-    def accept(self):
-        if not self.id_edit.text() or not self.location_edit.text():
-            QMessageBox.warning(self, "Ошибка", "Заполните ID и координаты!")
-            return
-        super().accept()
+def init(self, parent=None):
+super().init(parent)
+uic.loadUi(os.path.join(os.path.dirname(file), '../forms/IncidentForm.ui'), self)
+self.buttonSave.clicked.connect(self.save_incident)
+def save_incident(self):
+type = self.comboType.currentText()
+lat = self.editLat.text()
+lon = self.editLon.text()
+description = self.textDescription.toPlainText()
+if not all([type, lat, lon, description]):
+QMessageBox.warning(self, "Ошибка", "Заполните все поля")
+return
+db = DBManager()
+db.save_incident(type, float(lat), float(lon), description)
+QMessageBox.information(self, "Успех", "Инцидент сохранён")

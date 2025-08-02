@@ -1,30 +1,26 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QSpinBox, QPushButton
-from PyQt5.QtWidgets import QMessageBox
-
+from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5 import uic
+import os
+from ..alg.alg_probabilities import compute_probability_map
+from qgis.core import QgsPointXY
 class ProbabilityDialog(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Параметры карты вероятности")
-        layout = QVBoxLayout()
-        self.radius_edit = QLineEdit()
-        self.count_spin = QSpinBox()
-        self.count_spin.setMinimum(10)
-        self.count_spin.setMaximum(10000)
-        layout.addWidget(QLabel("Радиус области (градусы):"))
-        layout.addWidget(self.radius_edit)
-        layout.addWidget(QLabel("Количество точек:"))
-        layout.addWidget(self.count_spin)
-        self.ok_button = QPushButton("Сгенерировать")
-        self.ok_button.clicked.connect(self.accept)
-        layout.addWidget(self.ok_button)
-        self.setLayout(layout)
-
-    def get_parameters(self):
-        try:
-            radius = float(self.radius_edit.text())
-            if radius < 0:
-                raise ValueError("Радиус не может быть отрицательным!")
-            return radius, self.count_spin.value()
-        except ValueError as e:
-            QMessageBox.warning(self, "Ошибка", str(e))
-            return 0.0, 10
+def init(self, parent=None):
+super().init(parent)
+uic.loadUi(os.path.join(os.path.dirname(file), '../forms/ProbabilityForm.ui'), self)
+self.buttonGenerate.clicked.connect(self.generate_map)
+def generate_map(self):
+try:
+lkp_lat = self.spinLkpLat.value()
+lkp_lon = self.spinLkpLon.value()
+radius = self.spinRadius.value()
+resolution = self.spinResolution.value()
+wind_speed = self.spinWindSpeed.value()
+wind_dir = self.spinWindDir.value()
+current_speed = self.spinCurrentSpeed.value()
+current_dir = self.spinCurrentDir.value()
+time = self.spinTime.value()
+lkp = QgsPointXY(lkp_lon, lkp_lat)
+matrix = compute_probability_map(lkp, radius, resolution, wind_speed, wind_dir, current_speed, current_dir, time)
+QMessageBox.information(self, "Успех", "Карта вероятности сгенерирована")
+except ValueError as e:
+QMessageBox.warning(self, "Ошибка", str(e))

@@ -1,7 +1,5 @@
-"""Простейший менеджер SQLite для хранения данных плагина."""
 import sqlite3
 class DBManager:
-"""Proper SQLite manager for plugin data."""
 def init(self, db_path: str = "poiskmore.db"):
 self.conn = sqlite3.connect(db_path)
 self.create_tables()

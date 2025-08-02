@@ -3,112 +3,44 @@
  <class>SearchAreaForm</class>
  <widget class="QDialog" name="SearchAreaForm">
   <property name="windowTitle">
-   <string>Форма для создания района</string>
+   <string>Район Поиска</string>
   </property>
-  <layout class="QFormLayout" name="formLayout">
+  <layout class="QFormLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="labelName">
+    <widget class="QLabel">
      <property name="text">
-      <string>Название:</string>
+      <string>Тип:</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="editName"/>
+    <widget class="QComboBox" name="comboType">
+     <item>
+      <property name="text">
+       <string>Круг</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Квадрат</string>
+      </property>
+     </item>
+    </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="labelPrefix">
+    <widget class="QLabel">
      <property name="text">
-      <string>Префикс подрайонов:</string>
+      <string>Центр:</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="editPrefix"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="labelType">
-     <property name="text">
-      <string>Тип поиска:</string>
-     </property>
-    </widget>
+    <widget class="QLineEdit" name="editCenter"/>
    </item>
    <item row="2" column="1">
-    <widget class="QComboBox" name="comboType">
-     <item>
-      <property name="text">
-       <string>Parallel Sweep</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Sector</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Expanding Square</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="labelTime">
+    <widget class="QPushButton" name="buttonGenerate">
      <property name="text">
-      <string>Время начала (UTC):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QDateTimeEdit" name="dateTimeStart"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="labelDuration">
-     <property name="text">
-      <string>Длительность (ч):</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QSpinBox" name="spinDuration"/>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="labelSRU">
-     <property name="text">
-      <string>Способ позиции SRU:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QComboBox" name="comboSRU">
-     <item>
-      <property name="text">
-       <string>Manual</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>From LKP</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Calculated</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QPushButton" name="buttonCancel">
-     <property name="text">
-      <string>Отмена</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QPushButton" name="buttonBuild">
-     <property name="text">
-      <string>Построить</string>
+      <string>Сгенерировать</string>
      </property>
     </widget>
    </item>

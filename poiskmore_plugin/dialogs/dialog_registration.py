@@ -1,55 +1,14 @@
-# dialogs/dialog_registration.py
-from PyQt5.QtWidgets import QDialog, QMessageBox
-from PyQt5 import uic
-import os
-
-class RegistrationForm(QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        uic.loadUi(os.path.join(os.path.dirname(__file__), '../forms/RegistrationForm.ui'), self)
-
-        self.buttonNext.clicked.connect(self.next_state)
-        self.buttonPrev.clicked.connect(self.prev_state)
-        self.buttonFinish.clicked.connect(self.finish_registration)
-
-        self.update_buttons()
-
-    def next_state(self):
-        current = self.stackedWidget.currentIndex()
-        if current < self.stackedWidget.count() - 1:
-            self.stackedWidget.setCurrentIndex(current + 1)
-        self.update_buttons()
-
-    def prev_state(self):
-        current = self.stackedWidget.currentIndex()
-        if current > 0:
-            self.stackedWidget.setCurrentIndex(current - 1)
-        self.update_buttons()
-
-    def update_buttons(self):
-        idx = self.stackedWidget.currentIndex()
-        count = self.stackedWidget.count()
-        self.buttonPrev.setEnabled(idx > 0)
-        self.buttonNext.setEnabled(idx < count - 1)
-        self.buttonFinish.setEnabled(idx == count - 1)
-
-        if idx == count - 1:
-            summary = self.collect_summary()
-            self.plainConfirm.setPlainText(summary)
-
-    def collect_summary(self):
-        summary = f"Тип происшествия: {self.comboIncidentType.currentText()}\n"
-        summary += f"Дата/Время: {self.dateTimeIncident.dateTime().toString('dd.MM.yyyy HH:mm')}\n"
-        summary += f"Место: {self.editLocation.text()}\n"
-        summary += f"Координаты: {self.editCoordinates.text()}\n"
-        summary += f"Название судна: {self.editVesselName.text()}\n"
-        summary += f"IMO: {self.editIMONumber.text()}\n"
-        summary += f"Позывной: {self.editCallSign.text()}\n"
-        summary += f"Экипаж: {self.spinPersonsOnBoard.value()}\n"
-        summary += f"Ситуация:\n{self.textSituationDescription.toPlainText()}\n"
-        return summary
-
-    def finish_registration(self):
-        summary = self.collect_summary()
-        QMessageBox.information(self, "Регистрация происшествия", f"Происшествие зарегистрировано:\n\n{summary}")
-        self.accept()
+# python """Форма регистрации происшествий."""
+from PyQt5.QtWidgets import QDialog, QMessageBox from PyQt5 import uic import os
+from ..utils.db_manager import DBManager
+class RegistrationForm(QDialog): def init(self, parent=None): super().init(parent) ui_path = os.path.join(os.path.dirname(file), "../forms/RegistrationForm.ui") uic.loadUi(ui_path, self) self.db = DBManager()
+self.buttonNext.clicked.connect(self.next_state) self.buttonPrev.clicked.connect(self.prev_state) self.buttonFinish.clicked.connect(self.finish_registration)
+self.update_buttons()
+def next_state(self): index = self.stackedWidget.currentIndex() if index < self.stackedWidget.count() - 1: self.stackedWidget.setCurrentIndex(index + 1) self.update_buttons()
+def prev_state(self): index = self.stackedWidget.currentIndex() if index > 0: self.stackedWidget.setCurrentIndex(index - 1) self.update_buttons()
+def update_buttons(self): index = self.stackedWidget.currentIndex() self.buttonPrev.setEnabled(index > 0) self.buttonNext.setEnabled(index < self.stackedWidget.count() - 1) self.buttonFinish.setEnabled(index == self.stackedWidget.count() - 1) if index == self.stackedWidget.count() - 1: self.plainConfirm.setPlainText(self.collect_summary())
+def collect_summary(self) -> str: return ( f"Тип: {self.comboIncidentType.currentText()}\n" f"Дата: {self.dateTimeIncident.dateTime().toString()}\n" f"Место: {self.editLocation.text()}\n" f"Судно: {self.editVesselName.text()}\n" f"IMO: {self.editIMONumber.text()}\n" f"Описание: {self.textDescription.toPlainText()}" )
+def finish_registration(self): incident_type = self.comboIncidentType.currentText() lat = self.editLat.text() lon = self.editLon.text() description = self.textDescription.toPlainText()
+# errors = self.validate_data(incident_type, lat, lon, description) if errors: QMessageBox.warning(self, "Ошибка", "\n".join(errors)) return
+# self.db.save_incident(incident_type, float(lat), float(lon), description) QMessageBox.information(self, "Успех", "Происшествие зарегистрировано") self.accept()
+def validate_data(self, incident_type, lat, lon, description): errors = [] if not incident_type: errors.append("Выберите тип происшествия") try: float(lat) float(lon) except ValueError: errors.append("Неверные координаты") if not description: errors.append("Введите описание") return errors

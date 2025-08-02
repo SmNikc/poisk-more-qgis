@@ -1,70 +1,51 @@
-# dialogs/dialog_sitrep.py
+"""Диалоговая форма для отправки SITREP."""
+
+from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5 import uic
-from PyQt5.QtWidgets import QDialog, QFileDialog, QMessageBox
 import os
-import json
-import stomp
+
+from ..utils.db_manager import DBManager
+from ..reports.sitrep_generator import generate_sitrep_pdf
 
 class SitrepForm(QDialog):
+    """Форма ввода и отправки SITREP."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         ui_path = os.path.join(os.path.dirname(__file__), "../forms/SitrepForm.ui")
         uic.loadUi(ui_path, self)
 
-        self.buttonCancel.clicked.connect(self.reject)
-        self.buttonToPdf.clicked.connect(self.on_to_pdf)
-        self.buttonSend.clicked.connect(self.on_send)
+        self.db = DBManager()
+        self.buttonSend.clicked.connect(self.send_sitrep)
 
-    def collect_data(self):
-        data = {
-            "header": {
-                "category": self.comboCategory.currentText(),
-                "timestamp": self.dateTimeUtc.dateTime().toString("yyyy-MM-ddTHH:mm:ss"),
-                "from": self.editFrom.text(),
-                "profile": self.comboProfile.currentText(),
-                "to": [self.listRecipients.item(i).text() for i in range(self.listRecipients.count())]
-            },
-            "main": {
-                "object": self.editObject.text(),
-                "callsign": self.editCallsign.text(),
-                "location": self.editLocation.text(),
-                "latitude": self.spinLat.value(),
-                "lat_dir": self.comboLatDir.currentText(),
-                "longitude": self.spinLon.value(),
-                "lon_dir": self.comboLonDir.currentText(),
-                "situation": self.textSituation.toPlainText(),
-                "source_info": self.editSourceInfo.text(),
-                "event_time": self.dateEventTime.dateTime().toString("yyyy-MM-ddTHH:mm:ss"),
-                "persons": self.spinPersons.value(),
-                "assistance": self.textAssistance.toPlainText(),
-            },
-            "additional": {
-                "G": {},
-                "H": {},
-                "J": {},
-                "KLMN": {}
-            }
-        }
-        return data
+    def send_sitrep(self):
+        category = self.comboCategory.currentText()
+        date_utc = self.dateTimeUtc.dateTime().toString()
+        from_field = self.editFrom.text()
+        to_field = self.editTo.text()
+        object_field = self.editObject.text()
+        location = self.editLocation.text()
+        lat = self.editLat.text()
+        lon = self.editLon.text()
+        situation = self.textSituation.toPlainText()
+        weather = self.textWeather.toPlainText()
+        search_area = self.textSearchArea.toPlainText()
 
-    def on_to_pdf(self):
-        data = self.collect_data()
-        save_path, _ = QFileDialog.getSaveFileName(self, "Сохранить PDF", "sitrep.pdf", "PDF Files (*.pdf)")
-        if not save_path:
+        if not all([
+            category, date_utc, from_field, to_field, object_field,
+            location, lat, lon, situation, weather, search_area
+        ]):
+            QMessageBox.warning(self, "Ошибка", "Заполните все поля A-N")
             return
-        from reportlab.platypus import SimpleDocTemplate, Paragraph
-        from reportlab.lib.styles import getSampleStyleSheet
-        doc = SimpleDocTemplate(save_path)
-        styles = getSampleStyleSheet()
-        elems = [Paragraph(json.dumps(data, indent=2, ensure_ascii=False), styles["Normal"])]
-        doc.build(elems)
-        QMessageBox.information(self, "Успех", f"PDF сохранён:\n{save_path}")
 
-    def on_send(self):
-        data = self.collect_data()
-        body = json.dumps(data, ensure_ascii=False)
-        conn = stomp.Connection([('localhost', 61613)])
-        conn.connect(wait=True)
-        conn.send(destination="/queue/sitrep", body=body)
-        conn.disconnect()
-        QMessageBox.information(self, "Отправлено", "SITREP отправлен.")
+        data = {
+            "type": category,
+            "datetime": date_utc,
+            "sru": from_field,
+            "zone": search_area,
+            "notes": situation,
+        }
+
+        generate_sitrep_pdf(data)
+        self.db.save_sitrep(category, date_utc, from_field, search_area, situation)
+        QMessageBox.information(self, "Успех", "SITREP отправлен и сохранён в БД")

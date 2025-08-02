@@ -5,14 +5,9 @@
   <property name="windowTitle">
    <string>Журнал действий</string>
   </property>
-  <layout class="QVBoxLayout" name="mainLayout">
+  <layout class="QVBoxLayout">
    <item>
-    <widget class="QTableWidget" name="logTable"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="buttonClose">
-     <property name="text"><string>Закрыть</string></property>
-    </widget>
+    <widget class="QTableView" name="tableLog"/>
    </item>
   </layout>
  </widget>

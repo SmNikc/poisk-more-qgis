@@ -1,4 +1,4 @@
-[GENERAL]
+[general]
 name=Поиск-Море
 qgisMinimumVersion=3.0
 description=Плагин для поисково-спасательных операций на море по IAMSAR

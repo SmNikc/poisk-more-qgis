@@ -1,5 +1,4 @@
---- FILE: poiskmore_plugin\i18n\ru.ts ---
-xml<?xml version="1.0" encoding="utf-8"?>
+C:\Projects\poisk-more-qgis\poiskmore_plugin\i18n\ru.tsxml<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>

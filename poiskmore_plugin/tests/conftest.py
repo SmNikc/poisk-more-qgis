@@ -1,10 +1,12 @@
 import os
 import sys
-from qgis.core import QgsApplication
 
-# Initialize QGIS for tests
-qgs = QgsApplication([], False)
-qgs.initQgis()
+try:
+    from qgis.core import QgsApplication
 
-# Add plugin root to path
+    qgs = QgsApplication([], False)
+    qgs.initQgis()
+except ImportError:
+    qgs = None
+
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))

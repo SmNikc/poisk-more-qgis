@@ -17,6 +17,10 @@ def compute_probability_map(
     time_hours,
 ):
     """Возвращает матрицу вероятностей вокруг LKP."""
+    if radius <= 0:
+        raise ValueError("Radius must be greater than 0")
+    if resolution <= 0:
+        raise ValueError("Resolution must be greater than 0")
 
     drift_x, drift_y = calculate_drift(
         0, 0, wind_speed, wind_dir, current_speed, current_dir, time_hours

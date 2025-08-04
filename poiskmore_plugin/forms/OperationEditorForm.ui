@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DriftCalculationForm</class>
- <widget class="QDialog" name="DriftCalculationForm">
+ <class>OperationEditorForm</class>
+ <widget class="QDialog" name="OperationEditorForm">
   <property name="windowTitle">
-   <string>Расчёт дрейфа по IAMSAR</string>
+   <string>Операция поиска и спасания</string>
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="QLabel" name="labelHeader">
+    <widget class="QLabel" name="labelTitle">
      <property name="text">
-      <string>Расчёт дрейфа объекта поиска</string>
+      <string>Информация об операции ПСО</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignHCenter</set>

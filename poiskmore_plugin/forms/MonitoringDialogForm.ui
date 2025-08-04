@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DriftCalculationForm</class>
- <widget class="QDialog" name="DriftCalculationForm">
+ <class>MonitoringDialogForm</class>
+ <widget class="QDialog" name="MonitoringDialogForm">
   <property name="windowTitle">
-   <string>Расчёт дрейфа по IAMSAR</string>
+   <string>Мониторинг районов поиска</string>
   </property>
-  <layout class="QVBoxLayout" name="mainLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="labelHeader">
+    <widget class="QLabel" name="labelMonitor">
      <property name="text">
-      <string>Расчёт дрейфа объекта поиска</string>
+      <string>Мониторинг текущих операций</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignHCenter</set>
+      <set>Qt::AlignTop|Qt::AlignHCenter</set>
      </property>
     </widget>
    </item>

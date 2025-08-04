@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DriftCalculationForm</class>
- <widget class="QDialog" name="DriftCalculationForm">
+ <class>RouteBuilderForm</class>
+ <widget class="QDialog" name="RouteBuilderForm">
   <property name="windowTitle">
-   <string>Расчёт дрейфа по IAMSAR</string>
+   <string>Построение маршрута SRU</string>
   </property>
-  <layout class="QVBoxLayout" name="mainLayout">
+  <layout class="QVBoxLayout" name="routeLayout">
    <item>
-    <widget class="QLabel" name="labelHeader">
+    <widget class="QLabel" name="labelRoute">
      <property name="text">
-      <string>Расчёт дрейфа объекта поиска</string>
+      <string>Маршрут движения поискового средства</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignHCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

@@ -1,4 +1,3 @@
-CopyEdit
 class PlanSearchManager:
     def __init__(self):
         self.load_data()

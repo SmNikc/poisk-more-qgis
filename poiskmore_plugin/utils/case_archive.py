@@ -1,4 +1,3 @@
-CopyEdit
 import json, datetime, os
 class CaseArchive:
     def __init__(self, path="archive_cases"):

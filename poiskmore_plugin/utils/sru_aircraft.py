@@ -1,4 +1,5 @@
-CopyEdit
+"""Utilities for managing Search and Rescue Unit (SRU) aircraft assignments."""
+
 import csv
 import datetime
 import uuid
@@ -98,5 +99,3 @@ class SRUAircraftManager:
             provider.addFeature(feat)
             line_layer.updateExtents()
             QgsProject.instance().addMapLayer(line_layer)
-# жду
-# Публикую далее. Следующие — все остальные ключевые utils.

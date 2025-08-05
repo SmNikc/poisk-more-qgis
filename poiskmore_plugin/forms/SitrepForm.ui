@@ -1,5 +1,3 @@
-xml
-CopyEdit
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>SitrepForm</class>
@@ -71,9 +69,7 @@ CopyEdit
     </widget>
    </item>
   </layout>
- </widget>
- <resources/>
- <connections/>
+</widget>
+<resources/>
+<connections/>
 </ui>
-жду
-Публикую далее. Следующие формы — авиация, планшет, план поиска.

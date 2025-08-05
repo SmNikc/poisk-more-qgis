@@ -10,14 +10,8 @@ methods are now correctly indented so the plugin can be instantiated by QGIS.
 from qgis.PyQt.QtWidgets import QAction, QMenu
 from qgis.utils import iface
 
-from .dialogs.dialog_sitrep import SitrepForm
-from .dialogs.region_dialog import RegionDialog
-from .dialogs.exercise_dialog import ExerciseDialog
-from .dialogs.err_editing_dialog import ErrEditingDialog
-from .dialogs.probability_dialog import ProbabilityDialog
-from .dialogs.sru_routing_dialog import SruRoutingDialog
-from .dialogs.operator_log_dialog import OperatorLogDialog
-from .dialogs.search_scheme_dialog import SearchSchemeDialog
+# Dialog modules are imported lazily inside the slot methods so that the plugin
+# can be loaded even if optional components are missing.
 
 
 class PoiskMorePlugin:
@@ -44,14 +38,8 @@ class PoiskMorePlugin:
         self.menu = QMenu("Поиск-Море", menu_bar)
         menu_bar.addMenu(self.menu)
 
+        # Only the SITREP dialog is implemented at the moment.
         self._add("SITREP", self.run_sitrep)
-        self._add("Район поиска", self.run_region)
-        self._add("Учение", self.run_exercise)
-        self._add("Инцидент", self.run_err)
-        self._add("Вероятность", self.run_probability)
-        self._add("Маршрут SRU", self.run_route)
-        self._add("Схема поиска", self.run_scheme)
-        self._add("Лог", self.run_log)
 
     def _add(self, name, callback):
         """Создаёт действие меню и добавляет его в меню плагина."""
@@ -67,33 +55,7 @@ class PoiskMorePlugin:
 
     def run_sitrep(self):
         """Открывает форму SITREP."""
-        SitrepForm(self.iface.mainWindow()).exec_()
+        from .dialogs.dialog_sitrep import SitrepDialog
 
-    def run_region(self):
-        """Открывает диалог выбора района поиска."""
-        RegionDialog(self.iface).exec_()
-
-    def run_exercise(self):
-        """Открывает форму учений."""
-        ExerciseDialog().exec_()
-
-    def run_err(self):
-        """Открывает форму инцидента."""
-        ErrEditingDialog().exec_()
-
-    def run_probability(self):
-        """Открывает диалог вероятности."""
-        ProbabilityDialog().exec_()
-
-    def run_route(self):
-        """Открывает диалог маршрута SRU."""
-        SruRoutingDialog().exec_()
-
-    def run_scheme(self):
-        """Открывает диалог схемы поиска."""
-        SearchSchemeDialog().exec_()
-
-    def run_log(self):
-        """Открывает журнал оператора."""
-        OperatorLogDialog(self.iface).exec_()
+        SitrepDialog(self.iface.mainWindow()).exec_()
 

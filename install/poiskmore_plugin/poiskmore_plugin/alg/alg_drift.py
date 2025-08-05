@@ -1,0 +1,30 @@
+"""Простой расчёт дрейфа."""
+
+import math
+
+
+def calculate_drift(
+    lat,
+    lon,
+    wind_speed_ms,
+    wind_dir_deg,
+    current_speed_ms,
+    current_dir_deg,
+    time_hours,
+):
+    """Возвращает координаты с учётом дрейфа."""
+
+    wind_rad = math.radians(wind_dir_deg)
+    current_rad = math.radians(current_dir_deg)
+
+    drift_wind_x = wind_speed_ms * time_hours * math.sin(wind_rad) * 0.03
+    drift_wind_y = wind_speed_ms * time_hours * math.cos(wind_rad) * 0.03
+    drift_current_x = current_speed_ms * time_hours * math.sin(current_rad)
+    drift_current_y = current_speed_ms * time_hours * math.cos(current_rad)
+
+    delta_lat = (drift_wind_y + drift_current_y) / 111
+    delta_lon = (drift_wind_x + drift_current_x) / (
+        111 * math.cos(math.radians(lat))
+    )
+    return lat + delta_lat, lon + delta_lon
+

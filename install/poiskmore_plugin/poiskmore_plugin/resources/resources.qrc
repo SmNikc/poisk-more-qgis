@@ -1,8 +1,6 @@
-xml
-CopyEdit
 <RCC>
     <qresource prefix="/">
         <file>icon.png</file>
-        <file>splash.png</file>
+        <file>splash.jpg</file>
     </qresource>
 </RCC>

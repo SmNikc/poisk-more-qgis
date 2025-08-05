@@ -1,5 +1,3 @@
-xml
-CopyEdit
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>RegistrationForm</class>
@@ -14,28 +12,44 @@ CopyEdit
       <layout class="QFormLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="labelIncidentType">
-         <property name="text"><string>Тип происшествия:</string></property>
+         <property name="text">
+          <string>Тип происшествия:</string>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
         <widget class="QComboBox" name="comboIncidentType">
-         <item><property name="text"><string>Бедствие</string></property></item>
-         <item><property name="text"><string>Тренировка</string></property></item>
+         <item>
+          <property name="text">
+           <string>Бедствие</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Тренировка</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="labelTime">
-         <property name="text"><string>Дата и время (UTC):</string></property>
+         <property name="text">
+          <string>Дата и время (UTC):</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
         <widget class="QDateTimeEdit" name="dateTimeIncident">
-         <property name="calendarPopup"><bool>true</bool></property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="labelLocation">
-         <property name="text"><string>Местоположение:</string></property>
+         <property name="text">
+          <string>Местоположение:</string>
+         </property>
         </widget>
        </item>
        <item row="2" column="1">
@@ -43,7 +57,9 @@ CopyEdit
        </item>
        <item row="3" column="0">
         <widget class="QLabel">
-         <property name="text"><string>Широта:</string></property>
+         <property name="text">
+          <string>Широта:</string>
+         </property>
         </widget>
        </item>
        <item row="3" column="1">
@@ -51,7 +67,9 @@ CopyEdit
        </item>
        <item row="4" column="0">
         <widget class="QLabel">
-         <property name="text"><string>Долгота:</string></property>
+         <property name="text">
+          <string>Долгота:</string>
+         </property>
         </widget>
        </item>
        <item row="4" column="1">
@@ -63,7 +81,9 @@ CopyEdit
       <layout class="QFormLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="labelVesselName">
-         <property name="text"><string>Название судна:</string></property>
+         <property name="text">
+          <string>Название судна:</string>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
@@ -71,7 +91,9 @@ CopyEdit
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="labelIMO">
-         <property name="text"><string>IMO:</string></property>
+         <property name="text">
+          <string>IMO:</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
@@ -83,7 +105,9 @@ CopyEdit
       <layout class="QVBoxLayout">
        <item>
         <widget class="QLabel" name="labelDescription">
-         <property name="text"><string>Описание ситуации:</string></property>
+         <property name="text">
+          <string>Описание ситуации:</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -95,12 +119,16 @@ CopyEdit
       <layout class="QVBoxLayout">
        <item>
         <widget class="QLabel" name="labelConfirm">
-         <property name="text"><string>Подтверждение информации:</string></property>
+         <property name="text">
+          <string>Подтверждение информации:</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPlainTextEdit" name="plainConfirm">
-         <property name="readOnly"><bool>true</bool></property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -111,17 +139,23 @@ CopyEdit
     <layout class="QHBoxLayout">
      <item>
       <widget class="QPushButton" name="buttonPrev">
-       <property name="text"><string>Назад</string></property>
+       <property name="text">
+        <string>Назад</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonNext">
-       <property name="text"><string>Далее</string></property>
+       <property name="text">
+        <string>Далее</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonFinish">
-       <property name="text"><string>Завершить</string></property>
+       <property name="text">
+        <string>Завершить</string>
+       </property>
       </widget>
      </item>
     </layout>

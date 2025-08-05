@@ -1,5 +1,3 @@
-xml
-CopyEdit
 <RCC>
     <qresource prefix="/">
         <file>icon.png</file>

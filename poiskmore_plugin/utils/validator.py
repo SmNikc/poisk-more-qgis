@@ -1,4 +1,3 @@
-CopyEdit
 class Validator:
     @staticmethod
     def validate_search_area(area_data):

@@ -1,4 +1,3 @@
-CopyEdit
 import csv
 import uuid
 import math

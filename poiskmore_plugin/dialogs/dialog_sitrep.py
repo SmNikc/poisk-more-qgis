@@ -1,4 +1,11 @@
-CopyEdit
+"""Dialog window for creating SITREP reports.
+
+The original file accidentally contained the text ``CopyEdit`` as executable
+code on the first line which caused a ``NameError`` during plugin import.  QGIS
+attempts to load this module when the plugin is initialised, so the stray text
+prevented the whole plugin from starting.  The line has been removed and a
+short module level docstring added instead."""
+
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from ..forms.SitrepForm_ui import Ui_SitrepForm
 from ..utils.report_generator import generate_sitrep_docx

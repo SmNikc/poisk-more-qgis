@@ -1,0 +1,59 @@
+<ui version="4.0">
+ <class>SitrepDialog</class>
+ <widget class="QDialog" name="SitrepDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Категория сообщений</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_date_time">
+     <property name="text">
+      <string>Дата / Время (UTC)*</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hbox_date_time">
+     <item>
+      <widget class="QLineEdit" name="txt_date"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="txt_time"/>
+     </item>
+    </layout>
+   </item>
+   <!-- Добавьте все поля аналогично (QComboBox для канала/приоритета, QTextE -->
+   <item>
+    <widget class="QPushButton" name="btn_cancel">
+     <property name="text">
+      <string>Отмена</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_save_pdf">
+     <property name="text">
+      <string>Сохранить PDF</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_send">
+     <property name="text">
+      <string>Отправить</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

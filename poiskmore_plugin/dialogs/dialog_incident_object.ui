@@ -1,0 +1,73 @@
+<ui version="4.0">
+ <class>IncidentObjectDialog</class>
+ <widget class="QDialog" name="IncidentObjectDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Объект аварийного случая</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_incident_type">
+     <property name="text">
+      <string>Характер аварии</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="cmb_incident_type"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hbox_params">
+     <item>
+      <widget class="QLabel" name="label_length">
+       <property name="text">
+        <string>Д (длина):</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spin_length"/>
+     </item>
+     <!-- Добавьте аналогично для Ш, Осадка, MMSI, IMO и всех полей до ETD/ETA -->
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_select">
+     <property name="text">
+      <string>Выбрать</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_print">
+     <property name="text">
+      <string>Печать</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_send_sitrep">
+     <property name="text">
+      <string>Отправить SITREP</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_save">
+     <property name="text">
+      <string>Сохранить</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,45 @@
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QDoubleSpinBox, QSpinBox, QDateTimeEdit, QTableWidget, QTableWidgetItem, QLineEdit, QTextEdit, QPushButton, QMessageBox
+from PyQt5.QtCore import QDateTime
+from PyQt5 import uic
+import os
+from qgis.core import QgsProject
+class OperationEditDialog(QDialog):
+    def __init__(self, iface):
+        super().__init__()
+        self.iface = iface
+        ui_path = os.path.join(os.path.dirname(__file__), 'dialog_operation_edit.ui')
+        if os.path.exists(ui_path):
+            uic.loadUi(ui_path, self)
+        else:
+            self.setup_ui()
+        self.connect_buttons()
+    def setup_ui(self):
+        layout = QVBoxLayout(self)
+        # Ветер
+        lbl_wind = QLabel("Ветер")
+        hbox_wind_dir = QHBoxLayout()
+        self.spin_wind_dir = QSpinBox(value=90)
+        self.spin_wind_speed = QDoubleSpinBox(value=38.9)
+        self.datetime_wind_from = QDateTimeEdit()
+        self.datetime_wind_from.setDateTime(QDateTime.fromString("22.07.25 21:02", "dd.MM.yy hh:mm"))
+        self.datetime_wind_to = QDateTimeEdit()
+        self.datetime_wind_to.setDateTime(QDateTime.fromString("23.07.25 10:02", "dd.MM.yy hh:mm"))
+        hbox_wind_dir.addWidget(QLabel("Направление (градусы):"))
+        hbox_wind_dir.addWidget(self.spin_wind_dir)
+        hbox_wind_dir.addWidget(QLabel("Скорость (узлы):"))
+        hbox_wind_dir.addWidget(self.spin_wind_speed)
+        layout.addWidget(lbl_wind)
+        layout.addLayout(hbox_wind_dir)
+        layout.addWidget(QLabel("Актуально с:"))
+        layout.addWidget(self.datetime_wind_from)
+        layout.addWidget(QLabel("Актуально по:"))
+        layout.addWidget(self.datetime_wind_to)
+        # Таблица ASW
+        self.table_asw = QTableWidget(1, 4)
+        self.table_asw.setHorizontalHeaderLabels(["Скорость (узлы)", "Направление (градусы)", "Актуально с", "Актуально по"])
+        self.table_asw.setItem(0, 0, QTableWidgetItem("38.9000"))
+        self.table_asw.setItem(0, 1, QTableWidgetItem("90"))
+        self.table_asw.setItem(0, 2, QTableWidgetItem("22.07.2025 21:02"))
+        self.table_asw.setItem(0, 3, QTableWidgetItem("23.07.2025 10:02"))
+        layout.addWidget(QLabel("Расчет среднего ветра (ASW)"))
+        layout.addWidget(self.table_asw)

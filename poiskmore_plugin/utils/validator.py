@@ -1,37 +1,27 @@
 class Validator:
-    @staticmethod
-    def validate_search_area(area_data):
-        errors = []
-        if not area_data.get("type"):
-#             errors.append("Не указан тип района поиска.")
-        if not area_data.get("coords"):
-#             errors.append("Не указаны координаты района поиска.")
-        if not area_data.get("size") or float(area_data.get("size", 0)) <= 0:
-#             errors.append("Не указан или некорректен размер/радиус района поиска.")
-        return errors
-    @staticmethod
-    def validate_sru(sru_data):
-        errors = []
-        if not sru_data.get("callsign"):
-#             errors.append("Не указан позывной SRU.")
-        if not sru_data.get("type"):
-#             errors.append("Не указан тип SRU.")
-        if not sru_data.get("eta"):
-#             errors.append("Не рассчитано ETA для SRU.")
-        return errors
-    @staticmethod
-    def validate_plan(plan_data):
-        errors = []
-        for entry in plan_data:
-            if not entry.get("srus") or not entry.get("areas"):
-#                 errors.append(f"Не все районы поиска или SRU заполнены ({entry})")
-        return errors
-    @staticmethod
-    def validate_workflow(case_data):
-        steps_required = [
-            "case_opened", "lkp_defined", "search_area_built", "sru_assigned", "plan_generated", "sitrep_sent"
-        ]
-        for step in steps_required:
-            if not case_data.get(step):
-                return f"Не выполнен этап: {step}"
-        return None
+@staticmethod
+def validate_input(data, required_fields):
+errors = []
+for field in required_fields:
+if not data.get(field):
+errors.append(f"Поле '{field}' обязательно")
+return errors
+@staticmethod
+def validate_incident(data):
+errors = []
+if not data.get('name'):
+errors.append("Не указано название объекта")
+if not data.get('coords'):
+errors.append("Не указаны координаты")
+if not data.get('type'):
+errors.append("Не указан тип инцидента")
+return errors
+@staticmethod
+def validate_search_params(params):
+errors = []
+if params.get('radius', 0) <= 0:
+errors.append("Радиус должен быть положительным")
+if not params.get('mode'):
+errors.append("Режим поиска не указан")
+return errors
+Изменения: Добавлены полные методы валидации (incident, search_params) без "Другие методы...".

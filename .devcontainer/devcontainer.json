@@ -1,0 +1,20 @@
+{
+  "name": "poisk-more-qgis (QGIS + ActiveMQ)",
+  "dockerComposeFile": [
+    "../docker-compose.dev.yml"
+  ],
+  "service": "qgis",
+  "workspaceFolder": "/workspace/poisk-more-qgis",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "postStartCommand": "python3 /workspace/scripts/smoke_qgis.py || true"
+}

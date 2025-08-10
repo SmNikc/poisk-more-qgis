@@ -1,0 +1,34 @@
+version: "3.8"
+name: poisk-more-qgis-dev
+
+services:
+  activemq:
+    build: ./docker/activemq
+    container_name: pmq_activemq
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -qO- http://localhost:8161 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  qgis:
+    build: ./docker/qgis
+    container_name: pmq_qgis
+    environment:
+      - QT_QPA_PLATFORM=offscreen
+      - DISPLAY=:99
+      - QGIS_PREFIX_PATH=/usr
+      - PYTHONPATH=/usr/share/qgis/python
+      - QGIS_PROVIDER_FILE=/usr/lib/qgis/plugins
+      - ACTIVEMQ_HOST=activemq
+      - ACTIVEMQ_PORT=61616
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace/poisk-more-qgis
+    command: ["sleep", "infinity"]
+    depends_on:
+      activemq:
+        condition: service_healthy

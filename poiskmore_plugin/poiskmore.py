@@ -15,7 +15,11 @@ class PoiskMorePlugin:
 
     def initGui(self):
         self.menu = QMenu("Поиск-Море", self.iface.mainWindow())
-        self.iface.addPluginToMenu("Поиск-Море", self.menu.menuAction())
+        # Добавляем меню непосредственно в строку меню QGIS, чтобы оно
+        # отображалось как отдельный пункт верхнего уровня. Использование
+        # addPluginToMenu добавляет действия только в стандартное меню
+        # "Плагины", поэтому пользователь не видел пункт "Поиск-Море".
+        self.iface.mainWindow().menuBar().addMenu(self.menu)
 
         # Подменю "Поиск"
         search_menu = QMenu("Поиск", self.menu)
@@ -137,6 +141,7 @@ class PoiskMorePlugin:
         QMessageBox.information(self.iface.mainWindow(), "Документация", "Функционал не реализован")
 
     def unload(self):
-        self.iface.removePluginMenu("Поиск-Море", self.menu.menuAction())
+        # Удаляем меню из строки меню при выгрузке плагина
+        self.iface.mainWindow().menuBar().removeAction(self.menu.menuAction())
         self.menu.deleteLater()
         self.actions.clear()

@@ -9,7 +9,7 @@ python
 Копировать
 import pytest
 from PyQt5.QtWidgets import QApplication
-from dialogs.dialog_operatorlog import OperatorLogForm
+from ..dialogs.dialog_operatorlog import OperatorLogForm
 
 @pytest.fixture
 def app():

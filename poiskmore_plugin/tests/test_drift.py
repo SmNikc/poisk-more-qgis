@@ -9,7 +9,7 @@ python
 Копировать
 import pytest
 from PyQt5.QtWidgets import QApplication
-from dialogs.dialog_driftcalculation import DriftCalculationForm, DriftCalculationTask
+from ..dialogs.dialog_driftcalculation import DriftCalculationForm, DriftCalculationTask
 
 @pytest.fixture
 def app():

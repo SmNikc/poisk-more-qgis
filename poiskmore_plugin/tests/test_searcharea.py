@@ -9,7 +9,7 @@ python
 Копировать
 import pytest
 from PyQt5.QtWidgets import QApplication
-from dialogs.dialog_searcharea import SearchAreaForm, SearchAreaTask
+from ..dialogs.dialog_searcharea import SearchAreaForm, SearchAreaTask
 
 @pytest.fixture
 def app():

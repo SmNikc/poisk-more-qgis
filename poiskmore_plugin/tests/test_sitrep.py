@@ -9,7 +9,7 @@ python
 Копировать
 import pytest
 from PyQt5.QtWidgets import QApplication
-from dialogs.dialog_sitrep import SitrepForm, SendSitrepTask
+from ..dialogs.dialog_sitrep import SitrepForm, SendSitrepTask
 
 @pytest.fixture
 def app():

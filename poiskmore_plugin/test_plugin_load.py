@@ -8,21 +8,25 @@ app.initQgis()
 # Mock iface
 class MockIface:
     def mainWindow(self):
+        class MockMenuBar:
+            def addMenu(self, menu):
+                print("Menu added", menu.title())
+                return menu
+
+            def removeAction(self, *args):
+                print("Menu removed")
+
         class MockWindow:
-            pass
+            def menuBar(self):
+                return MockMenuBar()
+
         return MockWindow()
-    
+
     def messageBar(self):
         class MockBar:
             def pushMessage(self, *args):
                 print(args)
         return MockBar()
-    
-    def addPluginToMenu(self, *args):
-        print("Menu added")
-    
-    def removePluginMenu(self, *args):
-        print("Menu removed")
 
 from poiskmore_plugin import classFactory
 plugin = classFactory(MockIface())

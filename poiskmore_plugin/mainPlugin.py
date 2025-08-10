@@ -1,6 +1,6 @@
-Импорт диалогов (все полные)
+# Импорт диалогов (все полные)
 from dialogs.dialog_registration import RegistrationDialog from dialogs.dialog_weather import WeatherDialog from dialogs.dialog_searcharea import SearchAreaDialog from dialogs.dialog_sitrep import SitrepDialog from dialogs.dialog_asw import AswDialog from dialogs.dialog_twc import TwcDialog from dialogs.dialog_operation_edit import OperationEditDialog from dialogs.dialog_incident_object import IncidentObjectDialog from dialogs.dialog_search_params import SearchParamsDialog from dialogs.dialog_search_object import SearchObjectDialog
-Импорт алгоритмов (все полные)
+# Импорт алгоритмов (все полные)
 from alg.alg_datum import calculate_datum_points, add_datum_layer from alg.alg_zone import create_search_area, add_search_layer from alg.alg_distant_points import distant_points_calculation from alg.alg_manual_area import manual_area, ManualAreaTool
 class PoiskMorePlugin: def init(self, iface): self.iface = iface self.menu = None self.actions = {} self.plugin_dir = os.path.dirname(file) self.current_operation = None # Текущая операция self.operations = [] # Список операций
 def initGui(self): self.menu = QMenu("Поиск-Море", self.iface.mainWindow()) self.iface.addPluginToMenu("Поиск-Море", self.menu.menuAction())
@@ -9,7 +9,7 @@ datum_menu = QMenu("Исходный пункт", self.menu) self.menu.addMenu(d
 area_menu = QMenu("Район", self.menu) self.menu.addMenu(area_menu) create_area_submenu = QMenu("Создать район", area_menu) area_menu.addMenu(create_area_submenu) self.add_action(create_area_submenu, "Поиск от двух исходных пунктов", self.search_two_points) self.add_action(create_area_submenu, "Поиск вдоль исходной линии", self.search_along_line) self.add_action(create_area_submenu, "Далеко разнесённые исходные пункты", self.search_distant_points) self.add_action(create_area_submenu, "Ручное построение", self.manual_area) self.add_action(create_area_submenu, "Поиск от одной исходной точки", self.search_one_point)
 docs_menu = QMenu("Документы", self.menu) self.menu.addMenu(docs_menu) self.add_action(docs_menu, "Стандартные формы", self.standard_forms) self.add_action(docs_menu, "План поиска", self.search_plan) self.add_action(docs_menu, "Планшет ГМСКЦ", self.gmskc_tablet)
 service_menu = QMenu("Сервис", self.menu) self.menu.addMenu(service_menu) self.add_action(service_menu, "Характер аварийной ситуации", self.incident_type)
-Добавьте другие: "Синхронизация адресной книги" и т.д.
+# Добавьте другие: "Синхронизация адресной книги" и т.д.
 help_menu = QMenu("Помощь", self.menu) self.menu.addMenu(help_menu) self.add_action(help_menu, "О программе", self.about_program) self.add_action(help_menu, "Документация", self.documentation)
 def add_action(self, parent, text, callback): action = QAction(text, self.iface.mainWindow()) action.triggered.connect(callback) parent.addAction(action) self.actions[text] = action
 def new_emergency_case(self): dialog = RegistrationDialog() if dialog.exec_() == QDialog.Accepted: self.current_operation = dialog.get_data() self.operations.append(self.current_operation) self.iface.messageBar().pushMessage("Новый аварийный случай создан", level=Qgis.Success)
@@ -32,7 +32,7 @@ def manual_area(self): manual_area(self.iface)
 def search_one_point(self): point = QgsPointXY(30.0, 60.0) area = point.buffer(0.5, 20) add_search_layer(area) self.iface.messageBar().pushMessage("Район от одной точки создан", level=Qgis.Success)
 def standard_forms(self): forms = ["Form1", "Form2"] form, ok = QInputDialog.getItem(self.iface.mainWindow(), "Стандартные формы", "Выберите форму", forms, 0, False) if ok: QMessageBox.information(self.iface.mainWindow(), "Форма", f"Форма {form} открыта")
 def search_plan(self): dialog = QDialog() layout = QVBoxLayout() table = QTableWidget(5, 4) table.setHorizontalHeaderLabels(["SRU", "Район", "Время", "Статус"]) layout.addWidget(table) dialog.setLayout(layout) if dialog.exec_() == QDialog.Accepted:
-Generate plan
+# Generate plan
 self.iface.messageBar().pushMessage("План поиска сгенерирован", level=Qgis.Success)
 def gmskc_tablet(self): file = QFileDialog.getOpenFileName(self.iface.mainWindow(), "Открыть планшет", "", "Word (*.docx)") if file[0]: os.startfile(file[0])
 def incident_type(self): dialog = IncidentObjectDialog() dialog.exec_()

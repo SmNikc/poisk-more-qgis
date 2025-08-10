@@ -15,7 +15,7 @@ jobs:
   build-test:
     name: Build & Test (QGIS + ActiveMQ)
     runs-on: ubuntu-24.04
-    # 👇 Привязываем к окружению 'ci' (ничего заполнять в UI не нужно)
+    # Привязываем к окружению 'ci' (настройки в UI не требуются)
     environment: ci
 
     env:
@@ -70,14 +70,12 @@ jobs:
           print("QGIS core import OK")
           PY
 
-      # Пакуем плагин только на пуш тега (для релиза)
       - name: Package plugin (zip)
         if: startsWith(github.ref, 'refs/tags/v')
         shell: bash
         run: |
           set -euxo pipefail
           mkdir -p dist
-          # Делаем zip с корневой папкой репозитория внутри архива
           name="$(basename "$GITHUB_WORKSPACE")"
           cd ..
           zip -r "$GITHUB_WORKSPACE/dist/poiskmore_plugin.zip" "$name" \
@@ -99,7 +97,7 @@ jobs:
     needs: build-test
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
-    # 👇 Релиз идёт в 'prod' (можете включить reviewers/таймер в UI)
+    # Релиз идёт в 'prod' (можно включить reviewers/таймер в UI)
     environment: prod
     permissions:
       contents: write

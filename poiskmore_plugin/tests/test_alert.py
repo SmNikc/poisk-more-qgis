@@ -9,7 +9,7 @@ python
 Копировать
 import pytest
 from PyQt5.QtWidgets import QApplication
-from dialogs.dialog_incomingalert import IncomingAlertForm, EmailFetchTask
+from ..dialogs.dialog_incomingalert import IncomingAlertForm, EmailFetchTask
 
 @pytest.fixture
 def app():

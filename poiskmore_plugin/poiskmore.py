@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QAction, QMenu, QMessageBox
 from qgis.core import QgsApplication, Qgis
 
 # Импорт форм (пример; добавьте все из dialogs/)
-from dialogs.dialog_registration import RegistrationDialog
+from .dialogs.dialog_registration import RegistrationDialog
 
 class PoiskMorePlugin:
     def __init__(self, iface):

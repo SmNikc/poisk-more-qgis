@@ -9,7 +9,7 @@ python
 Копировать
 import pytest
 from PyQt5.QtWidgets import QApplication
-from dialogs.dialog_reportgeneration import ReportGenerationForm, ReportPDFTask, ReportGeoJSONTask
+from ..dialogs.dialog_reportgeneration import ReportGenerationForm, ReportPDFTask, ReportGeoJSONTask
 import os
 
 @pytest.fixture

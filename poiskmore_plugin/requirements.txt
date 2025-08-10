@@ -1,7 +1,9 @@
 PyQt5>=5.15.0
 qgis>=3.16.0
-reportlab>=3.5.0
+reportlab>=3.5.0   # Для PDF
 requests>=2.25.0
+flask  # Для mock_server
+pytest  # Для тестов
 numpy>=1.19.0
 pandas>=1.2.0
 matplotlib>=3.3.0

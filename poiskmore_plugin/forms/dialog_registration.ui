@@ -1,0 +1,84 @@
+<ui version="4.0">
+ <class>RegistrationDialog</class>
+ <widget class="QDialog" name="RegistrationDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Регистрация данных по аварии</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_A">
+     <property name="text">
+      <string>A* Объект АС / УС</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="txt_name"/>
+   </item>
+   <!-- Добавьте все поля аналогично (QLineEdit, QSpinBox, QComboBox для коорд -->
+   <item>
+    <widget class="QLabel" name="label_B">
+     <property name="text">
+      <string>B* Местоположение</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hbox_lat">
+     <item>
+      <widget class="QSpinBox" name="spin_lat_deg"/>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="spin_lat_min"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmb_lat_dir">
+       <item>
+        <property name="text">
+         <string>С.Ш.</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ю.Ш.</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <!-- Аналогично для долготы, разделов C, D, E -->
+   <item>
+    <widget class="QPushButton" name="btn_cancel">
+     <property name="text">
+      <string>Отмена</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_save_pdf">
+     <property name="text">
+      <string>Сохранить PDF</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_send">
+     <property name="text">
+      <string>Отправить</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

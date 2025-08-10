@@ -1,2 +1,0 @@
-python from docx import Document
-def generate_plan_word(filename="plan_search.docx", context=None): doc = Document() doc.add_heading("План поиска", 0) if context: doc.add_paragraph(f"Тип схемы: {context.get('pattern')}") doc.add_paragraph(f"SRU: {context.get('sru')}") doc.add_paragraph(f"Район: {context.get('area')}") doc.add_paragraph(f"Предполагаемый район: {context.get('lkp')}") else: doc.add_paragraph("Нет данных для плана.") doc.save(filename)

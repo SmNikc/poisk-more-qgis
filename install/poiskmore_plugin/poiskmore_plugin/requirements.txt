@@ -1,1 +1,0 @@
-plaintext stomp.py PyQt5 pytest reportlab python-docx sqlalchemy pytest-qt # Добавлено для тестов UI, если нужно

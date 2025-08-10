@@ -1,1 +1,0 @@
-xml <ts version="2.1" language="ru_RU"> <context> <name>SitrepForm</name> <message> <source>SITREP <translation>SITREP</translation> </message> </context> </ts>

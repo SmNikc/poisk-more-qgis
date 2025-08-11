@@ -6,16 +6,18 @@ from qgis.PyQt.QtCore import QUrl
 from qgis.core import Qgis, QgsApplication, QgsProject, QgsFeature, QgsGeometry, QgsPointXY, QgsVectorLayer
 from qgis.gui import QgsMapToolEmitPoint
 
-from .dialogs.dialog_registration import RegistrationDialog
-from .dialogs.dialog_weather import WeatherDialog
-from .dialogs.dialog_searcharea import SearchAreaDialog
-from .dialogs.dialog_sitrep import SitrepDialog
-from .dialogs.dialog_asw import AswDialog
-from .dialogs.dialog_twc import TwcDialog
-from .dialogs.dialog_operation_edit import OperationEditDialog
-from .dialogs.dialog_incident_object import IncidentObjectDialog
-from .dialogs.dialog_search_params import SearchParamsDialog
-from .dialogs.dialog_search_object import SearchObjectDialog
+# Используем абсолютные импорты, чтобы QGIS корректно находил модули
+# диалогов даже при нестандартной загрузке плагина.
+from poiskmore_plugin.dialogs.dialog_registration import RegistrationDialog
+from poiskmore_plugin.dialogs.dialog_weather import WeatherDialog
+from poiskmore_plugin.dialogs.dialog_searcharea import SearchAreaDialog
+from poiskmore_plugin.dialogs.dialog_sitrep import SitrepDialog
+from poiskmore_plugin.dialogs.dialog_asw import AswDialog
+from poiskmore_plugin.dialogs.dialog_twc import TwcDialog
+from poiskmore_plugin.dialogs.dialog_operation_edit import OperationEditDialog
+from poiskmore_plugin.dialogs.dialog_incident_object import IncidentObjectDialog
+from poiskmore_plugin.dialogs.dialog_search_params import SearchParamsDialog
+from poiskmore_plugin.dialogs.dialog_search_object import SearchObjectDialog
 
 from .alg.alg_datum import calculate_datum_points, add_datum_layer
 from .alg.alg_zone import create_search_area, add_search_layer

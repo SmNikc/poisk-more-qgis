@@ -1,17 +1,13 @@
-from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QLabel
 class SearchObjectDialog(QDialog):
 def __init__(self, parent=None):
 super().__init__(parent)
 layout = QVBoxLayout(self)
+layout.addWidget(QLabel("Объект поиска:"))
 self.obj = QLineEdit()
 layout.addWidget(self.obj)
 btn = QPushButton("OK")
-btn.clicked.connect(self.validate)
+btn.clicked.connect(self.ok)
 layout.addWidget(btn)
-def validate(self):
-if self.obj.text().strip():
+def ok(self):
 self.accept()
-else:
-QMessageBox.warning(self, "Ошибка", "Объект обязателен")
-def get_data(self):
-return self.obj.text()

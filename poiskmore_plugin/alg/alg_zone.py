@@ -1,5 +1,5 @@
 from qgis.core import QgsGeometry, QgsFeature, QgsVectorLayer, QgsProject, QgsPointXY
-from math import atan2, degrees, radians, cos, sin, sqrt
+from math import atan2, sin, cos, sqrt
 def create_search_area(params, mode='two_points'):
 if mode == 'two_points':
 point1 = params.get('point1', QgsPointXY(30.0, 60.0))
@@ -25,10 +25,10 @@ return line.buffer(buffer, 5)
 if mode == 'distant_points':
 p1 = params.get('p1', QgsPointXY(30.0, 60.0))
 p2 = params.get('p2', QgsPointXY(31.0, 61.0))
-from .alg_distant_points import distant_points_calculation  # Импорт для интеграции
+from alg_distant_points import distant_points_calculation
 return distant_points_calculation(p1, p2, params)
 if mode == 'manual':
-polygon = params.get('polygon', QgsGeometry.fromPolygonXY([[QgsPointXY(30.0, 60.0), QgsPointXY(30.1, 60.0), QgsPointXY(30.1, 60.1)]]))
+polygon = params.get('polygon', QgsGeometry.fromPolygonXY([[QgsPointXY(30.0, 60.0), QgsPointXY(30.1, 60.0), QgsPointXY(30.1, 60.1), QgsPointXY(30.0, 60.1)]]))
 return polygon
 if mode == 'one_point':
 point = params.get('point', QgsPointXY(30.0, 60.0))
@@ -42,4 +42,3 @@ feat.setGeometry(area_geom)
 pr.addFeature(feat)
 QgsProject.instance().addMapLayer(layer)
 return layer
-Изменения: Добавлены все режимы с реальными расчетами (без "аналогично" или "From...").

@@ -1,2 +1,17 @@
-class SearchAreaDialog(QDialog): def init(self, iface): super().init() self.iface = iface layout = QVBoxLayout(self) self.coords = QLineEdit() layout.addWidget(QLabel("Coords (lat1,lon1;lat2,lon2;...):")) layout.addWidget(self.coords) btn = QPushButton("Create Area") btn.clicked.connect(self.create_area) layout.addWidget(btn)
-def create_area(self): try: points = [QgsPointXY(float(lon), float(lat)) for lat, lon in [pair.split(',') for pair in self.coords.text().split(';')]] polygon = QgsGeometry.fromPolygonXY([points]) layer = QgsVectorLayer("Polygon?crs=epsg:4326", "Search Area", "memory") feat = QgsFeature() feat.setGeometry(polygon) layer.dataProvider().addFeature(feat) QgsProject.instance().addMapLayer(layer) self.accept() except: QMessageBox.warning(self, "Ошибка", "Неверные координаты")
+from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QMessageBox
+class SearchAreaDialog(QDialog):
+def __init__(self, parent=None):
+super().__init__(parent)
+layout = QVBoxLayout(self)
+self.area_desc = QLineEdit()
+layout.addWidget(self.area_desc)
+btn = QPushButton("Create")
+btn.clicked.connect(self.create)
+layout.addWidget(btn)
+def create(self):
+if self.area_desc.text().strip():
+self.accept()
+else:
+QMessageBox.warning(self, "Ошибка", "Описание обязательно")
+def get_data(self):
+return {'area': self.area_desc.text()}

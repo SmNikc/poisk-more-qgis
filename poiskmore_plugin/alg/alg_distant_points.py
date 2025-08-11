@@ -1,6 +1,33 @@
-def distant_points_calculation(p1, p2, params): dx = p2.x() - p1.x() dy = p2.y() - p1.y() distance = sqrt(dx2 + dy2)
-if distance > params.get('threshold', 1.0): radius = params.get('radius', 0.5) area1 = p1.buffer(radius, 30) area2 = p2.buffer(radius, 30)
-angle = atan2(dy, dx) half_width = params.get('width', 0.2) / 2 offset_x = half_width * sin(angle) offset_y = half_width * cos(angle)
-rp1 = QgsPointXY(p1.x() - offset_x, p1.y() + offset_y) rp2 = QgsPointXY(p1.x() + offset_x, p1.y() - offset_y) rp3 = QgsPointXY(p2.x() + offset_x, p2.y() - offset_y) rp4 = QgsPointXY(p2.x() - offset_x, p2.y() + offset_y)
+from qgis.core import QgsGeometry, QgsPointXY
+from math import sqrt, atan2, sin, cos
+def distant_points_calculation(point1, point2, params):
+dx = point2.x() - point1.x()
+dy = point2.y() - point1.y()
+distance = sqrt(dx**2 + dy**2)
+if distance > params.get('threshold', 1.0):
+radius = params.get('radius', 0.5)
+area1 = point1.buffer(radius, 20)
+area2 = point2.buffer(radius, 20)
+angle = atan2(dy, dx)
+half_width = params.get('width', 0.2) / 2
+offset_x = half_width * sin(angle)
+offset_y = half_width * cos(angle)
+rp1 = QgsPointXY(point1.x() - offset_x, point1.y() + offset_y)
+rp2 = QgsPointXY(point1.x() + offset_x, point1.y() - offset_y)
+rp3 = QgsPointXY(point2.x() + offset_x, point2.y() - offset_y)
+rp4 = QgsPointXY(point2.x() - offset_x, point2.y() + offset_y)
 rect = QgsGeometry.fromPolygonXY([[rp1, rp2, rp3, rp4]])
-full_area = area1.combine(rect).combine(area2) return full_area else: center = QgsPointXY((p1.x() + p2.x())/2, (p1.y() + p2.y())/2) major = distance / 2 + params.get('radius', 0.5) minor = params.get('minor', 0.3) ellipse = center.buffer(major, minor, 30) # Пример, для реального эллипса использовать custom return ellipse
+full_area = area1.combine(rect).combine(area2)
+return full_area
+else:
+center = QgsPointXY((point1.x() + point2.x()) / 2, (point1.y() + point2.y()) / 2)
+major = distance / 2 + params.get('radius', 0.5)
+minor = params.get('minor', 0.3)
+ellipse_points = []
+for i in range(20):
+theta = i * (2 * 3.14159 / 20)
+x = center.x() + major * cos(theta)
+y = center.y() + minor * sin(theta)
+ellipse_points.append(QgsPointXY(x, y))
+ellipse = QgsGeometry.fromPolygonXY([ellipse_points])
+return ellipse

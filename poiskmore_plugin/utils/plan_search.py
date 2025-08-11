@@ -1,1 +1,9 @@
-class PlanSearchManager: def generate_plan_pdf(self, data, filepath="search_plan.pdf"): c = canvas.Canvas(filepath, pagesize=A4) y = 800 for key, value in data.items(): c.drawString(100, y, f"{key}: {value}") y -= 20 c.save() return filepath
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+class PlanSearchManager:
+def generate_plan_pdf(self, data):
+filepath = "plan.pdf"
+c = canvas.Canvas(filepath, pagesize=letter)
+c.drawString(100, 750, str(data))
+c.save()
+return filepath

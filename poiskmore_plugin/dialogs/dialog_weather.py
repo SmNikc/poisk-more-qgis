@@ -1,4 +1,18 @@
-class WeatherDialog(QDialog): def init(self, iface): super().init() self.iface = iface layout = QVBoxLayout(self) self.wind_speed = QDoubleSpinBox() self.wind_dir = QDoubleSpinBox() self.current_speed = QDoubleSpinBox() self.current_dir = QDoubleSpinBox() layout.addWidget(QLabel("Wind Speed:")) layout.addWidget(self.wind_speed) layout.addWidget(QLabel("Wind Dir:")) layout.addWidget(self.wind_dir) layout.addWidget(QLabel("Current Speed:")) layout.addWidget(self.current_speed) layout.addWidget(QLabel("Current Dir:")) layout.addWidget(self.current_dir) btn = QPushButton("Save") btn.clicked.connect(self.save_weather) layout.addWidget(btn)
-def save_weather(self): data = { 'wind_speed': self.wind_speed.value(), 'wind_dir': self.wind_dir.value(), 'current_speed': self.current_speed.value(), 'current_dir': self.current_dir.value() }
-Сохраните data
-QMessageBox.information(self, "Сохранено", "Погода сохранена") self.accept()
+from PyQt5.QtWidgets import QDialog, QDoubleSpinBox, QPushButton, QVBoxLayout, QMessageBox
+class WeatherDialog(QDialog):
+def __init__(self, parent=None):
+super().__init__(parent)
+layout = QVBoxLayout(self)
+self.wind_speed = QDoubleSpinBox()
+self.wind_speed.setValue(10.0)
+layout.addWidget(self.wind_speed)
+btn = QPushButton("Save")
+btn.clicked.connect(self.save)
+layout.addWidget(btn)
+def save(self):
+if self.wind_speed.value() > 0:
+self.accept()
+else:
+QMessageBox.warning(self, "Ошибка", "Скорость ветра >0")
+def get_data(self):
+return {'wind_speed': self.wind_speed.value()}

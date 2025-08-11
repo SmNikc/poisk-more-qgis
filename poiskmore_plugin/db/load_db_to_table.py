@@ -1,12 +1,12 @@
+from PyQt5.QtWidgets import QTableWidget
 import sqlite3
-
-def fetch_all_from_sqlite(db_path="poiskmore.db"):
-    try:
-        with sqlite3.connect(db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT id, data, created_at FROM incidents ORDER BY created_at DESC")
-            rows = cursor.fetchall()
-            return [(row[0], json.loads(row[1]), row[2]) for row in rows]
-    except sqlite3.Error as e:
-        print(f"[Ошибка] Загрузка данных из SQLite: {e}")
-        return []
+def load_db_to_table(db_path, table_widget):
+conn = sqlite3.connect(db_path)
+cursor = conn.cursor()
+cursor.execute('SELECT * FROM incidents')
+rows = cursor.fetchall()
+table_widget.setRowCount(len(rows))
+for row_num, row_data in enumerate(rows):
+for col_num, data in enumerate(row_data):
+table_widget.setItem(row_num, col_num, QTableWidgetItem(str(data)))
+conn.close()

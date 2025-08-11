@@ -1,4 +1,17 @@
-class ManualAreaTool(QgsMapTool): def init(self, canvas, callback): super().init(canvas) self.canvas = canvas self.callback = callback self.points = [] self.rubberBand = QgsRubberBand(canvas, QgsWkbTypes.PolygonGeometry)
-def canvasPressEvent(self, e): if e.button() == Qt.LeftButton: point = self.toMapCoordinates(e.pos()) self.points.append(point) self.rubberBand.addPoint(point, True) self.rubberBand.show() elif e.button() == Qt.RightButton: if len(self.points) >= 3: self.points.append(self.points[0]) # Закрыть polygon = QgsGeometry.fromPolygonXY([self.points]) self.callback(polygon) self.deactivate() self.canvas.unsetMapTool(self) self.rubberBand.reset(QgsWkbTypes.PolygonGeometry)
-def manual_area(iface): tool = ManualAreaTool(iface.mapCanvas(), lambda geom: add_search_layer(geom)) iface.mapCanvas().setMapTool(tool)
-def add_search_layer(geom): layer = QgsVectorLayer("Polygon?crs=epsg:4326", "Manual Area", "memory") feat = QgsFeature() feat.setGeometry(geom) layer.dataProvider().addFeature(feat) QgsProject.instance().addMapLayer(layer)
+from qgis.gui import QgsMapToolEmitPoint
+from qgis.core import QgsGeometry, QgsPointXY
+class ManualAreaTool(QgsMapToolEmitPoint):
+def __init__(self, canvas, callback):
+super().__init__(canvas)
+self.points = []
+self.callback = callback
+def canvasPressEvent(self, e):
+point = self.toMapCoordinates(e.pos())
+self.points.append(point)
+if len(self.points) >= 3:
+polygon = QgsGeometry.fromPolygonXY([self.points])
+self.callback(polygon)
+self.deactivate()
+def manual_area(iface):
+tool = ManualAreaTool(iface.mapCanvas(), lambda geom: add_search_layer(geom))
+iface.mapCanvas().setMapTool(tool)

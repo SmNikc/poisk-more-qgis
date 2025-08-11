@@ -1,10 +1,7 @@
-from qgis.core import QgsFeature, QgsGeometry, QgsPointXY
-
-def build_route(start_point, end_point):
-    steps = 10
-    route = []
-    for i in range(steps + 1):
-        x = start_point.x() + (end_point.x() - start_point.x()) * i / steps
-        y = start_point.y() + (end_point.y() - start_point.y()) * i / steps
-        route.append(QgsPointXY(x, y))
-    return QgsGeometry.fromPolylineXY(route)
+from qgis.core import QgsPointXY
+def calculate_sru_routing(start, end, obstacles):
+route = [start, end]
+for obs in obstacles:
+if obs.intersects(QgsGeometry.fromPolylineXY(route)):
+route.append(QgsPointXY(start.x() + 1, start.y() + 1))
+return route

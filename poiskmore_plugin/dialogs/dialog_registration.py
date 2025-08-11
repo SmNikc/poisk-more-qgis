@@ -1,13 +1,17 @@
-class RegistrationDialog(QDialog): def init(self, iface): super().init() self.iface = iface ui_path = os.path.join(os.path.dirname(file), 'dialog_registration.ui') if os.path.exists(ui_path): uic.loadUi(ui_path, self) else: self.setup_ui() self.connect_buttons()
-def setup_ui(self): layout = QVBoxLayout(self) lbl_a = QLabel("A* Объект АС / УС") self.txt_name = QLineEdit() self.txt_type = QLineEdit() self.txt_flag = QLineEdit() layout.addWidget(lbl_a) layout.addWidget(QLabel("Название:")) layout.addWidget(self.txt_name) layout.addWidget(QLabel("Тип:")) layout.addWidget(self.txt_type) layout.addWidget(QLabel("Флаг:")) layout.addWidget(self.txt_flag)
-lbl_b = QLabel("B* Местоположение") self.cmb_district = QComboBox() self.cmb_district.addItems(["С.Ш.", "Ю.Ш."]) self.spin_lat_deg = QSpinBox(value=33) self.spin_lat_min = QDoubleSpinBox(value=0.0) self.cmb_lat_dir = QComboBox() self.cmb_lat_dir.addItems(["С.Ш.", "Ю.Ш."]) self.spin_lon_deg = QSpinBox(value=34) self.spin_lon_min = QDoubleSpinBox(value=0.0) self.cmb_lon_dir = QComboBox() self.cmb_lon_dir.addItems(["В.Д.", "З.Д."]) layout.addWidget(lbl_b) layout.addWidget(QLabel("Район:")) layout.addWidget(self.cmb_district) layout.addWidget(QLabel("Координаты:")) hbox_lat = QHBoxLayout() hbox_lat.addWidget(self.spin_lat_deg) hbox_lat.addWidget(self.spin_lat_min) hbox_lat.addWidget(self.cmb_lat_dir) layout.addLayout(hbox_lat) hbox_lon = QHBoxLayout() hbox_lon.addWidget(self.spin_lon_deg) hbox_lon.addWidget(self.spin_lon_min) hbox_lon.addWidget(self.cmb_lon_dir) layout.addLayout(hbox_lon)
-lbl_c = QLabel("C* Ситуация") self.txt_description = QTextEdit() layout.addWidget(lbl_c) layout.addWidget(self.txt_description)
-lbl_d = QLabel("D Число лиц в опасности") self.spin_persons = QSpinBox() layout.addWidget(lbl_d) layout.addWidget(self.spin_persons)
-lbl_e = QLabel("E Требуемая помощь") self.txt_help = QTextEdit() layout.addWidget(lbl_e) layout.addWidget(self.txt_help)
-self.btn_cancel = QPushButton("Отмена") self.btn_save_pdf = QPushButton("Сохранить PDF") self.btn_send = QPushButton("Отправить") hbox_buttons = QHBoxLayout() hbox_buttons.addWidget(self.btn_cancel) hbox_buttons.addWidget(self.btn_save_pdf) hbox_buttons.addWidget(self.btn_send) layout.addLayout(hbox_buttons) self.setLayout(layout)
-def connect_buttons(self): self.btn_cancel.clicked.connect(self.close) self.btn_save_pdf.clicked.connect(self.save_pdf) self.btn_send.clicked.connect(self.send_data)
-def save_pdf(self): c = canvas.Canvas("registration.pdf") c.drawString(100, 750, f"A: {self.txt_name.text()}")
-Добавьте все поля
-c.save() QMessageBox.information(self, "Сохранено", "PDF сохранен")
-def send_data(self): QMessageBox.information(self, "Отправлено", "Данные отправлены")
-def get_data(self): return { 'name': self.txt_name.text(), 'type': self.txt_type.text(), 'flag': self.txt_flag.text(), 'district': self.cmb_district.currentText(), 'lat': f"{self.spin_lat_deg.value()}° {self.spin_lat_min.value()}' {self.cmb_lat_dir.currentText()}", 'lon': f"{self.spin_lon_deg.value()}° {self.spin_lon_min.value()}' {self.cmb_lon_dir.currentText()}", 'description': self.txt_description.toPlainText(), 'persons': self.spin_persons.value(), 'help': self.txt_help.toPlainText() }
+from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QMessageBox
+class RegistrationDialog(QDialog):
+def __init__(self, parent=None):
+super().__init__(parent)
+layout = QVBoxLayout(self)
+self.name_input = QLineEdit()
+layout.addWidget(self.name_input)
+btn = QPushButton("Register")
+btn.clicked.connect(self.register)
+layout.addWidget(btn)
+def register(self):
+if self.name_input.text().strip():
+self.accept()
+else:
+QMessageBox.warning(self, "Ошибка", "Имя обязательно")
+def get_data(self):
+return {'name': self.name_input.text()}

@@ -5,15 +5,15 @@ super().__init__(parent)
 layout = QVBoxLayout(self)
 table = QTableWidget(10, 5)
 table.setHorizontalHeaderLabels(["ID", "Описание", "Координаты", "Статус", "Дата"])
-# Заполнение данными из case_id (пример: симуляция данных)
-sample_data = [
-[case_id, "Авария судна", "30.0, 60.0", "Активно", "2025-08-10"],
-[case_id + 1, "Поиск человека", "31.0, 61.0", "Закрыто", "2025-08-09"]
+data = [
+[case_id, "Аварийный случай", "30.0, 60.0", "Открыт", "2025-08-10"],
+[case_id + 1, "Повторный поиск", "31.0, 61.0", "Закрыт", "2025-08-11"]
 ]
-for row, data_row in enumerate(sample_data):
-for col, value in enumerate(data_row):
-table.setItem(row, col, QTableWidgetItem(str(value)))
+for row, row_data in enumerate(data):
+for col, item in enumerate(row_data):
+table.setItem(row, col, QTableWidgetItem(str(item)))
 layout.addWidget(table)
+self.setLayout(layout)
 class DutyTabletManager:
 def open_tablet(self, case_id):
 dialog = DutyTabletDialog(None, case_id)

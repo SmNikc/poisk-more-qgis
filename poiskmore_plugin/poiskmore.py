@@ -3,8 +3,9 @@ import os
 from PyQt5.QtWidgets import QAction, QMenu, QMessageBox
 from qgis.core import QgsApplication, Qgis
 
-# Импорт форм (пример; добавьте все из dialogs/)
-from .dialogs.dialog_registration import RegistrationDialog
+# Импорт формы регистрации. Используем абсолютный путь, чтобы избежать
+# ошибок ModuleNotFoundError при загрузке плагина в QGIS.
+from poiskmore_plugin.dialogs.dialog_registration import RegistrationDialog
 
 class PoiskMorePlugin:
     def __init__(self, iface):

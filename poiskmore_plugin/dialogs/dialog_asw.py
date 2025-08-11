@@ -1,17 +1,34 @@
-from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QMessageBox
-class AswDialog(QDialog):
+from PyQt5.QtWidgets import QDialog, QDoubleSpinBox, QSpinBox, QPushButton, QVBoxLayout, QLabel
+from PyQt5.QtCore import QDateTime, QDateTimeEdit
+class DialogASW(QDialog):
 def __init__(self, parent=None):
 super().__init__(parent)
 layout = QVBoxLayout(self)
-self.asw_param = QLineEdit()
-layout.addWidget(self.asw_param)
-btn = QPushButton("Apply")
-btn.clicked.connect(self.apply)
+layout.addWidget(QLabel("Расчет ASW:"))
+layout.addWidget(QLabel("Период поиска:"))
+self.from_time = QDateTimeEdit()
+self.from_time.setDateTime(QDateTime.fromString("22.07.25 21:02", "dd.MM.yy hh:mm"))
+layout.addWidget(self.from_time)
+layout.addWidget(QLabel("По:"))
+self.to_time = QDateTimeEdit()
+self.to_time.setDateTime(QDateTime.fromString("23.07.25 10:02", "dd.MM.yy hh:mm"))
+layout.addWidget(self.to_time)
+layout.addWidget(QLabel("Скорость (узлы):"))
+self.speed = QDoubleSpinBox(minimum=0, value=1.39)
+layout.addWidget(self.speed)
+layout.addWidget(QLabel("Направление (градусы):"))
+self.dir = QSpinBox(minimum=0, maximum=360, value=300)
+layout.addWidget(self.dir)
+layout.addWidget(QLabel("Температура воды °C:"))
+self.water_temp = QDoubleSpinBox(minimum=-10, maximum=40, value=0.3)
+layout.addWidget(self.water_temp)
+layout.addWidget(QLabel("Источники информации:"))
+self.source = QLineEdit()
+layout.addWidget(self.source)
+btn = QPushButton("Отмена")
+btn.clicked.connect(self.close)
 layout.addWidget(btn)
-def apply(self):
-if self.asw_param.text().strip():
-self.accept()
-else:
-QMessageBox.warning(self, "Ошибка", "Параметр обязателен")
-def get_data(self):
-return {'asw': self.asw_param.text()}
+btn_save = QPushButton("Сохранить PDF")
+layout.addWidget(btn_save)
+btn_send = QPushButton("Отправить")
+layout.addWidget(btn_send)

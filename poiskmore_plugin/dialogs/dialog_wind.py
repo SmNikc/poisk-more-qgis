@@ -1,0 +1,22 @@
+from PyQt5.QtWidgets import QDialog, QDoubleSpinBox, QSpinBox, QPushButton, QVBoxLayout, QLabel, QMessageBox
+class DialogWind(QDialog):
+def __init__(self, parent=None):
+super().__init__(parent)
+layout = QVBoxLayout(self)
+self.wind_speed = QDoubleSpinBox(minimum=0, maximum=100, value=38.9)
+self.wind_dir = QSpinBox(minimum=0, maximum=360, value=90)
+layout.addWidget(QLabel("Скорость (узлы):"))
+layout.addWidget(self.wind_speed)
+layout.addWidget(QLabel("Направление (градусы):"))
+layout.addWidget(self.wind_dir)
+layout.addWidget(QLabel("С:"))
+self.from_time = QDateTimeEdit()
+self.from_time.setDateTime(QDateTime.fromString("22.07.25 21:02", "dd.MM.yy hh:mm"))
+layout.addWidget(self.from_time)
+layout.addWidget(QLabel("По:"))
+self.to_time = QDateTimeEdit()
+self.to_time.setDateTime(QDateTime.fromString("23.07.25 10:02", "dd.MM.yy hh:mm"))
+layout.addWidget(self.to_time)
+btn = QPushButton("Закрыть")
+btn.clicked.connect(self.close)
+layout.addWidget(btn)

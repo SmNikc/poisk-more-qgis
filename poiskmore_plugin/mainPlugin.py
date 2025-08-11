@@ -6,21 +6,21 @@ from qgis.PyQt.QtCore import QUrl
 from qgis.core import Qgis, QgsApplication, QgsProject, QgsFeature, QgsGeometry, QgsPointXY, QgsVectorLayer
 from qgis.gui import QgsMapToolEmitPoint
 
-from dialogs.dialog_registration import RegistrationDialog
-from dialogs.dialog_weather import WeatherDialog
-from dialogs.dialog_searcharea import SearchAreaDialog
-from dialogs.dialog_sitrep import SitrepDialog
-from dialogs.dialog_asw import AswDialog
-from dialogs.dialog_twc import TwcDialog
-from dialogs.dialog_operation_edit import OperationEditDialog
-from dialogs.dialog_incident_object import IncidentObjectDialog
-from dialogs.dialog_search_params import SearchParamsDialog
-from dialogs.dialog_search_object import SearchObjectDialog
+from .dialogs.dialog_registration import RegistrationDialog
+from .dialogs.dialog_weather import WeatherDialog
+from .dialogs.dialog_searcharea import SearchAreaDialog
+from .dialogs.dialog_sitrep import SitrepDialog
+from .dialogs.dialog_asw import AswDialog
+from .dialogs.dialog_twc import TwcDialog
+from .dialogs.dialog_operation_edit import OperationEditDialog
+from .dialogs.dialog_incident_object import IncidentObjectDialog
+from .dialogs.dialog_search_params import SearchParamsDialog
+from .dialogs.dialog_search_object import SearchObjectDialog
 
-from alg.alg_datum import calculate_datum_points, add_datum_layer
-from alg.alg_zone import create_search_area, add_search_layer
-from alg.alg_distant_points import distant_points_calculation
-from alg.alg_manual_area import manual_area, ManualAreaTool
+from .alg.alg_datum import calculate_datum_points, add_datum_layer
+from .alg.alg_zone import create_search_area, add_search_layer
+from .alg.alg_distant_points import distant_points_calculation
+from .alg.alg_manual_area import manual_area, ManualAreaTool
 
 class PoiskMorePlugin:
     def __init__(self, iface):

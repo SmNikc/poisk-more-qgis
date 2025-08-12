@@ -41,7 +41,10 @@ class ManualAreaTool(QgsMapTool):
             ring = self.points + [self.points[0]]
             polygon = QgsGeometry.fromPolygonXY([ring])
             self.callback(polygon)
-        self.deactivate()
+        # После завершения рисования переключаемся на
+        # инструмент по умолчанию, чтобы пользователь
+        # снова явно активировал рисование через меню
+        self.canvas.unsetMapTool(self)
 
     def deactivate(self):
         """Reset temporary graphics and state."""

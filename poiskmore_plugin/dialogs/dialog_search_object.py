@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QLabel, QDateTimeEdit
+from PyQt5.QtCore import QDateTime
 class SearchObjectDialog(QDialog):
 def __init__(self, parent=None):
 super().__init__(parent)

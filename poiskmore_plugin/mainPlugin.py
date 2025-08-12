@@ -28,6 +28,7 @@ class PoiskMorePlugin:
     def __init__(self, iface):
         self.iface = iface
         self.menu = None
+        self._menu_bar = None
         self.actions = {}
         self.plugin_dir = os.path.dirname(__file__)
         self.current_operation = None
@@ -36,7 +37,8 @@ class PoiskMorePlugin:
 
     def initGui(self):
         self.menu = QMenu("Поиск-Море", self.iface.mainWindow())
-        self.iface.addPluginToMenu("Поиск-Море", self.menu.menuAction())
+        self._menu_bar = self.iface.mainWindow().menuBar()
+        self._menu_bar.addMenu(self.menu)
 
         search_menu = QMenu("Поиск", self.menu)
         self.menu.addMenu(search_menu)
@@ -310,6 +312,10 @@ class PoiskMorePlugin:
         QDesktopServices.openUrl(QUrl.fromLocalFile(os.path.join(self.plugin_dir, 'docs/manual.pdf')))
 
     def unload(self):
-        self.iface.removePluginMenu("Поиск-Море", self.menu.menuAction())
-        self.menu.deleteLater()
+        if self._menu_bar and self.menu:
+            self._menu_bar.removeAction(self.menu.menuAction())
+        if self.menu:
+            self.menu.deleteLater()
+        self.menu = None
+        self._menu_bar = None
         self.actions.clear()

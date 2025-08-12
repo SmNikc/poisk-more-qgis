@@ -1,4 +1,17 @@
-from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QLabel, QTabWidget, QTextEdit, QComboBox, QDoubleSpinBox, QSpinBox
+from PyQt5.QtWidgets import (
+    QDialog,
+    QLineEdit,
+    QPushButton,
+    QVBoxLayout,
+    QMessageBox,
+    QLabel,
+    QTabWidget,
+    QTextEdit,
+    QComboBox,
+    QDoubleSpinBox,
+    QSpinBox,
+    QWidget,
+)
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtWidgets import QDateTimeEdit
 

@@ -1,5 +1,5 @@
 """Диалог выбора района поиска с отображением OpenSeaMap."""
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QMessageBox, QWidget, QPushButton
 from PyQt5 import uic
 import os
 from qgis.core import QgsProject, QgsRasterLayer

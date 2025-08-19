@@ -1,0 +1,4 @@
+from qgis.core import QgsRasterLayer, QgsProject
+class ExportMapAsRaster:
+    def execute(self, map_layer: QgsRasterLayer, output_path: str):
+        QgsProject.instance().addMapLayer(map_layer)

@@ -1,5 +1,22 @@
-pythonimport sqlite3
-from PyQt5.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QLabel, QTabWidget, QTextEdit, QComboBox, QDoubleSpinBox, QSpinBox, QDateTimeEdit, QHBoxLayout, QGroupBox, QFormLayout
+import sqlite3
+from PyQt5.QtWidgets import (
+    QDialog,
+    QLineEdit,
+    QPushButton,
+    QVBoxLayout,
+    QMessageBox,
+    QLabel,
+    QTabWidget,
+    QTextEdit,
+    QComboBox,
+    QDoubleSpinBox,
+    QSpinBox,
+    QDateTimeEdit,
+    QHBoxLayout,
+    QGroupBox,
+    QFormLayout,
+    QWidget,
+)
 from PyQt5.QtCore import QDateTime
 from math import cos, sin, radians
 from reportlab.lib.pagesizes import letter

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IncidentRegistrationDialog</class>
+ <widget class="QDialog" name="IncidentRegistrationDialog">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>900</width><height>720</height></rect>
+  </property>
+  <property name="windowTitle">
+   <string>Регистрация происшествия на море</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex"><number>0</number></property>
+
+     <!-- TAB 1: INCIDENT / LOCATION -->
+     <widget class="QWidget" name="tab_incident">
+      <attribute name="title"><string>Объект аварийного случая/Местоположение</string></attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_incident">
+         <property name="title"><string>Информация о происшествии</string></property>
+         <layout class="QFormLayout" name="formLayout_incident">
+          <item row="0" column="0"><widget class="QLabel" name="label_operation"><property name="text"><string>Название операции:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="lineEdit_operation_name"><property name="placeholderText"><string>SAR_YYYYMMDD_HHMM</string></property></widget></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_type"><property name="text"><string>Тип происшествия:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="comboBox_incident_type"/></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_datetime"><property name="text"><string>Дата/время происшествия:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QDateTimeEdit" name="dateTimeEdit_incident"><property name="displayFormat"><string>dd.MM.yyyy HH:mm UTC</string></property><property name="calendarPopup"><bool>true</bool></property></widget></item>
+
+          <item row="3" column="0"><widget class="QLabel" name="label_source"><property name="text"><string>Источник информации:</string></property></widget></item>
+          <item row="3" column="1"><widget class="QComboBox" name="comboBox_info_source"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_location">
+         <property name="title"><string>Местоположение происшествия</string></property>
+         <layout class="QFormLayout" name="formLayout_location">
+          <item row="0" column="0"><widget class="QLabel" name="label_coordinates"><property name="text"><string>Координаты:</string></property></widget></item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_coords">
+            <item><widget class="QLabel" name="label_lat"><property name="text"><string>Широта:</string></property></widget></item>
+            <item><widget class="QDoubleSpinBox" name="doubleSpinBox_latitude"><property name="decimals"><number>6</number></property><property name="minimum"><double>-90.0</double></property><property name="maximum"><double>90.0</double></property><property name="suffix"><string>°</string></property></widget></item>
+            <item><widget class="QLabel" name="label_lon"><property name="text"><string>Долгота:</string></property></widget></item>
+            <item><widget class="QDoubleSpinBox" name="doubleSpinBox_longitude"><property name="decimals"><number>6</number></property><property name="minimum"><double>-180.0</double></property><property name="maximum"><double>180.0</double></property><property name="suffix"><string>°</string></property></widget></item>
+           </layout>
+          </item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_accuracy"><property name="text"><string>Точность позиции:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="comboBox_position_accuracy"/></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_lastpos"><property name="text"><string>Время последней позиции:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QDateTimeEdit" name="dateTimeEdit_last_position"><property name="displayFormat"><string>dd.MM.yyyy HH:mm UTC</string></property><property name="calendarPopup"><bool>true</bool></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_calculations">
+         <property name="title"><string>Расчётные параметры</string></property>
+         <layout class="QFormLayout" name="formLayout_calc">
+          <item row="0" column="0"><widget class="QLabel" name="label_asw"><property name="text"><string>ASW (мили):</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="lineEdit_asw"><property name="readOnly"><bool>true</bool></property><property name="placeholderText"><string>Рассчитывается автоматически</string></property></widget></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_twc"><property name="text"><string>TWC (узлы/курс):</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="lineEdit_twc"><property name="readOnly"><bool>true</bool></property><property name="placeholderText"><string>Рассчитывается автоматически</string></property></widget></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_datum"><property name="text"><string>Datum:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="lineEdit_datum"><property name="readOnly"><bool>true</bool></property><property name="placeholderText"><string>Рассчитывается автоматически</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item><spacer name="verticalSpacer1"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+      </layout>
+     </widget>
+
+     <!-- TAB 2: SEARCH OBJECTS -->
+     <widget class="QWidget" name="tab_search_objects">
+      <attribute name="title"><string>Объекты поиска</string></attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="groupBox_vessel">
+         <property name="title"><string>Информация о судне в бедствии</string></property>
+         <layout class="QFormLayout" name="formLayout_vessel">
+          <item row="0" column="0"><widget class="QLabel" name="label_vessel_name"><property name="text"><string>Название судна:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QLineEdit" name="lineEdit_vessel_name"/></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_callsign"><property name="text"><string>Позывной:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="lineEdit_callsign"/></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_vessel_type"><property name="text"><string>Тип судна:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QComboBox" name="comboBox_vessel_type"/></item>
+
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_dimensions"><property name="text"><string>Размеры (Д×Ш):</string></property></widget>
+          </item>
+          <item row="3" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_vessel_size">
+            <item><widget class="QSpinBox" name="spinBox_vessel_length"><property name="maximum"><number>500</number></property><property name="suffix"><string> м</string></property></widget></item>
+            <item><widget class="QSpinBox" name="spinBox_vessel_width"><property name="maximum"><number>100</number></property><property name="suffix"><string> м</string></property></widget></item>
+           </layout>
+          </item>
+
+          <item row="4" column="0"><widget class="QLabel" name="label_color"><property name="text"><string>Цвет корпуса:</string></property></widget></item>
+          <item row="4" column="1"><widget class="QLineEdit" name="lineEdit_vessel_color"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_people">
+         <property name="title"><string>Люди, требующие спасения</string></property>
+         <layout class="QFormLayout" name="formLayout_people">
+          <item row="0" column="0"><widget class="QLabel" name="label_people_count"><property name="text"><string>Количество:</string></property></widget></item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_people">
+            <item><widget class="QLabel" name="label_on_board"><property name="text"><string>На борту:</string></property></widget></item>
+            <item><widget class="QSpinBox" name="spinBox_on_board"><property name="maximum"><number>9999</number></property></widget></item>
+            <item><widget class="QLabel" name="label_in_water"><property name="text"><string>В воде:</string></property></widget></item>
+            <item><widget class="QSpinBox" name="spinBox_in_water"><property name="maximum"><number>9999</number></property></widget></item>
+            <item><widget class="QLabel" name="label_in_rafts"><property name="text"><string>На плотах:</string></property></widget></item>
+            <item><widget class="QSpinBox" name="spinBox_in_rafts"><property name="maximum"><number>9999</number></property></widget></item>
+           </layout>
+          </item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_survival"><property name="text"><string>Спасательные средства:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QTextEdit" name="textEdit_survival"><property name="maximumSize"><size><width>16777215</width><height>60</height></size></property></widget></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_people_condition"><property name="text"><string>Состояние людей:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QComboBox" name="comboBox_people_condition"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_search">
+         <property name="title"><string>Объекты для поиска</string></property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QTableWidget" name="tableWidget_search_objects">
+            <property name="columnCount"><number>3</number></property>
+            <column><property name="text"><string>Объект</string></property></column>
+            <column><property name="text"><string>Количество</string></property></column>
+            <column><property name="text"><string>Примечание</string></property></column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+
+       <item><spacer name="verticalSpacer2"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+      </layout>
+     </widget>
+
+     <!-- TAB 3: ADDITIONAL INFO -->
+     <widget class="QWidget" name="tab_additional">
+      <attribute name="title"><string>Дополнительная информация</string></attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_communication">
+         <property name="title"><string>Связь</string></property>
+         <layout class="QFormLayout" name="formLayout_comm">
+          <item row="0" column="0"><widget class="QLabel" name="label_last_contact"><property name="text"><string>Последняя связь:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QDateTimeEdit" name="dateTimeEdit_last_contact"><property name="displayFormat"><string>dd.MM.yyyy HH:mm UTC</string></property><property name="calendarPopup"><bool>true</bool></property></widget></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_frequencies"><property name="text"><string>Рабочие частоты:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="lineEdit_frequencies"><property name="placeholderText"><string>2182 кГц, 156.8 МГц, ...</string></property></widget></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_beacons"><property name="text"><string>Аварийные буи (EPIRB/SART):</string></property></widget></item>
+          <item row="2" column="1"><widget class="QLineEdit" name="lineEdit_emergency_beacons"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_navigation">
+         <property name="title"><string>Навигационная информация</string></property>
+         <layout class="QFormLayout" name="formLayout_nav">
+          <item row="0" column="0"><widget class="QLabel" name="label_last_course"><property name="text"><string>Последний курс/скорость:</string></property></widget></item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_nav">
+            <item><widget class="QSpinBox" name="spinBox_course"><property name="maximum"><number>359</number></property><property name="suffix"><string>°</string></property></widget></item>
+            <item><widget class="QDoubleSpinBox" name="doubleSpinBox_speed"><property name="maximum"><double>50.0</double></property><property name="suffix"><string> узлов</string></property></widget></item>
+           </layout>
+          </item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_destination"><property name="text"><string>Пункт назначения:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QLineEdit" name="lineEdit_destination"/></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_eta"><property name="text"><string>Расчётное время прибытия (ETA):</string></property></widget></item>
+          <item row="2" column="1"><widget class="QDateTimeEdit" name="dateTimeEdit_eta"><property name="calendarPopup"><bool>true</bool></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_resources">
+         <property name="title"><string>Доступные силы и средства</string></property>
+         <layout class="QFormLayout" name="formLayout_resources">
+          <item row="0" column="0"><widget class="QLabel" name="label_vessels"><property name="text"><string>Суда в районе:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QTextEdit" name="textEdit_vessels_in_area"><property name="maximumSize"><size><width>16777215</width><height>60</height></size></property></widget></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_aircraft"><property name="text"><string>Авиация:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QTextEdit" name="textEdit_aircraft_available"><property name="maximumSize"><size><width>16777215</width><height>60</height></size></property></widget></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_shore"><property name="text"><string>Береговые средства:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QTextEdit" name="textEdit_shore_facilities"><property name="maximumSize"><size><width>16777215</width><height>60</height></size></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_notes">
+         <property name="title"><string>Примечания</string></property>
+         <layout class="QVBoxLayout" name="verticalLayout_notes">
+          <item><widget class="QTextEdit" name="textEdit_additional_notes"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item><spacer name="verticalSpacer3"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+      </layout>
+     </widget>
+
+     <!-- TAB 4: WEATHER -->
+     <widget class="QWidget" name="tab_weather">
+      <attribute name="title"><string>Погода</string></attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_wind">
+         <property name="title"><string>Ветер</string></property>
+         <layout class="QFormLayout" name="formLayout_wind">
+          <item row="0" column="0"><widget class="QLabel" name="label_wind"><property name="text"><string>Направление/Скорость:</string></property></widget></item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_wind">
+            <item><widget class="QSpinBox" name="spinBox_wind_dir"><property name="maximum"><number>359</number></property><property name="suffix"><string>°</string></property></widget></item>
+            <item><widget class="QSpinBox" name="spinBox_wind_speed"><property name="maximum"><number>100</number></property><property name="suffix"><string> узлов</string></property></widget></item>
+           </layout>
+          </item>
+          <item row="1" column="0"><widget class="QLabel" name="label_beaufort"><property name="text"><string>Шкала Бофорта:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="comboBox_beaufort"/></item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_sea">
+         <property name="title"><string>Состояние моря</string></property>
+         <layout class="QFormLayout" name="formLayout_sea">
+          <item row="0" column="0"><widget class="QLabel" name="label_douglas"><property name="text"><string>Шкала Дугласа:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="comboBox_douglas"/></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_wave_height"><property name="text"><string>Высота волн:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QDoubleSpinBox" name="doubleSpinBox_wave_height"><property name="decimals"><number>1</number></property><property name="maximum"><double>20.0</double></property><property name="suffix"><string> м</string></property></widget></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_swell"><property name="text"><string>Зыбь (напр./выс.):</string></property></widget></item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_swell">
+            <item><widget class="QSpinBox" name="spinBox_swell_dir"><property name="maximum"><number>359</number></property><property name="suffix"><string>°</string></property></widget></item>
+            <item><widget class="QDoubleSpinBox" name="doubleSpinBox_swell_height"><property name="decimals"><number>1</number></property><property name="maximum"><double>10.0</double></property><property name="suffix"><string> м</string></property></widget></item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_current">
+         <property name="title"><string>Течение</string></property>
+         <layout class="QFormLayout" name="formLayout_current">
+          <item row="0" column="0"><widget class="QLabel" name="label_current"><property name="text"><string>Направление/Скорость:</string></property></widget></item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_current">
+            <item><widget class="QSpinBox" name="spinBox_current_dir"><property name="maximum"><number>359</number></property><property name="suffix"><string>°</string></property></widget></item>
+            <item><widget class="QDoubleSpinBox" name="doubleSpinBox_current_speed"><property name="decimals"><number>1</number></property><property name="maximum"><double>10.0</double></property><property name="suffix"><string> узлов</string></property></widget></item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QGroupBox" name="groupBox_visibility">
+         <property name="title"><string>Видимость и осадки</string></property>
+         <layout class="QFormLayout" name="formLayout_visibility">
+          <item row="0" column="0"><widget class="QLabel" name="label_visibility"><property name="text"><string>Видимость:</string></property></widget></item>
+          <item row="0" column="1"><widget class="QComboBox" name="comboBox_visibility"/></item>
+
+          <item row="1" column="0"><widget class="QLabel" name="label_precipitation"><property name="text"><string>Осадки:</string></property></widget></item>
+          <item row="1" column="1"><widget class="QComboBox" name="comboBox_precipitation"/></item>
+
+          <item row="2" column="0"><widget class="QLabel" name="label_cloud_cover"><property name="text"><string>Облачность:</string></property></widget></item>
+          <item row="2" column="1"><widget class="QComboBox" name="comboBox_cloud_cover"/></item>
+
+          <item row="3" column="0"><widget class="QLabel" name="label_temp"><property name="text"><string>Температура (воздух/вода):</string></property></widget></item>
+          <item row="3" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_temp">
+            <item><widget class="QSpinBox" name="spinBox_air_temp"><property name="minimum"><number>-50</number></property><property name="maximum"><number>50</number></property><property name="suffix"><string> °C</string></property></widget></item>
+            <item><widget class="QSpinBox" name="spinBox_water_temp"><property name="minimum"><number>-2</number></property><property name="maximum"><number>35</number></property><property name="suffix"><string> °C</string></property></widget></item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+
+       <item><spacer name="verticalSpacer4"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property></spacer></item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+
+   <!-- Bottom Buttons -->
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_buttons">
+     <item><widget class="QPushButton" name="pushButton_calculate"><property name="text"><string>Рассчитать параметры</string></property></widget></item>
+     <item><spacer name="horizontalSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="pushButton_save"><property name="text"><string>Сохранить</string></property></widget></item>
+     <item><widget class="QPushButton" name="pushButton_cancel"><property name="text"><string>Отмена</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+
+  <connections>
+   <connection>
+    <sender>pushButton_cancel</sender>
+    <signal>clicked()</signal>
+    <receiver>IncidentRegistrationDialog</receiver>
+    <slot>reject()</slot>
+   </connection>
+  </connections>
+ </widget>
+ <resources/>
+</ui>

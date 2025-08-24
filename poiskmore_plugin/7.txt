@@ -1,0 +1,324 @@
+Ñòðóêòóðà ïàïîê òîìà Windows
+Ñåðèéíûé íîìåð òîìà: 7018-58EE
+C:\PROJECTS\POISK-MORE-QGIS\POISKMORE_PLUGIN
+¦   .flake8
+¦   7.txt
+¦   CHANGELOG.md
+¦   icon.png
+¦   LICENSE
+¦   mainPlugin.py
+¦   menu_structure.py
+¦   metadata.txt
+¦   mock_server.py
+¦   operation_logger.py
+¦   poiskmore.py
+¦   README.md
+¦   requirements.txt
+¦   test_plugin_load.py
+¦   __init__.py
+¦   
++---.github
+¦   L---workflows
+¦           ci.yml
+¦           
++---alg
+¦       advanced_search_area.py
+¦       alg_calculations.py
+¦       alg_datum.py
+¦       alg_distant_points.py
+¦       alg_drift.py
+¦       alg_manual_area.py
+¦       alg_probabilities.py
+¦       alg_reports.py
+¦       alg_sru_route.py
+¦       alg_weather.py
+¦       alg_zone.py
+¦       auto_update_search_area.py
+¦       convex_hull.py
+¦       convex_hull.py.bak.20250819-183312
+¦       convex_hull.py.bak.20250819-210804
+¦       convex_hull.py.bak.20250819-211405
+¦       planar_graph.py
+¦       planar_graph.py.bak.20250819-211405
+¦       segment_intersection_detector.py
+¦       segment_intersection_detector.py.bak.20250819-211405
+¦       segment_node.py
+¦       segment_node.py.bak.20250819-211405
+¦       subgraph.py
+¦       subgraph.py.bak.20250819-211405
+¦       __init__.py
+¦       
++---controllers
+¦       assign_sru_by_distance.py
+¦       download_manager.py
+¦       heatmap_drawer.py
+¦       probability_generator.py
+¦       region_create.py
+¦       search_scheme.py
+¦       search_scheme_draw.py
+¦       sru_route_draw.py
+¦       sru_routing.py
+¦       weather_store_controller.py
+¦       weather_store_controller.py.bak.20250819-210804
+¦       weather_store_controller.py.bak.20250819-211405
+¦       zone_intersection.py
+¦       __init__.py
+¦       
++---data
+¦       boundaries.geojson
+¦       districts.geojson
+¦       russian_seas.geojson
+¦       sample_err.xml
+¦       test_sru.geojson
+¦       test_zones.geojson
+¦       __init__.py
+¦       
++---db
+¦       incident_storage.py
+¦       load_db_to_table.py
+¦       orm_xml_to_db.py
+¦       schema_init.py
+¦       training_db.py
+¦       xml_loader.py
+¦       __init__.py
+¦       
++---dialogs
+¦       dialog_about.py
+¦       dialog_aircraftdirectory.py
+¦       dialog_asw.py
+¦       dialog_casearchive.py
+¦       dialog_close_search.py
+¦       dialog_copy_operation.py
+¦       dialog_delete_operation.py
+¦       dialog_documentation.py
+¦       dialog_drift.py
+¦       dialog_drift_params.py
+¦       dialog_dutyofficertablet.py
+¦       dialog_incident.py
+¦       dialog_incident_object.py
+¦       dialog_messages.py
+¦       dialog_new_emergency.py
+¦       dialog_operation_edit.py
+¦       dialog_operation_list.py
+¦       dialog_plansearch.py
+¦       dialog_registration.py
+¦       dialog_repeat_search.py
+¦       dialog_searcharea.py
+¦       dialog_search_object.py
+¦       dialog_search_params.py
+¦       dialog_sitrep.py
+¦       dialog_sru_assignment.py
+¦       dialog_standard_form1.py
+¦       dialog_standard_forms.py
+¦       dialog_sync_address_book.py
+¦       dialog_twc.py
+¦       dialog_validator.py
+¦       dialog_weather.py
+¦       dialog_weather_params.py
+¦       dialog_weather_report.py
+¦       region_dialog.py
+¦       __init__.py
+¦       
++---docs
+¦       functional_blocks.md
+¦       install_instructions.txt
+¦       Poiskmore_Install_Update_v2.docx
+¦       README.md
+¦       README_GROK_MIGRATION.md
+¦       __init__.py
+¦       
++---esb
+¦       esb_integration.py
+¦       __init__.py
+¦       
++---events
+¦       weather_event_args.py
+¦       weather_event_args.py.bak.20250819-210804
+¦       weather_event_args.py.bak.20250819-211405
+¦       
++---forms
+¦       AircraftDirectoryForm.ui
+¦       dialog_asw.ui
+¦       dialog_incident_object.ui
+¦       dialog_operation_edit.ui
+¦       dialog_registration.ui
+¦       dialog_searcharea.ui
+¦       dialog_search_object.ui
+¦       dialog_search_params.ui
+¦       dialog_sitrep.ui
+¦       dialog_twc.ui
+¦       dialog_weather.ui
+¦       DutyOfficerTabletForm.ui
+¦       operation_create_form.py
+¦       operation_create_form.py.bak.20250819-211405
+¦       PlanSearchForm.ui
+¦       SearchAreaAdvancedForm.ui
+¦       standard_form_5_control.py
+¦       standard_form_5_control.py.bak.20250819-183312
+¦       standard_form_5_control.py.bak.20250819-210804
+¦       standard_form_5_control.py.bak.20250819-211405
+¦       standard_form_6_control.py
+¦       standard_form_6_control.py.bak.20250819-183312
+¦       standard_form_6_control.py.bak.20250819-210804
+¦       standard_form_6_control.py.bak.20250819-211405
+¦       __init__.py
+¦       
++---i18n
+¦       poiskmore_ru.ts
+¦       
++---model
+¦       asw_model.py
+¦       coverage_equality_comparer.py
+¦       incident_model.py
+¦       number_value.py
+¦       product_object_item.py
+¦       product_subscription.py
+¦       product_subscription_item.py
+¦       saved_weather_download_subscription.py
+¦       search_model.py
+¦       sent_request.py
+¦       sitrep_model.py
+¦       weather_model.py
+¦       
++---models
+¦       coverage_equality_comparer.py
+¦       coverage_equality_comparer.py.bak.20250819-210804
+¦       coverage_equality_comparer.py.bak.20250819-211405
+¦       domain_flags.py
+¦       domain_flags.py.bak.20250819-211405
+¦       geometry_services.py
+¦       geometry_services.py.bak.20250819-211405
+¦       incident_data.py
+¦       incident_data.py.bak.20250819-211405
+¦       number_value.py
+¦       number_value.py.bak.20250819-210804
+¦       number_value.py.bak.20250819-211405
+¦       product_object_item.py
+¦       product_object_item.py.bak.20250819-182231
+¦       product_object_item.py.bak.20250819-183312
+¦       product_object_item.py.bak.20250819-210804
+¦       product_object_item.py.bak.20250819-211405
+¦       product_subscription.py
+¦       product_subscription.py.bak.20250819-211405
+¦       product_subscription_item.py
+¦       product_subscription_item.py.bak.20250819-183312
+¦       product_subscription_item.py.bak.20250819-210804
+¦       product_subscription_item.py.bak.20250819-211405
+¦       projection_parameter.py
+¦       projection_parameter.py.bak.20250819-211405
+¦       sar_unit_info.py
+¦       sar_unit_info.py.bak.20250819-211405
+¦       search_task.py
+¦       search_task.py.bak.20250819-211405
+¦       ship_type.py
+¦       ship_type.py.bak.20250819-211405
+¦       sit185_alert_type.py
+¦       sit185_alert_type.py.bak.20250819-211405
+¦       sit185_marker.py
+¦       sit185_marker.py.bak.20250819-211405
+¦       sit185_message.py
+¦       sit185_message.py.bak.20250819-211405
+¦       
++---projects
+¦       qgis_project.qgs
+¦       __init__.py
+¦       
++---reports
+¦       log_summary_generator.py
+¦       report_generator.py
+¦       sitrep_generator.py
+¦       sitrep_generator_docx.py
+¦       __init__.py
+¦       
++---resources
+¦       icon.png
+¦       resources.qrc
+¦       splash.jpg
+¦       splash.png
+¦       
++---styles
+¦       region_style.qml
+¦       search_scheme_style.qml
+¦       sru_style.qml
+¦       __init__.py
+¦       
++---templates
+¦       sitrep_template.docx
+¦       sitrep_template.docx.txt
+¦       __init__.py
+¦       
++---tests
+¦       conftest.py
+¦       test_alert.py
+¦       test_algorithms.py
+¦       test_assign_sru.py
+¦       test_db.py
+¦       test_drift.py
+¦       test_exercise_input.json
+¦       test_heatmap_render.py
+¦       test_log_storage.py
+¦       test_operatorlog.py
+¦       test_probability_map.py
+¦       test_report.py
+¦       test_runner.py
+¦       test_searcharea.py
+¦       test_send.py
+¦       test_sitrep.py
+¦       test_sitrep_input.json
+¦       test_sitrep_validator.py
+¦       test_utils.py
+¦       __init__.py
+¦       
++---tools
+¦       build_and_push_to_ghcr.py
+¦       Convert_Splash_Icon.py
+¦       dialog_drift.py
+¦       generate_dockerfile_from_local_qgis.py
+¦       
++---ui
+¦       icons.txt
+¦       icon_loader.py
+¦       __init__.py
+¦       
++---ui_test_forms
+L---utils
+        aircraft_directory.py
+        bearing_calc.py
+        buffer_zone.py
+        case_archive.py
+        config_loader.py
+        data_validator.py
+        db_manager.py
+        duty_tablet.py
+        duty_tablet_manager.py
+        email_manager.py
+        export_geojson.py
+        geojson_exporter.py
+        geojson_validator.py
+        icon_loader.py
+        incident_directory.py
+        layout_template.py
+        logger.py
+        map_snapshot.py
+        multi_sru_simulator.py
+        operation_logger.py
+        operator_log.py
+        pdf_exporter.py
+        pdf_generator.py
+        plan_search.py
+        plan_search_manager.py
+        plan_word.py
+        point_in_polygon.py
+        report_generator.py
+        reset_plugin_state.py
+        resources.py
+        serialization_helper.py
+        sru_aircraft.py
+        sru_simulator.py
+        time_optimizer.py
+        utils.py
+        util_coord.py
+        validator.py
+        zone_splitter.py
+        __init__.py
+        

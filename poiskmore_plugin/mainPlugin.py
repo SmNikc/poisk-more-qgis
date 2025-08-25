@@ -207,9 +207,14 @@ class PoiskMorePlugin:
         """
         # Здесь можно обрабатывать дополнительные действия
         pass
-    
+
     # === СУЩЕСТВУЮЩИЕ ОБРАБОТЧИКИ (СОХРАНЯЕМ СОВМЕСТИМОСТЬ) ===
-    
+
+    def _on_emergency_types(self):
+        """Открыть диалог настройки типов аварийных ситуаций"""
+        dialog = EmergencyTypesDialog(self.iface.mainWindow())
+        dialog.exec_()
+
     def new_emergency_case(self):
         """Создать новый аварийный случай"""
         try:

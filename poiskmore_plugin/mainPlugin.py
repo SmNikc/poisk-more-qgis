@@ -78,16 +78,16 @@ class PoiskMorePlugin:
         Инициализация GUI плагина
         Использует MenuManager для создания структуры меню
         """
-            # --- ensure_emergency_types_dialog (auto) ---
+        # --- ensure_emergency_types_dialog (auto) ---
+        try:
+            self.action_emergency_types
+        except AttributeError:
+            self.action_emergency_types = QAction("Типы происшествий", self.iface.mainWindow())
+            self.action_emergency_types.triggered.connect(self._on_emergency_types)
             try:
-                self.action_emergency_types
-            except AttributeError:
-                self.action_emergency_types = QAction("Типы происшествий", self.iface.mainWindow())
-                self.action_emergency_types.triggered.connect(self._on_emergency_types)
-                try:
-                    self.iface.addPluginToMenu("&Поиск-Море", self.action_emergency_types)
-                except Exception:
-                    self.iface.addPluginToMenu("Поиск-Море", self.action_emergency_types)
+                self.iface.addPluginToMenu("&Поиск-Море", self.action_emergency_types)
+            except Exception:
+                self.iface.addPluginToMenu("Поиск-Море", self.action_emergency_types)
 
         # Создаем менеджер меню с полной структурой
         self.menu_manager = MenuManager(self.iface, self.plugin_dir)
@@ -382,14 +382,14 @@ class PoiskMorePlugin:
         Выгрузка плагина
         Очистка ресурсов при отключении
         """
-            # --- ensure_emergency_types_dialog (auto) ---
+        # --- ensure_emergency_types_dialog (auto) ---
+        try:
+            self.iface.removePluginMenu("&Поиск-Море", self.action_emergency_types)
+        except Exception:
             try:
-                self.iface.removePluginMenu("&Поиск-Море", self.action_emergency_types)
+                self.iface.removePluginMenu("Поиск-Море", self.action_emergency_types)
             except Exception:
-                try:
-                    self.iface.removePluginMenu("Поиск-Море", self.action_emergency_types)
-                except Exception:
-                    pass
+                pass
 
         # Сохраняем текущую операцию если есть
         if self.current_operation:
@@ -429,9 +429,5 @@ class PoiskMorePlugin:
             print('IncidentRegistrationDialog error:', e)
 
 
-def initGui(self):
-    pass
 
 
-def unload(self):
-    pass

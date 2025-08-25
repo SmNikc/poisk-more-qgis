@@ -340,7 +340,8 @@ class MenuManager(QObject):
         """Показать вкладку операции"""
         # Этот метод будет реализован при интеграции с UI
         self.menu_action_triggered.emit('show_operation_tab')
-        def _create_service_menu(self):
+ 
+    def _create_service_menu(self):
         """
         Создать меню "Сервис" - настройки и авторизация
         """
@@ -382,7 +383,7 @@ class MenuManager(QObject):
         action_sync.setEnabled(False)  # Активно после авторизации
         service_menu.addAction(action_sync)
         self.actions['sync_contacts'] = action_sync
-        
+
         self.main_menu.addMenu(service_menu)
     
     def _create_datum_menu(self):
@@ -697,7 +698,8 @@ class MenuManager(QObject):
                 "SRU обновлены",
                 f"Активных поисковых единиц: {len(sru_data)}"
             )
-            def _create_documents_menu(self):
+
+    def _create_documents_menu(self):
         """
         Создать меню "Документы" - формы и отчеты
         """

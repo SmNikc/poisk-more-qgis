@@ -5,8 +5,6 @@
 """
 
 import os
-from .dialogs.emergency_types_dialog import EmergencyTypesDialog
-from PyQt5.QtWidgets import QAction
 from qgis.PyQt.QtWidgets import QAction, QMenu, QDialog, QMessageBox
 from .dialogs.incident_registration_dialog import IncidentRegistrationDialog
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
@@ -78,17 +76,6 @@ class PoiskMorePlugin:
         Инициализация GUI плагина
         Использует MenuManager для создания структуры меню
         """
-            # --- ensure_emergency_types_dialog (auto) ---
-            try:
-                self.action_emergency_types
-            except AttributeError:
-                self.action_emergency_types = QAction("Типы происшествий", self.iface.mainWindow())
-                self.action_emergency_types.triggered.connect(self._on_emergency_types)
-                try:
-                    self.iface.addPluginToMenu("&Поиск-Море", self.action_emergency_types)
-                except Exception:
-                    self.iface.addPluginToMenu("Поиск-Море", self.action_emergency_types)
-
         # Создаем менеджер меню с полной структурой
         self.menu_manager = MenuManager(self.iface, self.plugin_dir)
         self.menu_manager.create_menu_structure()
@@ -382,15 +369,6 @@ class PoiskMorePlugin:
         Выгрузка плагина
         Очистка ресурсов при отключении
         """
-            # --- ensure_emergency_types_dialog (auto) ---
-            try:
-                self.iface.removePluginMenu("&Поиск-Море", self.action_emergency_types)
-            except Exception:
-                try:
-                    self.iface.removePluginMenu("Поиск-Море", self.action_emergency_types)
-                except Exception:
-                    pass
-
         # Сохраняем текущую операцию если есть
         if self.current_operation:
             reply = QMessageBox.question(

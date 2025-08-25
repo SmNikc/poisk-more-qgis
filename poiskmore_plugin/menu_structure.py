@@ -332,7 +332,7 @@ class MenuManager(QObject):
     def _check_archived_cases(self):
         """Проверить наличие архивных дел"""
         # Здесь должна быть проверка БД на наличие архивных дел
-        from .database.db_manager import DatabaseManager
+        from .utils.db_manager import DatabaseManager
         db = DatabaseManager()
         return db.has_archived_cases()
     
@@ -944,7 +944,7 @@ class MenuManager(QObject):
         if not self.operation_data:
             return
         
-        from .database.db_manager import DatabaseManager
+        from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
         self.operation_data['status'] = status
@@ -959,7 +959,7 @@ class MenuManager(QObject):
         Args:
             operation_id: Идентификатор операции
         """
-        from .database.db_manager import DatabaseManager
+        from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
         operation_data = db.load_operation(operation_id)
@@ -977,7 +977,7 @@ class MenuManager(QObject):
         Args:
             finish_data: Данные о завершении операции
         """
-        from .database.db_manager import DatabaseManager
+        from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
         self.operation_data.update(finish_data)
@@ -994,7 +994,7 @@ class MenuManager(QObject):
         Args:
             case_id: Идентификатор дела
         """
-        from .database.db_manager import DatabaseManager
+        from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
         archived_case = db.load_archived_case(case_id)

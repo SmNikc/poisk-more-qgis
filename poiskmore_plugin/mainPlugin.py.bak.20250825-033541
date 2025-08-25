@@ -405,11 +405,3 @@ class PoiskMorePlugin:
         except Exception as e:
             # Не валим плагин при ошибке диалога
             print('IncidentRegistrationDialog error:', e)
-
-
-def initGui(self):
-    pass
-
-
-def unload(self):
-    pass

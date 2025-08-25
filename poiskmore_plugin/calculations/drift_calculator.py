@@ -138,107 +138,41 @@ class DriftCalculator:
         }
     
     def _calculate_wind_drift(self, wind: Dict, leeway_data: Dict) -> DriftVector:
-        """
-        Рассчитать дрейф от ветра
-        
-        Args:
-            wind: Данные ветра
-            leeway_data: Коэффициенты дрейфа
-            
-        Returns:
-            Вектор дрейфа от ветра
-        """
-        # Средний коэффициент дрейфа
+        """Рассчитать дрейф от ветра"""
         leeway_rate = (leeway_data['min'] + leeway_data['max']) / 2 / 100.0
-        
-        # Скорость дрейфа от ветра
         drift_speed = wind['speed'] * leeway_rate
-        
-        # Направление дрейфа (по ветру)
-        drift_direction = wind['direction']
-        
+        drift_direction = wind['direction']  # по ветру
         return DriftVector(drift_direction, drift_speed)
     
     def _calculate_current_drift(self, current: Dict) -> DriftVector:
-        """
-        Рассчитать дрейф от течения
-        
-        Args:
-            current: Данные течения
-            
-        Returns:
-            Вектор дрейфа от течения
-        """
-        # Течение влияет на все объекты одинаково (100%)
+        """Рассчитать дрейф от течения (100%)"""
         return DriftVector(current['direction'], current['speed'])
     
     def _sum_drift_vectors(self, wind_drift: DriftVector, current_drift: DriftVector) -> DriftVector:
-        """
-        Сложить векторы дрейфа от ветра и течения
-        
-        Args:
-            wind_drift: Вектор дрейфа от ветра
-            current_drift: Вектор дрейфа от течения
-            
-        Returns:
-            Суммарный вектор дрейфа
-        """
-        # Преобразуем в компоненты
+        """Сложить ветровой и течения"""
         wind_x, wind_y = wind_drift.to_components()
         current_x, current_y = current_drift.to_components()
-        
-        # Суммируем компоненты
         total_x = wind_x + current_x
         total_y = wind_y + current_y
-        
-        # Вычисляем результирующую скорость и направление
         total_speed = math.sqrt(total_x**2 + total_y**2)
-        
-        # Вычисляем направление
         if total_speed > 0:
-            # Преобразуем из математического угла в навигационный
             math_angle = math.atan2(total_y, total_x)
             nav_direction = (90 - math.degrees(math_angle)) % 360
         else:
             nav_direction = 0
-        
         return DriftVector(nav_direction, total_speed)
     
     def _apply_divergence(self, drift: DriftVector, divergence_angle: float) -> DriftVector:
-        """
-        Применить угол расхождения к вектору дрейфа
-        
-        Args:
-            drift: Исходный вектор дрейфа
-            divergence_angle: Угол расхождения в градусах (+ вправо, - влево)
-            
-        Returns:
-            Вектор дрейфа с учетом расхождения
-        """
+        """Применить угол расхождения"""
         new_direction = (drift.direction + divergence_angle) % 360
         return DriftVector(new_direction, drift.speed)
     
     def _calculate_displacement(self, drift: DriftVector, hours: float) -> Dict:
-        """
-        Рассчитать смещение объекта за время
-        
-        Args:
-            drift: Вектор дрейфа
-            hours: Время в часах
-            
-        Returns:
-            Смещение в милях по широте и долготе
-        """
-        # Расстояние в морских милях
+        """Смещение объекта за время (в милях по осям)"""
         distance = drift.speed * hours
-        
-        # Преобразуем направление в радианы (из навигационного в математическое)
         math_angle = math.radians(90 - drift.direction)
-        
-        # Смещение по осям (в морских милях)
         dx_nm = distance * math.cos(math_angle)
         dy_nm = distance * math.sin(math_angle)
-        
         return {
             'dx_nm': dx_nm,
             'dy_nm': dy_nm,
@@ -250,30 +184,12 @@ class DriftCalculator:
                                        initial_error: float,
                                        drift_data: Dict,
                                        elapsed_hours: float) -> Dict:
-        """
-        Рассчитать расширение района поиска с учетом погрешностей
-        
-        Args:
-            initial_error: Начальная погрешность позиции в милях
-            drift_data: Данные о дрейфе
-            elapsed_hours: Прошедшее время в часах
-            
-        Returns:
-            Параметры расширения района поиска
-        """
-        # Погрешность позиции (10% от пройденного расстояния)
+        """Расширение района поиска с учётом погрешностей"""
         position_error = drift_data['center']['distance_nm'] * 0.1
-        
-        # Погрешность от расхождения
         divergence_error = drift_data['center']['distance_nm'] * \
                           math.sin(math.radians(drift_data['divergence_angle']))
-        
-        # Суммарная погрешность
         total_error = math.sqrt(initial_error**2 + position_error**2 + divergence_error**2)
-        
-        # Радиус района поиска (с учетом коэффициента безопасности 1.5)
         search_radius = total_error * 1.5
-        
         return {
             'initial_error': initial_error,
             'position_error': position_error,
@@ -288,61 +204,28 @@ class DriftCalculator:
                            drift_vector: DriftVector,
                            hours: float,
                            num_points: int = 10) -> list:
-        """
-        Рассчитать линию дрейфа
-        
-        Args:
-            start_point: Начальная точка (lat, lon)
-            drift_vector: Вектор дрейфа
-            hours: Общее время дрейфа
-            num_points: Количество точек на линии
-            
-        Returns:
-            Список точек линии дрейфа
-        """
+        """Линия дрейфа (список точек lat/lon во времени)"""
         points = []
         lat_start, lon_start = start_point
-        
         for i in range(num_points + 1):
             t = (i / num_points) * hours
             displacement = self._calculate_displacement(drift_vector, t)
-            
-            # Преобразуем смещение в градусы
-            # 1 морская миля = 1/60 градуса по широте
             dlat = displacement['dy_nm'] / 60.0
-            
-            # Для долготы учитываем широту
             dlon = displacement['dx_nm'] / (60.0 * math.cos(math.radians(lat_start)))
-            
             new_lat = lat_start + dlat
             new_lon = lon_start + dlon
-            
             points.append({
                 'lat': new_lat,
                 'lon': new_lon,
                 'time_hours': t,
                 'distance_nm': displacement['distance_nm']
             })
-        
         return points
     
     def get_object_types(self) -> list:
-        """
-        Получить список доступных типов объектов
-        
-        Returns:
-            Список типов объектов
-        """
+        """Список типов объектов"""
         return list(self.LEEWAY_RATES.keys())
     
     def get_leeway_info(self, object_type: str) -> Optional[Dict]:
-        """
-        Получить информацию о коэффициентах дрейфа для типа объекта
-        
-        Args:
-            object_type: Тип объекта
-            
-        Returns:
-            Информация о коэффициентах дрейфа
-        """
+        """Информация о коэффициентах дрейфа по типу объекта"""
         return self.LEEWAY_RATES.get(object_type)

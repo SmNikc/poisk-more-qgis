@@ -1,1 +1,2 @@
-# Пакет диалоговых окон для поисково-спасательных операций
+# -*- coding: utf-8 -*-
+from .incident_registration_dialog import IncidentRegistrationDialog

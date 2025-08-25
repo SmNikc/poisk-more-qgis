@@ -13,7 +13,7 @@ from PyQt5.QtCore import Qt, QDateTime, pyqtSignal
 import math, json
 from datetime import datetime
 
-from drift_calculator import DriftCalculator, DriftVector
+from ..calculations.drift_calculator import DriftCalculator, DriftVector
 
 class IncidentRegistrationDialog(QDialog):
     incident_registered = pyqtSignal(dict)

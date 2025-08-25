@@ -6,7 +6,6 @@
 
 import os
 from qgis.PyQt.QtWidgets import QAction, QMenu, QDialog, QMessageBox
-from .dialogs.incident_registration_dialog import IncidentRegistrationDialog
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.core import Qgis, QgsApplication, QgsProject
 
@@ -398,18 +397,3 @@ class PoiskMorePlugin:
             level=Qgis.Info,
             duration=3
         )
-    def _open_incident_registration_dialog(self):
-        try:
-            dlg = IncidentRegistrationDialog(self.iface.mainWindow())
-            dlg.exec_()
-        except Exception as e:
-            # Не валим плагин при ошибке диалога
-            print('IncidentRegistrationDialog error:', e)
-
-
-def initGui(self):
-    pass
-
-
-def unload(self):
-    pass

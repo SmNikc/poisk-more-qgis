@@ -1,8 +1,0 @@
-from dataclasses import dataclass
-@dataclass
-class ProductObjectItem:
-    selected: bool = False
-    object_id: int = 0
-    name: str = ""
-    description: str = ""
-    download_size: float = 0.0  # Size in bytes per square degree

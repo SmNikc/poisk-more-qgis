@@ -73,3 +73,65 @@ Pipfile.lock
 
 # Rope
 .ropeproject
+
+# ========================================
+# ДОПОЛНЕНИЯ ДЛЯ ПРОЕКТА ПОИСК-МОРЕ
+# Добавить в конец существующего .gitignore
+# ========================================
+
+# Резервные копии плагина
+backups/
+backup*/
+backup_before_update/
+*.bak
+*.bak.*
+*_backup*
+*_old*
+*.orig
+
+# QGIS временные файлы проекта
+*.qgs~
+*.qgs.bak
+*.qgz~
+*.qgs.lock
+
+# UI файлы Qt Designer
+*.ui.autosave
+*.pyproject.user
+*.pro.user
+
+# Специфичные БД проекта (хотя *.db уже покрывает)
+incidents.db
+poiskmore.db
+incidents.db.backup*
+poiskmore.db.backup*
+
+# Временные файлы
+*.tmp
+*.temp
+.~*
+~$*
+
+# Логи специфичные для плагина
+logs/
+poiskmore*.log
+debug_*.txt
+
+# Тестовые данные
+test_data/
+test_operations/
+sample_data/
+
+# Локальные настройки плагина
+local_settings.py
+config.local.py
+user_preferences.json
+
+# Экспортированные файлы
+exports/
+*.geojson.tmp
+*.gpx.tmp
+
+# Файлы миграций БД
+migrations/applied/
+*.migration.done

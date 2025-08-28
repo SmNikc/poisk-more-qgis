@@ -1,0 +1,26 @@
+{
+  "version": "2.2.3",
+  "timestamp": "20250829_010325",
+  "source_path": "C:\\INSTALLPOISKMORE",
+  "plugin_path": "C:\\Projects\\poisk-more-qgis\\poiskmore_plugin",
+  "integrated_components": [
+    "database",
+    "shapefiles",
+    "styles",
+    "oilwater"
+  ],
+  "files_count": 329,
+  "total_size_mb": 8.09,
+  "integration_log": [
+    "Shape copied: sarrcc_m.shp.UDJIN.7240.15848.sr.lock",
+    "Shape copied: sarrcc_m.shx",
+    "Shape copied: sarregion_m.cpg",
+    "Shape copied: sarregion_m.dbf",
+    "Shape copied: sarregion_m.prj",
+    "Shape copied: sarregion_m.shp",
+    "Shape copied: sarregion_m.shp.UDJIN.7240.15848.sr.lock",
+    "Shape copied: sarregion_m.shp.xml",
+    "Shape copied: sarregion_m.shx",
+    "Archive copied: subRegions1.avl"
+  ]
+}

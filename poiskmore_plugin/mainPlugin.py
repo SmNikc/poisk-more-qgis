@@ -6,7 +6,6 @@
 
 import os
 from .dialogs.emergency_types_dialog import EmergencyTypesDialog
-from PyQt5.QtWidgets import QAction
 from qgis.PyQt.QtWidgets import QAction, QMenu, QDialog, QMessageBox
 from .dialogs.incident_registration_dialog import IncidentRegistrationDialog
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
@@ -54,11 +53,13 @@ class PoiskMorePlugin:
         
         # Менеджер меню - будет создан в initGui
         self.menu_manager = None
-        
+
         # Данные операций (сохраняем совместимость)
         self.current_operation = None
         self.operations = []
         self._map_tool = None
+        # Зарезервированная ссылка на боковую панель плагина
+        self._pm_sidebar = None
         
         # Инициализация переводчика для локализации
         locale = QSettings().value('locale/userLocale')[0:2]

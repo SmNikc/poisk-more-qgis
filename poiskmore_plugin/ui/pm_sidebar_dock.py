@@ -184,7 +184,12 @@ class BasemapManager:
         if not grp: return
         for node in grp.findLayers():
             if node.layer().name() == LAYER_SEAMARKS:
-                grp.moveLayer(node, 0)  # вверх группы
+                layer = node.layer()
+                # QgsLayerTreeGroup.moveLayer() был удалён в QGIS 3.40.
+                # Удаляем слой из группы и вставляем его в начало, чтобы
+                # сохранить прежнее поведение "поднять overlay".
+                grp.removeLayer(layer)
+                grp.insertLayer(0, layer)
                 break
 
 # ---------- Основной Dock ----------

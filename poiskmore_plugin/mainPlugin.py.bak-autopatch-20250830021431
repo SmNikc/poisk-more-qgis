@@ -6,6 +6,7 @@
 
 import os
 from .dialogs.emergency_types_dialog import EmergencyTypesDialog
+from PyQt5.QtWidgets import QAction
 from qgis.PyQt.QtWidgets import QAction, QMenu, QDialog, QMessageBox
 from .dialogs.incident_registration_dialog import IncidentRegistrationDialog
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
@@ -13,7 +14,6 @@ from qgis.core import Qgis, QgsApplication, QgsProject
 
 # Импорт менеджера меню - УЖЕ ЕСТЬ В ПАПКЕ!
 from .menu_structure import MenuManager
-from .ui.pm_sidebar_dock import ensure_pm_sidebar_dock
 
 # Импорт существующих диалогов
 try:
@@ -43,7 +43,6 @@ class PoiskMorePlugin:
     """
     
     def __init__(self, iface):
-    self._pm_sidebar = None
         """
         Конструктор плагина
         
@@ -55,13 +54,11 @@ class PoiskMorePlugin:
         
         # Менеджер меню - будет создан в initGui
         self.menu_manager = None
-
+        
         # Данные операций (сохраняем совместимость)
         self.current_operation = None
         self.operations = []
         self._map_tool = None
-        # Зарезервированная ссылка на боковую панель плагина
-        self._pm_sidebar = None
         
         # Инициализация переводчика для локализации
         locale = QSettings().value('locale/userLocale')[0:2]
@@ -105,11 +102,6 @@ class PoiskMorePlugin:
         self._override_menu_handlers()
         
         # Устанавливаем начальное состояние
-        # === Боковая панель «Поиск‑Море»: базовые карты/overlay/тематика/центры ===
-        try:
-            self._pm_sidebar = ensure_pm_sidebar_dock(self.iface, self.plugin_dir)
-        except Exception as e:
-            QgsApplication.messageLog().logMessage(f"Sidebar init error: {e}", "Poisk-More", Qgis.Warning)
         self._update_menu_state()
         
         # Показываем сообщение о загрузке
@@ -391,14 +383,6 @@ class PoiskMorePlugin:
             )
     
     def unload(self):
-        # Снимаем боковую панель, если создана
-        try:
-            if getattr(self, "_pm_sidebar", None):
-                self.iface.removeDockWidget(self._pm_sidebar)
-                self._pm_sidebar.setParent(None)
-                self._pm_sidebar = None
-        except Exception:
-            pass
         """
         Выгрузка плагина
         Очистка ресурсов при отключении

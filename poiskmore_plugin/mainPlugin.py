@@ -14,6 +14,7 @@ from qgis.core import Qgis, QgsApplication, QgsProject
 
 # Импорт менеджера меню - УЖЕ ЕСТЬ В ПАПКЕ!
 from .menu_structure import MenuManager
+from .ui.pm_sidebar_dock import ensure_pm_sidebar_dock
 
 # Импорт существующих диалогов
 try:
@@ -43,6 +44,7 @@ class PoiskMorePlugin:
     """
     
     def __init__(self, iface):
+    self._pm_sidebar = None
         """
         Конструктор плагина
         
@@ -102,6 +104,11 @@ class PoiskMorePlugin:
         self._override_menu_handlers()
         
         # Устанавливаем начальное состояние
+        # === Боковая панель «Поиск‑Море»: базовые карты/overlay/тематика/центры ===
+        try:
+            self._pm_sidebar = ensure_pm_sidebar_dock(self.iface, self.plugin_dir)
+        except Exception as e:
+            QgsApplication.messageLog().logMessage(f"Sidebar init error: {e}", "Poisk-More", Qgis.Warning)
         self._update_menu_state()
         
         # Показываем сообщение о загрузке
@@ -383,6 +390,14 @@ class PoiskMorePlugin:
             )
     
     def unload(self):
+        # Снимаем боковую панель, если создана
+        try:
+            if getattr(self, "_pm_sidebar", None):
+                self.iface.removeDockWidget(self._pm_sidebar)
+                self._pm_sidebar.setParent(None)
+                self._pm_sidebar = None
+        except Exception:
+            pass
         """
         Выгрузка плагина
         Очистка ресурсов при отключении

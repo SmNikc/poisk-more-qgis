@@ -43,7 +43,6 @@ class PoiskMorePlugin:
     """
     
     def __init__(self, iface):
-    self._pm_sidebar = None
         """
         Конструктор плагина
         

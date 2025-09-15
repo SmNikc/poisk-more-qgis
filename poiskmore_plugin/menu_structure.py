@@ -385,9 +385,7 @@ class MenuManager(QObject):
         self.main_menu.addMenu(service_menu)
     
     def _create_datum_menu(self):
-        """
-        Создать меню "Исходный пункт" - расчет исходных точек поиска
-        """
+        """Создать меню "Исходный пункт" - расчет исходных точек поиска."""
         datum_menu = QMenu("Исходный пункт", self.main_menu)
         datum_menu.setObjectName("datum_menu")
         self.menus['datum'] = datum_menu
@@ -420,9 +418,7 @@ class MenuManager(QObject):
         self.main_menu.addMenu(datum_menu)
     
     def _create_area_menu(self):
-        """
-        Создать меню "Район" - управление районами поиска
-        """
+        """Создать меню "Район" - управление районами поиска."""
         area_menu = QMenu("Район", self.main_menu)
         area_menu.setObjectName("area_menu")
         self.menus['area'] = area_menu

@@ -340,7 +340,7 @@ class MenuManager(QObject):
         """Показать вкладку операции"""
         # Этот метод будет реализован при интеграции с UI
         self.menu_action_triggered.emit('show_operation_tab')
- 
+
     def _create_service_menu(self):
         """Создать меню 'Сервис' - настройки и авторизация."""
         service_menu = QMenu("Сервис", self.main_menu)

@@ -30,34 +30,36 @@ class PoiskMorePlugin:
     """Главный класс плагина ПОИСК-МОРЕ для QGIS"""
 
     def __init__(self, iface):
-    self._pm_sidebar = None
         """
         Конструктор плагина
-        
+
         Args:
             iface: Интерфейс QGIS для взаимодействия с приложением
         """
+        self._pm_sidebar = None
+
         # Сохраняем ссылку на интерфейс QGIS
         self.iface = iface
-        
+
         # Директория плагина
         self.plugin_dir = os.path.dirname(__file__)
-        
+
         # Инициализация переводчика для локализации
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'PoiskMore_{}.qm'.format(locale))
+            'PoiskMore_{}.qm'.format(locale)
+        )
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
-            
+
         # Менеджер меню - будет создан в initGui
         self.menu_manager = None
-        
+
         # Текущая операция
         self.current_operation = None
         
@@ -80,12 +82,16 @@ class PoiskMorePlugin:
         self.menu_manager.menu_action_triggered.connect(self.on_menu_action)
         
         # Устанавливаем начальное состояние (нет активной операции)
-    # === Боковая панель «Поиск‑Море»: базовые карты/overlay/тематика/центры ===
-    try:
-        self._pm_sidebar = ensure_pm_sidebar_dock(self.iface, self.plugin_dir)
-    except Exception as e:
-        QgsApplication.messageLog().logMessage(f"Sidebar init error: {e}", "Poisk-More", Qgis.Warning)
         self.menu_manager.set_operation_active(False)
+
+        # === Боковая панель «Поиск‑Море»: базовые карты/overlay/тематика/центры ===
+        try:
+            self._pm_sidebar = ensure_pm_sidebar_dock(self.iface, self.plugin_dir)
+        except Exception as e:
+            QgsApplication.messageLog().logMessage(
+                f"Sidebar init error: {e}", "Poisk-More", Qgis.Warning
+            )
+            self.menu_manager.set_operation_active(False)
         
         # Показываем сообщение о загрузке плагина
         self.iface.messageBar().pushMessage(

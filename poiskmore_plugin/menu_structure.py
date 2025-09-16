@@ -5,7 +5,7 @@
 Версия 2.0.0
 """
 
-from qgis.PyQt.QtCore import QObject, pyqtSignal, QSettings
+from qgis.PyQt.QtCore import QObject, pyqtSignal, QSettings, QDateTime
 from qgis.PyQt.QtGui import QIcon, QAction
 from qgis.PyQt.QtWidgets import QMenu, QMessageBox, QToolBar
 from typing import Dict, List, Optional, Callable
@@ -340,12 +340,16 @@ class MenuManager(QObject):
         return db.has_archived_cases()
     
     def _show_operation_tab(self):
-        """Показать вкладку операции"""
+        """Показать вкладку операции."""
         # Этот метод будет реализован при интеграции с UI
         self.menu_action_triggered.emit('show_operation_tab')
 
     def _create_service_menu(self):
-        """Создать меню "Сервис" - настройки и авторизация."""
+        """
+        Создать меню "Сервис".
+
+        В разделе собраны инструменты авторизации и служебных настроек.
+        """
         service_menu = QMenu("Сервис", self.main_menu)
         service_menu.setObjectName("service_menu")
         self.menus['service'] = service_menu

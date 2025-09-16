@@ -168,6 +168,10 @@ def patch_menu_structure(plugin_root: Path) -> None:
     marker_begin = "# --- begin: auto-patch by sync_menu_structure"
     marker_end = "# --- end: auto-patch by sync_menu_structure"
 
+    if "self._apply_menu_extensions()" in content:
+        print(f"{BANNER} SKIP: menu_structure.py уже содержит встроенное подключение расширений")
+        return
+
     if marker_begin in content and marker_end in content:
         print(f"{BANNER} OK: menu_structure.py уже содержит auto-patch wrapper — пропускаю")
         return

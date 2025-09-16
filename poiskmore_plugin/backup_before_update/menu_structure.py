@@ -340,10 +340,9 @@ class MenuManager(QObject):
         """Показать вкладку операции"""
         # Этот метод будет реализован при интеграции с UI
         self.menu_action_triggered.emit('show_operation_tab')
-        def _create_service_menu(self):
-        """
-        Создать меню "Сервис" - настройки и авторизация
-        """
+
+    def _create_service_menu(self):
+        """Создать меню "Сервис" - настройки и авторизация."""
         service_menu = QMenu("Сервис", self.main_menu)
         service_menu.setObjectName("service_menu")
         self.menus['service'] = service_menu
@@ -382,7 +381,7 @@ class MenuManager(QObject):
         action_sync.setEnabled(False)  # Активно после авторизации
         service_menu.addAction(action_sync)
         self.actions['sync_contacts'] = action_sync
-        
+
         self.main_menu.addMenu(service_menu)
     
     def _create_datum_menu(self):
@@ -697,7 +696,8 @@ class MenuManager(QObject):
                 "SRU обновлены",
                 f"Активных поисковых единиц: {len(sru_data)}"
             )
-            def _create_documents_menu(self):
+
+    def _create_documents_menu(self):
         """
         Создать меню "Документы" - формы и отчеты
         """
@@ -1150,3 +1150,40 @@ class MenuManager(QObject):
         self.menus.clear()
         self.actions.clear()
         self.toolbars.clear()
+
+# --- begin: auto-patch by sync_menu_structure (20250825-203127)
+# Мягкий wrapper вокруг create_menu_structure: вызывает оригинал, затем подключает расширение меню
+try:
+    _original_create_menu_structure  # type: ignore
+except NameError:
+    _original_create_menu_structure = None  # type: ignore
+
+if _original_create_menu_structure is None:
+    try:
+        # Сохраняем оригинал
+        _original_create_menu_structure = create_menu_structure  # type: ignore
+    except Exception:
+        _original_create_menu_structure = None  # type: ignore
+
+if _original_create_menu_structure is not None:
+    def create_menu_structure(menu, actions, run_action):
+        # сначала оригинальная сборка меню
+        _original_create_menu_structure(menu, actions, run_action)
+        # затем — расширение меню "Регистрация происшествия"
+        try:
+            from .menu_extensions.incident_menu_patch import apply as _apply_incident_menu_patch
+            _apply_incident_menu_patch(menu, actions, run_action)
+        except Exception:
+            # Не падаем, если вдруг модуль не загрузился — меню останется как было
+            pass
+else:
+    # На случай, если в файле не было create_menu_structure: создаём тонкий вариант,
+    # который просто подключит расширение меню.
+    def create_menu_structure(menu, actions, run_action):
+        try:
+            from .menu_extensions.incident_menu_patch import apply as _apply_incident_menu_patch
+            _apply_incident_menu_patch(menu, actions, run_action)
+        except Exception:
+            pass
+
+# --- end: auto-patch by sync_menu_structure

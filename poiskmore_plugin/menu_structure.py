@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-Модуль управления структурой меню плагина ПОИСК-МОРЕ
-Соответствует документации и методике проведения поисково-спасательных операций
-Версия 2.0.0
-"""
+"""Модуль управления структурой меню плагина ПОИСК-МОРЕ.
+
+Соответствует документации и методике проведения поисково-спасательных операций.
+Версия 2.0.0."""
 
 from qgis.PyQt.QtCore import QObject, pyqtSignal, QSettings
 from qgis.PyQt.QtGui import QIcon, QAction
@@ -12,10 +11,9 @@ from typing import Dict, List, Optional, Callable
 import os
 
 class MenuManager(QObject):
-    """
-    Менеджер структуры меню плагина
-    Управляет созданием, видимостью и состоянием всех элементов меню
-    """
+    """Менеджер структуры меню плагина.
+
+    Управляет созданием, видимостью и состоянием всех элементов меню."""
     
     # Сигналы для взаимодействия с другими компонентами
     operation_started = pyqtSignal(dict)  # Начата новая операция
@@ -23,13 +21,11 @@ class MenuManager(QObject):
     menu_action_triggered = pyqtSignal(str)  # Вызвано действие меню
     
     def __init__(self, iface, plugin_dir):
-        """
-        Инициализация менеджера меню
-        
+        """Инициализация менеджера меню.
+
         Args:
-            iface: Интерфейс QGIS
-            plugin_dir: Путь к директории плагина
-        """
+            iface: Интерфейс QGIS.
+            plugin_dir: Путь к директории плагина."""
         super().__init__()
         self.iface = iface
         self.plugin_dir = plugin_dir
@@ -49,9 +45,7 @@ class MenuManager(QObject):
         self.main_menu = None
         
     def create_menu_structure(self):
-        """
-        Создать полную структуру меню согласно документации
-        """
+        """Создать полную структуру меню согласно документации."""
         # Создаем главное меню
         self.main_menu = QMenu("ПОИСК-МОРЕ", self.iface.mainWindow().menuBar())
         self.iface.mainWindow().menuBar().addMenu(self.main_menu)
@@ -63,17 +57,18 @@ class MenuManager(QObject):
         self._create_area_menu()        # 4. Район
         self._create_documents_menu()   # 5. Документы
         self._create_help_menu()       # 6. Помощь
-        
+
+        # Подключаем дополнительные расширения меню, если они доступны
+        self._apply_menu_extensions()
+
         # Создаем панель инструментов
         self._create_toolbar()
-        
+
         # Устанавливаем начальное состояние элементов
         self._update_menu_state()
     
     def _create_search_menu(self):
-        """
-        Создать меню "Поиск" - главное меню для работы с операциями
-        """
+        """Создать меню "Поиск" — главное меню для работы с операциями."""
         search_menu = QMenu("Поиск", self.main_menu)
         search_menu.setObjectName("search_menu")
         self.menus['search'] = search_menu
@@ -291,24 +286,20 @@ class MenuManager(QObject):
     # === ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ===
     
     def _get_icon(self, icon_name):
-        """
-        Получить иконку из директории icons
-        
+        """Получить иконку из директории icons.
+
         Args:
-            icon_name: Имя файла иконки
-            
+            icon_name: Имя файла иконки.
+
         Returns:
-            QIcon объект или пустая иконка если файл не найден
-        """
+            QIcon объект или пустая иконка, если файл не найден."""
         icon_path = os.path.join(self.icons_dir, icon_name)
         if os.path.exists(icon_path):
             return QIcon(icon_path)
         return QIcon()
     
     def _update_menu_state(self):
-        """
-        Обновить состояние элементов меню в зависимости от состояния операции
-        """
+        """Обновить состояние элементов меню в зависимости от состояния операции."""
         # Элементы, требующие активной операции
         operation_required = [
             'edit_info', 'close_search', 'finish_search',
@@ -342,9 +333,7 @@ class MenuManager(QObject):
         self.menu_action_triggered.emit('show_operation_tab')
 
     def _create_service_menu(self):
-        """
-        Создать меню «Сервис» — настройки и авторизация.
-        """
+        """Создать меню "Сервис" - настройки и авторизация."""
         service_menu = QMenu("Сервис", self.main_menu)
         service_menu.setObjectName("service_menu")
         self.menus['service'] = service_menu
@@ -387,9 +376,7 @@ class MenuManager(QObject):
         self.main_menu.addMenu(service_menu)
     
     def _create_datum_menu(self):
-        """
-        Создать меню «Исходный пункт» — расчет исходных точек поиска.
-        """
+        """Создать меню "Исходный пункт" для расчета исходных точек поиска."""
         datum_menu = QMenu("Исходный пункт", self.main_menu)
         datum_menu.setObjectName("datum_menu")
         self.menus['datum'] = datum_menu
@@ -422,9 +409,7 @@ class MenuManager(QObject):
         self.main_menu.addMenu(datum_menu)
     
     def _create_area_menu(self):
-        """
-        Создать меню «Район» — управление районами поиска.
-        """
+        """Создать меню "Район" для управления районами поиска."""
         area_menu = QMenu("Район", self.main_menu)
         area_menu.setObjectName("area_menu")
         self.menus['area'] = area_menu
@@ -627,12 +612,10 @@ class MenuManager(QObject):
     # === ОБРАБОТЧИКИ МЕНЮ "РАЙОН" ===
     
     def _on_create_area(self, area_type):
-        """
-        Обработчик создания района поиска
-        
+        """Обработчик создания района поиска.
+
         Args:
-            area_type: Тип района поиска
-        """
+            area_type: Тип района поиска."""
         if not self.operation_active:
             QMessageBox.warning(
                 self.iface.mainWindow(),
@@ -700,9 +683,7 @@ class MenuManager(QObject):
             )
 
     def _create_documents_menu(self):
-        """
-        Создать меню "Документы" - формы и отчеты
-        """
+        """Создать меню "Документы" для работы с формами и отчетами."""
         docs_menu = QMenu("Документы", self.main_menu)
         docs_menu.setObjectName("documents_menu")
         self.menus['documents'] = docs_menu
@@ -746,9 +727,7 @@ class MenuManager(QObject):
         self.main_menu.addMenu(docs_menu)
     
     def _create_help_menu(self):
-        """
-        Создать меню "Помощь" - справка и документация
-        """
+        """Создать меню "Помощь" со справочной документацией."""
         help_menu = QMenu("Помощь", self.main_menu)
         help_menu.setObjectName("help_menu")
         self.menus['help'] = help_menu
@@ -799,13 +778,27 @@ class MenuManager(QObject):
         action_about.triggered.connect(self._on_about)
         help_menu.addAction(action_about)
         self.actions['about'] = action_about
-        
+
         self.main_menu.addMenu(help_menu)
-    
+
+    def _apply_menu_extensions(self):
+        """Подключить дополнительные расширения меню (если доступны)."""
+        if self.main_menu is None:
+            return
+
+        try:
+            from .menu_extensions.incident_menu_patch import apply as apply_incident_menu_patch
+        except Exception:
+            return
+
+        try:
+            apply_incident_menu_patch(self.main_menu, self.actions, None)
+        except Exception:
+            # Расширение не критично для работы меню, поэтому тихо игнорируем ошибки
+            pass
+
     def _create_toolbar(self):
-        """
-        Создать панель инструментов с быстрым доступом к основным функциям
-        """
+        """Создать панель инструментов с быстрым доступом к основным функциям."""
         toolbar = self.iface.addToolBar("ПОИСК-МОРЕ")
         toolbar.setObjectName("poisk_more_toolbar")
         self.toolbars['main'] = toolbar
@@ -935,12 +928,10 @@ class MenuManager(QObject):
     # === МЕТОДЫ РАБОТЫ С ОПЕРАЦИЯМИ ===
     
     def _save_operation_state(self, status='active'):
-        """
-        Сохранить состояние текущей операции
-        
+        """Сохранить состояние текущей операции.
+
         Args:
-            status: Статус операции (active, suspended, completed)
-        """
+            status: Статус операции (active, suspended, completed)."""
         if not self.operation_data:
             return
         
@@ -953,12 +944,10 @@ class MenuManager(QObject):
         db.save_operation(self.operation_data)
     
     def _load_operation(self, operation_id):
-        """
-        Загрузить операцию по ID
-        
+        """Загрузить операцию по идентификатору.
+
         Args:
-            operation_id: Идентификатор операции
-        """
+            operation_id: Идентификатор операции."""
         from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
@@ -971,12 +960,10 @@ class MenuManager(QObject):
             self.operation_started.emit(operation_data)
     
     def _archive_operation(self, finish_data):
-        """
-        Архивировать завершенную операцию
-        
+        """Архивировать завершенную операцию.
+
         Args:
-            finish_data: Данные о завершении операции
-        """
+            finish_data: Данные о завершении операции."""
         from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
@@ -988,12 +975,10 @@ class MenuManager(QObject):
         db.archive_operation(self.operation_data)
     
     def _load_archived_case(self, case_id):
-        """
-        Загрузить архивное дело для повторного поиска
-        
+        """Загрузить архивное дело для повторного поиска.
+
         Args:
-            case_id: Идентификатор дела
-        """
+            case_id: Идентификатор дела."""
         from .utils.db_manager import DatabaseManager
         
         db = DatabaseManager()
@@ -1087,12 +1072,10 @@ class MenuManager(QObject):
         self.menu_action_triggered.emit('update_statistics')
     
     def _generate_form(self, form_type):
-        """
-        Генерировать стандартную форму
-        
+        """Генерировать стандартную форму.
+
         Args:
-            form_type: Тип формы для генерации
-        """
+            form_type: Тип формы для генерации."""
         from .reports.standard_forms import StandardFormsGenerator
         
         generator = StandardFormsGenerator()
@@ -1110,12 +1093,10 @@ class MenuManager(QObject):
             webbrowser.open(file_path)
     
     def _generate_search_plan_document(self, plan_data):
-        """
-        Генерировать документ плана поиска
-        
+        """Генерировать документ плана поиска.
+
         Args:
-            plan_data: Данные плана поиска
-        """
+            plan_data: Данные плана поиска."""
         from .reports.search_plan_generator import SearchPlanGenerator
         
         generator = SearchPlanGenerator()
@@ -1133,9 +1114,7 @@ class MenuManager(QObject):
             webbrowser.open(file_path)
     
     def cleanup(self):
-        """
-        Очистка ресурсов при выгрузке плагина
-        """
+        """Очистка ресурсов при выгрузке плагина."""
         # Сохраняем текущую операцию если есть
         if self.operation_active:
             self._save_operation_state()
@@ -1153,39 +1132,3 @@ class MenuManager(QObject):
         self.actions.clear()
         self.toolbars.clear()
 
-# --- begin: auto-patch by sync_menu_structure (20250825-203127)
-# Мягкий wrapper вокруг create_menu_structure: вызывает оригинал, затем подключает расширение меню
-try:
-    _original_create_menu_structure  # type: ignore
-except NameError:
-    _original_create_menu_structure = None  # type: ignore
-
-if _original_create_menu_structure is None:
-    try:
-        # Сохраняем оригинал
-        _original_create_menu_structure = create_menu_structure  # type: ignore
-    except Exception:
-        _original_create_menu_structure = None  # type: ignore
-
-if _original_create_menu_structure is not None:
-    def create_menu_structure(menu, actions, run_action):
-        # сначала оригинальная сборка меню
-        _original_create_menu_structure(menu, actions, run_action)
-        # затем — расширение меню "Регистрация происшествия"
-        try:
-            from .menu_extensions.incident_menu_patch import apply as _apply_incident_menu_patch
-            _apply_incident_menu_patch(menu, actions, run_action)
-        except Exception:
-            # Не падаем, если вдруг модуль не загрузился — меню останется как было
-            pass
-else:
-    # На случай, если в файле не было create_menu_structure: создаём тонкий вариант,
-    # который просто подключит расширение меню.
-    def create_menu_structure(menu, actions, run_action):
-        try:
-            from .menu_extensions.incident_menu_patch import apply as _apply_incident_menu_patch
-            _apply_incident_menu_patch(menu, actions, run_action)
-        except Exception:
-            pass
-
-# --- end: auto-patch by sync_menu_structure

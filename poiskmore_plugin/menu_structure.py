@@ -328,12 +328,16 @@ class MenuManager(QObject):
         return db.has_archived_cases()
     
     def _show_operation_tab(self):
-        """Показать вкладку операции"""
+        """Показать вкладку операции."""
         # Этот метод будет реализован при интеграции с UI
         self.menu_action_triggered.emit('show_operation_tab')
 
+    # === МЕНЮ "СЕРВИС" ===
+
     def _create_service_menu(self):
-        """Создать меню "Сервис" - настройки и авторизация."""
+        """
+        Создать меню "Сервис" - настройки и авторизация.
+        """
         service_menu = QMenu("Сервис", self.main_menu)
         service_menu.setObjectName("service_menu")
         self.menus['service'] = service_menu

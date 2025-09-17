@@ -1,0 +1,219 @@
+Ñòðóêòóðà ïàïîê òîìà Windows
+Ñåðèéíûé íîìåð òîìà: 7018-58EE
+C:\INSTALLPOISKMORE
+¦   Apache.NMS.ActiveMQ.dll
+¦   Apache.NMS.ActiveMQ.pdb
+¦   Apache.NMS.ActiveMQ.xml
+¦   Apache.NMS.dll
+¦   Apache.NMS.pdb
+¦   Apache.NMS.xml
+¦   BouncyCastle.Crypto.dll
+¦   CMapSDKInterop.CDTool.dll
+¦   CMapSDKInterop.DisplayGenerator.dll
+¦   CMapSDKInterop.GeoDatabase.dll
+¦   CMapSDKInterop.GeoPres.dll
+¦   CMapSDKInterop.GeoProjection.dll
+¦   CMapSDKInterop.GeoTypes.dll
+¦   CommonServiceLocator.dll
+¦   CommonServiceLocator.pdb
+¦   container.xml
+¦   ESRI.ArcGIS.ADF.Local.dll
+¦   ESRI.ArcGIS.ArcMapUI.dll
+¦   ESRI.ArcGIS.AxControls.dll
+¦   ESRI.ArcGIS.Carto.dll
+¦   ESRI.ArcGIS.Controls.dll
+¦   ESRI.ArcGIS.DataSourcesFile.dll
+¦   ESRI.ArcGIS.DataSourcesGDB.dll
+¦   ESRI.ArcGIS.Display.dll
+¦   ESRI.ArcGIS.Editor.dll
+¦   ESRI.ArcGIS.EngineCore.dll
+¦   ESRI.ArcGIS.Framework.dll
+¦   ESRI.ArcGIS.Geodatabase.dll
+¦   ESRI.ArcGIS.GeoDatabaseExtensions.dll
+¦   ESRI.ArcGIS.Geometry.dll
+¦   ESRI.ArcGIS.Location.dll
+¦   ESRI.ArcGIS.Output.dll
+¦   ESRI.ArcGIS.System.dll
+¦   ESRI.ArcGIS.SystemUI.dll
+¦   ESRI.ArcGIS.Version.dll
+¦   Export_Output.dbf
+¦   Export_Output.prj
+¦   Export_Output.sbn
+¦   Export_Output.sbx
+¦   Export_Output.shp
+¦   Export_Output.shx
+¦   GeoAPI.CoordinateSystems.dll
+¦   GeoAPI.CoordinateSystems.pdb
+¦   GeoAPI.CoordinateSystems.xml
+¦   GeoAPI.dll
+¦   GeoAPI.pdb
+¦   GeoAPI.xml
+¦   Implab.dll
+¦   Implab.ServiceHost.dll
+¦   Interop.DCAMControlLib.dll
+¦   Ionic.Zip.dll
+¦   itextsharp.dll
+¦   itextsharp.xml
+¦   linq2db.dll
+¦   linq2db.xml
+¦   LiteDB.dll
+¦   LiteDB.xml
+¦   NetTopologySuite.CoordinateSystems.dll
+¦   NetTopologySuite.CoordinateSystems.xml
+¦   NetTopologySuite.dll
+¦   NetTopologySuite.Features.dll
+¦   NetTopologySuite.Features.pdb
+¦   NetTopologySuite.Features.xml
+¦   NetTopologySuite.IO.GeoTools.dll
+¦   NetTopologySuite.IO.GeoTools.xml
+¦   NetTopologySuite.IO.ShapeFile.dll
+¦   NetTopologySuite.IO.ShapeFile.Extended.dll
+¦   NetTopologySuite.IO.ShapeFile.Extended.xml
+¦   NetTopologySuite.IO.ShapeFile.xml
+¦   NetTopologySuite.xml
+¦   Newtonsoft.Json.dll
+¦   Newtonsoft.Json.xml
+¦   NPKI.ArcGIS.exe
+¦   NPKI.ArcGIS.exe.config
+¦   NPKI.ArcGIS.pdb
+¦   nunit.framework.dll
+¦   nunit.framework.pdb
+¦   nunit.framework.xml
+¦   OilWater.Calculation.dll
+¦   OilWater.Database.dll
+¦   OilWater.dll
+¦   OilWater.Interface.dll
+¦   OilWater.ModelMetod.dll
+¦   OilWater.ModelSimple.dll
+¦   OilWater.ModelWalk.dll
+¦   OilWater.Substance.dll
+¦   Pallada.ArcGis.dll
+¦   Pallada.ArcGis.pdb
+¦   Pallada.ArcGis.ShipSea.dll
+¦   Pallada.ArcGis.ShipSea.pdb
+¦   Pallada.CMap.dll
+¦   Pallada.CMap.pdb
+¦   Pallada.Exchange.Sar.dll
+¦   Pallada.Exchange.Sar.pdb
+¦   Pallada.Gml.dll
+¦   Pallada.Gml.pdb
+¦   Pallada.Interop.ShipSea.dll
+¦   Pallada.Interop.ShipSea.dll.config
+¦   Pallada.Interop.ShipSea.pdb
+¦   Pallada.ISSKOI.MessagesModel.dll
+¦   Pallada.ISSKOI.MessagesModel.pdb
+¦   RestSharp.dll
+¦   RestSharp.xml
+¦   Russia.mxd
+¦   sardata.sqlite
+¦   System.Data.SQLite.dll
+¦   System.Data.SQLite.xml
+¦   System.Reactive.dll
+¦   System.Reactive.xml
+¦   trace.log
+¦   Unity.Abstractions.dll
+¦   Unity.Abstractions.pdb
+¦   Unity.Configuration.dll
+¦   Unity.Configuration.pdb
+¦   Unity.Container.dll
+¦   Unity.Container.pdb
+¦   Unity.Interception.Configuration.dll
+¦   Unity.Interception.Configuration.pdb
+¦   Unity.Interception.dll
+¦   Unity.Interception.pdb
+¦   Unity.RegistrationByConvention.dll
+¦   Unity.RegistrationByConvention.pdb
+¦   Unity.ServiceLocation.dll
+¦   Unity.ServiceLocation.pdb
+¦   
++---Archive
+¦       subRegions1.avl
+¦       
++---Export
+¦       CorrAndOptRegions1.dbf
+¦       CorrAndOptRegions1.shp
+¦       CorrAndOptRegions1.shx
+¦       SarUnits.dbf
+¦       SarUnits.prj
+¦       SarUnits.sbn
+¦       SarUnits.sbx
+¦       SarUnits.shp
+¦       SarUnits.shp.xml
+¦       SarUnits.shx
+¦       subRegions1.avl
+¦       subRegions1.dbf
+¦       subRegions1.shp
+¦       subRegions1.shx
+¦       ThingPoints.dbf
+¦       ThingPoints.prj
+¦       ThingPoints.shp
+¦       ThingPoints.shx
+¦       
++---OilWaterLibs
+¦       ingreds.xml
+¦       OilWater.introgis
+¦       
++---Resources
+¦       MarineRadioFrequencyList.pdf
+¦       SearchObjectTypesHelp.pdf
+¦       
++---ru
+¦       NPKI.ArcGIS.resources.dll
+¦       
++---Shapes
+¦       sarrcc_m.cpg
+¦       sarrcc_m.dbf
+¦       sarrcc_m.prj
+¦       sarrcc_m.shp
+¦       sarrcc_m.shp.UDJIN.7240.15848.sr.lock
+¦       sarrcc_m.shx
+¦       sarregion_m.cpg
+¦       sarregion_m.dbf
+¦       sarregion_m.prj
+¦       sarregion_m.shp
+¦       sarregion_m.shp.UDJIN.7240.15848.sr.lock
+¦       sarregion_m.shp.xml
+¦       sarregion_m.shx
+¦       
++---styles
+¦   ¦   DriftLines.lyr
+¦   ¦   DriftPoints.lyr
+¦   ¦   OriginalPoints.lyr
+¦   ¦   ProbabilityLines.lyr
+¦   ¦   ProbabilityPoints.lyr
+¦   ¦   RegionSchemes.lyr
+¦   ¦   SarUnits.lyr
+¦   ¦   Sit185Markers.lyr
+¦   ¦   SubRegionRoutes.lyr
+¦   ¦   SubRegions.lyr
+¦   ¦   ThingPoints.lyr
+¦   ¦   TotalPositionErrors.lyr
+¦   ¦   
+¦   L---ru
+¦       ¦   DriftLines.lyr
+¦       ¦   DriftPoints.lyr
+¦       ¦   OriginalPoints.lyr
+¦       ¦   ProbabilityLines.lyr
+¦       ¦   ProbabilityPoints.lyr
+¦       ¦   RegionSchemes.lyr
+¦       ¦   SarUnits.lyr
+¦       ¦   Sit185Markers.lyr
+¦       ¦   SubRegionRoutes.lyr
+¦       ¦   SubRegions.lyr
+¦       ¦   ThingPoints.lyr
+¦       ¦   TotalPositionErrors.lyr
+¦       ¦   
+¦       L---pictures
+¦               CoordCopter.png
+¦               CoordMaritime.png
+¦               CoordPlane.png
+¦               Copter.png
+¦               Maritime.png
+¦               Plane.png
+¦               
++---x64
+¦       SQLite.Interop.dll
+¦       
+L---x86
+        SQLite.Interop.dll
+        

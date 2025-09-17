@@ -455,31 +455,6 @@ class PoiskMoreSidebarDock(QDockWidget):
     # выполнение общей реализации, которая используется и кнопкой.
     def _zoom_to_center(self):
         self._zoom_to_center_impl()
-        it = self.listCenters.currentItem()
-        if not it:
-            QMessageBox.information(self, "Поиск‑Море", "Выберите центр.")
-            return
-        mode, payload = it.data(Qt.UserRole)
-        if mode == "json" and payload:
-            xmin,ymin,xmax,ymax = payload
-            rect = QgsRectangle(xmin,ymin,xmax,ymax)
-            self.iface.mapCanvas().setExtent(rect); self.iface.mapCanvas().refresh(); return
-        if mode == "layer":
-            lyr_id, fid = payload
-            lyr = QgsProject.instance().mapLayer(lyr_id)
-            if isinstance(lyr, QgsVectorLayer):
-                for f in lyr.getFeatures(QgsFeatureRequest(fid)):
-                    g = f.geometry()
-                    if g and not g.isEmpty():
-                        self.iface.mapCanvas().setExtent(g.boundingBox())
-                        self.iface.mapCanvas().refresh(); return
-        QMessageBox.warning(self, "Поиск‑Море", "Не удалось приблизить к выбранному центру.")
-
-    # Совместимость: прежний обработчик остаётся доступным для внешнего кода
-    # (например, в автотестах или сторонних расширениях), но теперь делегирует
-    # выполнение общей реализации, которая используется и кнопкой.
-    def _zoom_to_center(self):
-        self._zoom_to_center_impl()
 
     # --- Health‑check сервисов и мини‑легенда ---
     def _check_services(self):

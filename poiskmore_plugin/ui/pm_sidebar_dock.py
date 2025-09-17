@@ -284,7 +284,7 @@ class PoiskMoreSidebarDock(QDockWidget):
         self._refresh_thematic_list()
 
     # --- Сигналы ---
-    def _bind_signals(self):
+def _bind_signals(self):
         self.rbEsri.toggled.connect(lambda on: on and self.basemap.set_base(LAYER_ESRI))
         self.rbOSM.toggled.connect(lambda on: on and self.basemap.set_base(LAYER_OSM))
         self.cbSeamarks.toggled.connect(self.basemap.set_seamarks_visible)
@@ -297,18 +297,7 @@ class PoiskMoreSidebarDock(QDockWidget):
         self.btnRepair.clicked.connect(self._repair_links)
         self.btnStyles.clicked.connect(self._apply_styles)
 
-        zoom_slot = getattr(self, "_zoom_to_center", None)
-        if callable(zoom_slot):
-            self.btnZoom.clicked.connect(zoom_slot)
-        else:
-            # Защита от неполных сборок/старых версий файла, где обработчик ещё не добавлен.
-            # Вместо падения и отключения всей панели просто блокируем кнопку и логируем предупреждение.
-            self.btnZoom.setEnabled(False)
-            QgsApplication.messageLog().logMessage(
-                "Кнопка приближения к центру отключена: отсутствует обработчик _zoom_to_center",
-                "Poisk-More",
-                Qgis.Warning
-            )
+        self.btnZoom.clicked.connect(self._on_zoom_to_center_clicked)
         self.btnHealth.clicked.connect(self._check_services)
 
     # --- Инициализация групп ---
@@ -429,7 +418,18 @@ class PoiskMoreSidebarDock(QDockWidget):
                 except Exception as e:
                     QgsApplication.messageLog().logMessage(f"centers.json error: {e}", "Poisk-More", 2)
 
-    def _zoom_to_center(self):
+    def _on_zoom_to_center_clicked(self, checked: bool = False):
+        """Слот кнопки «Приблизить к центру».
+
+        Не используем прямое подключение к _zoom_to_center, чтобы инициализация
+        дока не падала, если в окружении загружена устаревшая версия класса без
+        соответствующего обработчика. Здесь же можно безопасно вызвать общую
+        реализацию, сохраняя поведение кнопки.
+        """
+        _ = checked  # сигнал clicked(bool) передаёт флаг нажатия
+        self._zoom_to_center_impl()
+
+    def _zoom_to_center_impl(self):
         it = self.listCenters.currentItem()
         if not it:
             QMessageBox.information(self, "Поиск‑Море", "Выберите центр.")
@@ -449,6 +449,12 @@ class PoiskMoreSidebarDock(QDockWidget):
                         self.iface.mapCanvas().setExtent(g.boundingBox())
                         self.iface.mapCanvas().refresh(); return
         QMessageBox.warning(self, "Поиск‑Море", "Не удалось приблизить к выбранному центру.")
+
+    # Совместимость: прежний обработчик остаётся доступным для внешнего кода
+    # (например, в автотестах или сторонних расширениях), но теперь делегирует
+    # выполнение общей реализации, которая используется и кнопкой.
+    def _zoom_to_center(self):
+        self._zoom_to_center_impl()
 
     # --- Health‑check сервисов и мини‑легенда ---
     def _check_services(self):

@@ -284,7 +284,7 @@ class PoiskMoreSidebarDock(QDockWidget):
         self._refresh_thematic_list()
 
     # --- Сигналы ---
-def _bind_signals(self):
+    def _bind_signals(self):
         self.rbEsri.toggled.connect(lambda on: on and self.basemap.set_base(LAYER_ESRI))
         self.rbOSM.toggled.connect(lambda on: on and self.basemap.set_base(LAYER_OSM))
         self.cbSeamarks.toggled.connect(self.basemap.set_seamarks_visible)
@@ -430,6 +430,31 @@ def _bind_signals(self):
         self._zoom_to_center_impl()
 
     def _zoom_to_center_impl(self):
+        it = self.listCenters.currentItem()
+        if not it:
+            QMessageBox.information(self, "Поиск‑Море", "Выберите центр.")
+            return
+        mode, payload = it.data(Qt.UserRole)
+        if mode == "json" and payload:
+            xmin,ymin,xmax,ymax = payload
+            rect = QgsRectangle(xmin,ymin,xmax,ymax)
+            self.iface.mapCanvas().setExtent(rect); self.iface.mapCanvas().refresh(); return
+        if mode == "layer":
+            lyr_id, fid = payload
+            lyr = QgsProject.instance().mapLayer(lyr_id)
+            if isinstance(lyr, QgsVectorLayer):
+                for f in lyr.getFeatures(QgsFeatureRequest(fid)):
+                    g = f.geometry()
+                    if g and not g.isEmpty():
+                        self.iface.mapCanvas().setExtent(g.boundingBox())
+                        self.iface.mapCanvas().refresh(); return
+        QMessageBox.warning(self, "Поиск‑Море", "Не удалось приблизить к выбранному центру.")
+
+    # Совместимость: прежний обработчик остаётся доступным для внешнего кода
+    # (например, в автотестах или сторонних расширениях), но теперь делегирует
+    # выполнение общей реализации, которая используется и кнопкой.
+    def _zoom_to_center(self):
+        self._zoom_to_center_impl()
         it = self.listCenters.currentItem()
         if not it:
             QMessageBox.information(self, "Поиск‑Море", "Выберите центр.")

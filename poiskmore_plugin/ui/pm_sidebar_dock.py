@@ -23,7 +23,7 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import (
     QgsProject, QgsRasterLayer, QgsVectorLayer, QgsFeatureRequest,
-    QgsRectangle, QgsApplication
+    QgsRectangle, QgsApplication, Qgis
 )
 
 # ---------- Константы ----------
@@ -297,7 +297,18 @@ class PoiskMoreSidebarDock(QDockWidget):
         self.btnRepair.clicked.connect(self._repair_links)
         self.btnStyles.clicked.connect(self._apply_styles)
 
-        self.btnZoom.clicked.connect(self._zoom_to_center)
+        zoom_slot = getattr(self, "_zoom_to_center", None)
+        if callable(zoom_slot):
+            self.btnZoom.clicked.connect(zoom_slot)
+        else:
+            # Защита от неполных сборок/старых версий файла, где обработчик ещё не добавлен.
+            # Вместо падения и отключения всей панели просто блокируем кнопку и логируем предупреждение.
+            self.btnZoom.setEnabled(False)
+            QgsApplication.messageLog().logMessage(
+                "Кнопка приближения к центру отключена: отсутствует обработчик _zoom_to_center",
+                "Poisk-More",
+                Qgis.Warning
+            )
         self.btnHealth.clicked.connect(self._check_services)
 
     # --- Инициализация групп ---

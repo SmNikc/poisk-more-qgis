@@ -23,7 +23,7 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import (
     QgsProject, QgsRasterLayer, QgsVectorLayer, QgsFeatureRequest,
-    QgsRectangle, QgsApplication
+    QgsRectangle, QgsApplication, Qgis
 )
 
 # ---------- Константы ----------
@@ -297,7 +297,7 @@ class PoiskMoreSidebarDock(QDockWidget):
         self.btnRepair.clicked.connect(self._repair_links)
         self.btnStyles.clicked.connect(self._apply_styles)
 
-        self.btnZoom.clicked.connect(self._on_zoom_button_clicked)
+        self.btnZoom.clicked.connect(self._on_zoom_to_center_clicked)
         self.btnHealth.clicked.connect(self._check_services)
 
     # --- Инициализация групп ---
@@ -418,13 +418,18 @@ class PoiskMoreSidebarDock(QDockWidget):
                 except Exception as e:
                     QgsApplication.messageLog().logMessage(f"centers.json error: {e}", "Poisk-More", 2)
 
-    def _on_zoom_button_clicked(self, checked: bool = False):
-        """Перехватываем сигнал QPushButton.clicked(bool)."""
-        # Сигнал clicked(bool) передаёт параметр checked, который здесь не используется.
-        # Передаём управление основному обработчику зумирования.
-        self._zoom_to_center()
+    def _on_zoom_to_center_clicked(self, checked: bool = False):
+        """Слот кнопки «Приблизить к центру».
 
-    def _zoom_to_center(self):
+        Не используем прямое подключение к _zoom_to_center, чтобы инициализация
+        дока не падала, если в окружении загружена устаревшая версия класса без
+        соответствующего обработчика. Здесь же можно безопасно вызвать общую
+        реализацию, сохраняя поведение кнопки.
+        """
+        _ = checked  # сигнал clicked(bool) передаёт флаг нажатия
+        self._zoom_to_center_impl()
+
+    def _zoom_to_center_impl(self):
         it = self.listCenters.currentItem()
         if not it:
             QMessageBox.information(self, "Поиск‑Море", "Выберите центр.")
@@ -444,6 +449,37 @@ class PoiskMoreSidebarDock(QDockWidget):
                         self.iface.mapCanvas().setExtent(g.boundingBox())
                         self.iface.mapCanvas().refresh(); return
         QMessageBox.warning(self, "Поиск‑Море", "Не удалось приблизить к выбранному центру.")
+
+    # Совместимость: прежний обработчик остаётся доступным для внешнего кода
+    # (например, в автотестах или сторонних расширениях), но теперь делегирует
+    # выполнение общей реализации, которая используется и кнопкой.
+    def _zoom_to_center(self):
+        self._zoom_to_center_impl()
+        it = self.listCenters.currentItem()
+        if not it:
+            QMessageBox.information(self, "Поиск‑Море", "Выберите центр.")
+            return
+        mode, payload = it.data(Qt.UserRole)
+        if mode == "json" and payload:
+            xmin,ymin,xmax,ymax = payload
+            rect = QgsRectangle(xmin,ymin,xmax,ymax)
+            self.iface.mapCanvas().setExtent(rect); self.iface.mapCanvas().refresh(); return
+        if mode == "layer":
+            lyr_id, fid = payload
+            lyr = QgsProject.instance().mapLayer(lyr_id)
+            if isinstance(lyr, QgsVectorLayer):
+                for f in lyr.getFeatures(QgsFeatureRequest(fid)):
+                    g = f.geometry()
+                    if g and not g.isEmpty():
+                        self.iface.mapCanvas().setExtent(g.boundingBox())
+                        self.iface.mapCanvas().refresh(); return
+        QMessageBox.warning(self, "Поиск‑Море", "Не удалось приблизить к выбранному центру.")
+
+    # Совместимость: прежний обработчик остаётся доступным для внешнего кода
+    # (например, в автотестах или сторонних расширениях), но теперь делегирует
+    # выполнение общей реализации, которая используется и кнопкой.
+    def _zoom_to_center(self):
+        self._zoom_to_center_impl()
 
     # --- Health‑check сервисов и мини‑легенда ---
     def _check_services(self):

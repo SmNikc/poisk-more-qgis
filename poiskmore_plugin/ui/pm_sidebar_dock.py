@@ -23,7 +23,7 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import (
     QgsProject, QgsRasterLayer, QgsVectorLayer, QgsFeatureRequest,
-    QgsRectangle, QgsApplication
+    QgsRectangle, QgsApplication, Qgis
 )
 
 # ---------- Константы ----------
@@ -284,7 +284,7 @@ class PoiskMoreSidebarDock(QDockWidget):
         self._refresh_thematic_list()
 
     # --- Сигналы ---
-    def _bind_signals(self):
+def _bind_signals(self):
         self.rbEsri.toggled.connect(lambda on: on and self.basemap.set_base(LAYER_ESRI))
         self.rbOSM.toggled.connect(lambda on: on and self.basemap.set_base(LAYER_OSM))
         self.cbSeamarks.toggled.connect(self.basemap.set_seamarks_visible)

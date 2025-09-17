@@ -23,7 +23,7 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import (
     QgsProject, QgsRasterLayer, QgsVectorLayer, QgsFeatureRequest,
-    QgsRectangle, QgsApplication
+    QgsRectangle, QgsApplication, Qgis
 )
 
 # ---------- Константы ----------
@@ -297,7 +297,24 @@ class PoiskMoreSidebarDock(QDockWidget):
         self.btnRepair.clicked.connect(self._repair_links)
         self.btnStyles.clicked.connect(self._apply_styles)
 
-        self.btnZoom.clicked.connect(self._zoom_to_center)
+        zoom_handler = getattr(self, "_zoom_to_center", None)
+        if zoom_handler:
+            self.btnZoom.clicked.connect(zoom_handler)
+        else:
+            def _missing_zoom_handler():
+                QMessageBox.warning(
+                    self,
+                    "Поиск‑Море",
+                    "Эта сборка плагина не поддерживает приближение к центрам."
+                )
+
+            self._missing_zoom_handler = _missing_zoom_handler
+            self.btnZoom.clicked.connect(self._missing_zoom_handler)
+            QgsApplication.messageLog().logMessage(
+                "Zoom-to-center handler is missing; falling back to stub.",
+                "Poisk-More",
+                Qgis.Warning
+            )
         self.btnHealth.clicked.connect(self._check_services)
 
     # --- Инициализация групп ---

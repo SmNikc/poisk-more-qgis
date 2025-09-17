@@ -297,7 +297,7 @@ class PoiskMoreSidebarDock(QDockWidget):
         self.btnRepair.clicked.connect(self._repair_links)
         self.btnStyles.clicked.connect(self._apply_styles)
 
-        self.btnZoom.clicked.connect(self._zoom_to_center)
+        self.btnZoom.clicked.connect(self._on_zoom_button_clicked)
         self.btnHealth.clicked.connect(self._check_services)
 
     # --- Инициализация групп ---
@@ -417,6 +417,12 @@ class PoiskMoreSidebarDock(QDockWidget):
                         self.listCenters.addItem(it)
                 except Exception as e:
                     QgsApplication.messageLog().logMessage(f"centers.json error: {e}", "Poisk-More", 2)
+
+    def _on_zoom_button_clicked(self, checked: bool = False):
+        """Перехватываем сигнал QPushButton.clicked(bool)."""
+        # Сигнал clicked(bool) передаёт параметр checked, который здесь не используется.
+        # Передаём управление основному обработчику зумирования.
+        self._zoom_to_center()
 
     def _zoom_to_center(self):
         it = self.listCenters.currentItem()

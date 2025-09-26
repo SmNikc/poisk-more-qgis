@@ -390,3 +390,9 @@ class DialogRepeatSearch(QDialog):
     def get_data(self):
         """Получить выбранную операцию (для совместимости)"""
         return self.selected_operation
+    
+    def get_selected_case_id(self):
+        """Получить ID выбранной операции/случая"""
+        if self.selected_operation:
+            return self.selected_operation.get('id', None)
+        return None

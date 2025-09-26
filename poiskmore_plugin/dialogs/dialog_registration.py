@@ -26,6 +26,9 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QDateTime
 from math import cos, sin, radians
 
+# Импортируем диалог расписания погоды
+from .weather_schedule_dialog import WeatherScheduleDialog
+
 class RegistrationDialog(QDialog):
     """Диалог регистрации нового аварийного случая"""
     
@@ -309,7 +312,46 @@ class RegistrationDialog(QDialog):
     def create_tab4(self):
         """Вкладка 4: Погода"""
         tab = QWidget()
-        layout = QFormLayout(tab)
+        main_layout = QVBoxLayout(tab)
+        
+        # НОВОЕ: Кнопки для работы с расписанием погоды
+        button_group = QGroupBox("📋 Расписание метеоусловий")
+        button_layout = QHBoxLayout()
+        
+        self.btn_weather_schedule = QPushButton("📋 Внести расписание ветра и течений")
+        self.btn_weather_schedule.setStyleSheet("QPushButton { font-weight: bold; padding: 10px; }")
+        self.btn_weather_schedule.clicked.connect(self.open_weather_schedule)
+        button_layout.addWidget(self.btn_weather_schedule)
+        
+        self.btn_import_hydro = QPushButton("📥 Импорт из Гидрометео")
+        self.btn_import_hydro.clicked.connect(self.import_from_hydro)
+        button_layout.addWidget(self.btn_import_hydro)
+        
+        button_group.setLayout(button_layout)
+        main_layout.addWidget(button_group)
+        
+        # Информация о рассчитанных значениях
+        info_group = QGroupBox("Рассчитанные значения")
+        info_layout = QFormLayout()
+        
+        self.lbl_asw_info = QLabel("Не рассчитано")
+        self.lbl_asw_info.setStyleSheet("QLabel { color: gray; }")
+        info_layout.addRow("Средний ветер (ASW):", self.lbl_asw_info)
+        
+        self.lbl_twc_info = QLabel("Не рассчитано")
+        self.lbl_twc_info.setStyleSheet("QLabel { color: gray; }")
+        info_layout.addRow("Суммарное течение (TWC):", self.lbl_twc_info)
+        
+        self.lbl_drift_info = QLabel("Не рассчитано")
+        self.lbl_drift_info.setStyleSheet("QLabel { color: gray; }")
+        info_layout.addRow("Дрейф объекта:", self.lbl_drift_info)
+        
+        info_group.setLayout(info_layout)
+        main_layout.addWidget(info_group)
+        
+        # Группа быстрого ввода (для совместимости)
+        quick_group = QGroupBox("Быстрый ввод (единичные значения)")
+        layout = QFormLayout()
         
         # Ветер
         wind_layout = QHBoxLayout()
@@ -331,55 +373,117 @@ class RegistrationDialog(QDialog):
         current_layout.addWidget(self.current_dir)
         layout.addRow("Течение:", current_layout)
         
+        quick_group.setLayout(layout)
+        main_layout.addWidget(quick_group)
+        
+        # Дополнительные параметры
+        extra_group = QGroupBox("Дополнительные параметры")
+        extra_layout = QFormLayout()
+        
         self.wave_height = QDoubleSpinBox(minimum=0, maximum=20)
-        layout.addRow("Высота волны (м):", self.wave_height)
+        extra_layout.addRow("Высота волны (м):", self.wave_height)
         
         self.precipitation = QLineEdit()
         self.precipitation.setPlaceholderText("Нет / Дождь / Снег / Туман")
-        layout.addRow("Осадки:", self.precipitation)
+        extra_layout.addRow("Осадки:", self.precipitation)
         
         self.air_temp = QDoubleSpinBox(minimum=-50, maximum=50)
-        layout.addRow("Температура воздуха °C:", self.air_temp)
+        extra_layout.addRow("Температура воздуха °C:", self.air_temp)
         
         self.visibility = QDoubleSpinBox(minimum=0, maximum=50)
-        layout.addRow("Видимость (мили):", self.visibility)
+        extra_layout.addRow("Видимость (мили):", self.visibility)
         
         self.ice = QLineEdit()
         self.ice.setPlaceholderText("Нет / Блинчатый / Сплоченный")
-        layout.addRow("Лёд:", self.ice)
+        extra_layout.addRow("Лёд:", self.ice)
         
         self.water_temp = QDoubleSpinBox(minimum=-10, maximum=40)
-        layout.addRow("Температура воды °C:", self.water_temp)
+        extra_layout.addRow("Температура воды °C:", self.water_temp)
         
         self.sunrise = QDateTimeEdit()
-        layout.addRow("Восход солнца (UTC):", self.sunrise)
+        extra_layout.addRow("Восход солнца (UTC):", self.sunrise)
         
         self.sunset = QDateTimeEdit()
-        layout.addRow("Заход солнца (UTC):", self.sunset)
+        extra_layout.addRow("Заход солнца (UTC):", self.sunset)
         
         self.weather_source = QLineEdit()
         self.weather_source.setPlaceholderText("Meteo.ru / Gismeteo / Местные данные")
-        layout.addRow("Источник погоды:", self.weather_source)
+        extra_layout.addRow("Источник погоды:", self.weather_source)
         
         self.actual_weather = QTextEdit()
         self.actual_weather.setMaximumHeight(60)
-        layout.addRow("Фактическая погода:", self.actual_weather)
+        extra_layout.addRow("Фактическая погода:", self.actual_weather)
         
-        # Кнопка расчета
-        btn_calc = QPushButton("Вычислить ASW/TWC")
+        extra_group.setLayout(extra_layout)
+        main_layout.addWidget(extra_group)
+        
+        # Кнопка расчета (для быстрого ввода)
+        btn_calc = QPushButton("Вычислить ASW/TWC (для быстрого ввода)")
         btn_calc.clicked.connect(self.calculate)
-        layout.addRow("", btn_calc)
-        
-        # Результаты расчета
-        self.lbl_asw = QLabel("ASW: не рассчитано")
-        self.lbl_twc = QLabel("TWC: не рассчитано")
-        layout.addRow("Результаты:", self.lbl_asw)
-        layout.addRow("", self.lbl_twc)
+        main_layout.addWidget(btn_calc)
         
         return tab
     
+    def open_weather_schedule(self):
+        """Открыть форму с расписанием ветра и течений"""
+        try:
+            # Получаем ID инцидента если есть
+            incident_id = getattr(self, 'incident_id', None)
+            
+            # Открываем диалог расписания погоды
+            dlg = WeatherScheduleDialog(incident_id, self)
+            dlg.weather_updated.connect(self.on_weather_updated)
+            
+            if dlg.exec_():
+                QMessageBox.information(self, "Успешно", 
+                                      "Данные расписания ветра и течений сохранены.\n"
+                                      "ASW и TWC рассчитаны с учетом изменения во времени.")
+        except Exception as e:
+            QMessageBox.warning(self, "Ошибка", 
+                               f"Не удалось открыть форму расписания:\n{str(e)}")
+    
+    def import_from_hydro(self):
+        """Импорт данных из модуля Гидрометео"""
+        QMessageBox.information(self, "Импорт", 
+                              "Функция импорта из модуля Гидрометео\n"
+                              "будет реализована в следующей версии.")
+    
+    def on_weather_updated(self, data):
+        """Обработка обновления данных погоды из формы расписания"""
+        try:
+            # Обновляем информационные метки
+            if 'asw' in data:
+                asw_speed = data['asw'].get('speed', 0)
+                asw_dir = data['asw'].get('direction', 0)
+                self.lbl_asw_info.setText(f"{asw_speed:.1f} уз @ {asw_dir:.0f}°")
+                self.lbl_asw_info.setStyleSheet("QLabel { color: green; font-weight: bold; }")
+                # Сохраняем для дальнейшего использования
+                self.asw = asw_speed
+                self.asw_dir = asw_dir
+            
+            if 'twc' in data:
+                twc_speed = data['twc'].get('speed', 0)
+                twc_dir = data['twc'].get('direction', 0)
+                self.lbl_twc_info.setText(f"{twc_speed:.1f} уз @ {twc_dir:.0f}°")
+                self.lbl_twc_info.setStyleSheet("QLabel { color: blue; font-weight: bold; }")
+                # Сохраняем для дальнейшего использования
+                self.twc = twc_speed
+                self.twc_dir = twc_dir
+            
+            if 'drift' in data:
+                drift_dist = data['drift'].get('distance', 0)
+                drift_dir = data['drift'].get('direction', 0)
+                self.lbl_drift_info.setText(f"{drift_dist:.1f} мили @ {drift_dir:.0f}°")
+                self.lbl_drift_info.setStyleSheet("QLabel { color: darkred; font-weight: bold; }")
+            
+            # Сохраняем полные данные расписания
+            self.weather_schedule_data = data
+            
+        except Exception as e:
+            QMessageBox.warning(self, "Ошибка", f"Ошибка обновления данных погоды:\n{str(e)}")
+    
     def calculate(self):
-        """Расчет ASW и TWC"""
+        """Расчет ASW и TWC для быстрого ввода"""
         try:
             # Расчёт ASW (Average Surface Wind - средний ветер)
             wind_speed = self.wind_speed.value()
@@ -391,8 +495,26 @@ class RegistrationDialog(QDialog):
             current_dir = self.current_dir.value()
             self.twc = current_speed * sin(radians(current_dir))
             
-            # Обновление отображения
-            self.lbl_asw.setText(f"ASW: {self.asw:.2f} узлов")
+            # Обновление отображения для старых меток (если они есть)
+            if hasattr(self, 'lbl_asw'):
+                self.lbl_asw.setText(f"ASW: {self.asw:.2f} узлов")
+            if hasattr(self, 'lbl_twc'):
+                self.lbl_twc.setText(f"TWC: {self.twc:.2f} узлов")
+            
+            # Обновление новых информационных меток
+            if hasattr(self, 'lbl_asw_info'):
+                self.lbl_asw_info.setText(f"{wind_speed:.1f} уз @ {wind_dir:.0f}° (упрощенный)")
+                self.lbl_asw_info.setStyleSheet("QLabel { color: orange; }")
+            
+            if hasattr(self, 'lbl_twc_info'):
+                self.lbl_twc_info.setText(f"{current_speed:.1f} уз @ {current_dir:.0f}° (упрощенный)")
+                self.lbl_twc_info.setStyleSheet("QLabel { color: orange; }")
+            
+            QMessageBox.information(self, "Расчёт", 
+                                  f"ASW: {self.asw:.2f} узлов\n"
+                                  f"TWC: {self.twc:.2f} узлов\n\n"
+                                  "Для полного расчета с учетом изменения во времени\n"
+                                  "используйте 'Внести расписание ветра и течений'")
             self.lbl_twc.setText(f"TWC: {self.twc:.2f} узлов")
             
             QMessageBox.information(

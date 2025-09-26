@@ -1,4 +1,0 @@
-# -*- coding: utf-8 -*-
-"""Расчётные алгоритмы плагина ПОИСК-МОРЕ."""
-from .drift_calculator import DriftCalculator, DriftVector, Wind, SurfaceCurrent, format_latlon
-__all__ = ["DriftCalculator", "DriftVector", "Wind", "SurfaceCurrent", "format_latlon"]

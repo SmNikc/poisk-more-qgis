@@ -183,9 +183,9 @@ class MenuManager(QObject):
     
     def _on_repeat_search(self):
         """Обработчик повторного поиска"""
-        from .dialogs.repeat_search_dialog import RepeatSearchDialog
+        from .dialogs.dialog_repeat_search import DialogRepeatSearch
         
-        dialog = RepeatSearchDialog(self.iface.mainWindow())
+        dialog = DialogRepeatSearch(self.iface.mainWindow())
         if dialog.exec_():
             case_id = dialog.get_selected_case_id()
             
@@ -304,8 +304,8 @@ class MenuManager(QObject):
         operation_required = [
             'edit_info', 'close_search', 'finish_search',
             'calculate_datum', 'datum_line', 'create_area',
-            'manage_sru', 'standard_forms', 'search_plan'
-        ]
+            'manage_sru', 'standard_forms', 'search_plan',
+            'send_sitrep']
         
         for action_name in operation_required:
             if action_name in self.actions:
@@ -342,10 +342,10 @@ class MenuManager(QObject):
         service_menu.setObjectName("service_menu")
         self.menus['service'] = service_menu
         
-        # 1. Характер аварийной ситуации
+        # 1. Типы аварийных ситуаций
         action_emergency = QAction(
             self._get_icon('emergency_type.png'),
-            "Характер аварийной ситуации",
+            "Типы аварийных ситуаций",
             self.iface.mainWindow()
         )
         action_emergency.setStatusTip("Настройка типов аварийных ситуаций и их характеристик")
@@ -376,6 +376,29 @@ class MenuManager(QObject):
         action_sync.setEnabled(False)  # Активно после авторизации
         service_menu.addAction(action_sync)
         self.actions['sync_contacts'] = action_sync
+
+        # 4. Минимизация интерфейса
+        action_minimize = QAction(
+            self._get_icon('minimize_interface.png'),
+            "Минимизация интерфейса",
+            self.iface.mainWindow()
+        )
+        action_minimize.setShortcut("F11")
+        action_minimize.setStatusTip("Скрыть боковые панели для максимального пространства карты")
+        action_minimize.triggered.connect(self._on_minimize_interface)
+        service_menu.addAction(action_minimize)
+        self.actions['minimize_interface'] = action_minimize
+        
+        # 5. Морские карты
+        action_maps = QAction(
+            self._get_icon('marine_maps.png'),
+            "Морские карты",
+            self.iface.mainWindow()
+        )
+        action_maps.setStatusTip("Управление морскими картами и подложками")
+        action_maps.triggered.connect(self._on_marine_maps)
+        service_menu.addAction(action_maps)
+        self.actions['marine_maps'] = action_maps
 
         self.main_menu.addMenu(service_menu)
     
@@ -555,6 +578,102 @@ class MenuManager(QObject):
                 f"Не удалось синхронизировать контакты:\n{str(e)}"
             )
     
+    def _on_minimize_interface(self):
+        """Обработчик минимизации интерфейса"""
+        try:
+            from .utils.interface_simplifier import InterfaceSimplifier
+            simplifier = InterfaceSimplifier(self.iface)
+            is_minimized = simplifier.toggle_minimized_mode()
+            
+            if 'minimize_interface' in self.actions:
+                if is_minimized:
+                    self.actions['minimize_interface'].setText("Восстановить интерфейс")
+                    self.actions['minimize_interface'].setStatusTip("Вернуть боковые панели")
+                else:
+                    self.actions['minimize_interface'].setText("Минимизация интерфейса")
+                    self.actions['minimize_interface'].setStatusTip("Скрыть боковые панели для максимального пространства карты")
+            
+            QMessageBox.information(
+                self.iface.mainWindow(),
+                "Интерфейс",
+                "Интерфейс минимизирован" if is_minimized else "Интерфейс восстановлен"
+            )
+        except ImportError:
+            # Используем встроенный функционал QGIS
+            from qgis.PyQt.QtWidgets import QDockWidget
+            
+            # Переключаем видимость доков
+            main_window = self.iface.mainWindow()
+            docks = main_window.findChildren(QDockWidget)
+            
+            any_visible = any(dock.isVisible() for dock in docks)
+            
+            for dock in docks:
+                # Скрываем/показываем все доки кроме нашего
+                if dock.objectName() != 'PoiskMoreDock':
+                    dock.setVisible(not any_visible)
+            
+            # Обновляем текст действия
+            if 'minimize_interface' in self.actions:
+                if not any_visible:
+                    self.actions['minimize_interface'].setText("Восстановить интерфейс")
+                else:
+                    self.actions['minimize_interface'].setText("Минимизация интерфейса")
+            
+            QMessageBox.information(
+                self.iface.mainWindow(),
+                "Интерфейс",
+                "Интерфейс минимизирован" if not any_visible else "Интерфейс восстановлен"
+            )
+    
+    def _on_marine_maps(self):
+        """Обработчик управления морских карт"""
+        from qgis.core import QgsRasterLayer, QgsProject
+        from qgis.PyQt.QtWidgets import QMenu
+        from qgis.PyQt.QtGui import QCursor
+        
+        # Создаем меню выбора карт
+        menu = QMenu(self.iface.mainWindow())
+        menu.setTitle("Морские карты")
+        
+        maps = [
+            ("Esri Ocean", "https://services.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"),
+            ("OpenSeaMap", "https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png")
+        ]
+        
+        for map_name, url in maps:
+            action = menu.addAction(map_name)
+            action.triggered.connect(
+                lambda checked, n=map_name, u=url: self._load_marine_map(n, u)
+            )
+        
+        # Показываем меню в позиции курсора
+        menu.exec_(QCursor.pos())
+    
+    def _load_marine_map(self, name, url):
+        """Загрузить морскую карту как слой"""
+        from qgis.core import QgsRasterLayer, QgsProject
+        
+        # Формируем URI для XYZ тайлов
+        uri = f"type=xyz&url={url}"
+        
+        # Создаем растровый слой
+        layer = QgsRasterLayer(uri, name, "wms")
+        
+        if layer.isValid():
+            QgsProject.instance().addMapLayer(layer)
+            QMessageBox.information(
+                self.iface.mainWindow(),
+                "Морские карты",
+                f"Карта '{name}' успешно загружена"
+            )
+        else:
+            QMessageBox.critical(
+                self.iface.mainWindow(),
+                "Ошибка",
+                f"Не удалось загрузить карту '{name}'"
+            )
+    
     # === ОБРАБОТЧИКИ МЕНЮ "ИСХОДНЫЙ ПУНКТ" ===
     
     def _on_calculate_datum(self):
@@ -717,16 +836,31 @@ class MenuManager(QObject):
         docs_menu.addAction(action_plan)
         self.actions['search_plan'] = action_plan
         
-        # 3. Планшет оперативного дежурного ГМСКЦ
+        # 3. Планшет оперативного дежурного
         action_tablet = QAction(
             self._get_icon('duty_tablet.png'),
-            "Планшет оперативного дежурного ГМСКЦ",
+            "Планшет оперативного дежурного",
             self.iface.mainWindow()
         )
         action_tablet.setStatusTip("Электронный планшет дежурного МСКЦ/МСПЦ")
         action_tablet.triggered.connect(self._on_duty_tablet)
         docs_menu.addAction(action_tablet)
         self.actions['duty_tablet'] = action_tablet
+
+        docs_menu.addSeparator()
+        
+        # 4. Отправить SITREP
+        action_sitrep = QAction(
+            self._get_icon('sitrep.png'),
+            "Отправить SITREP",
+            self.iface.mainWindow()
+        )
+        action_sitrep.setShortcut("Ctrl+R")
+        action_sitrep.setStatusTip("Отправить ситуационный отчет SITREP")
+        action_sitrep.triggered.connect(self._on_send_sitrep)
+        action_sitrep.setEnabled(False)  # Активно при наличии операции
+        docs_menu.addAction(action_sitrep)
+        self.actions['send_sitrep'] = action_sitrep
         
         self.main_menu.addMenu(docs_menu)
     
@@ -890,6 +1024,42 @@ class MenuManager(QObject):
         
         dialog = DutyTabletDialog(self.iface.mainWindow())
         dialog.exec_()
+    
+    def _on_send_sitrep(self):
+        """Обработчик отправки SITREP"""
+        if not self.operation_active:
+            QMessageBox.warning(
+                self.iface.mainWindow(),
+                "Нет активной операции",
+                "Создайте или загрузите операцию для формирования SITREP"
+            )
+            return
+        
+        try:
+            from .dialogs.dialog_sitrep import SitrepDialog
+            
+            dialog = SitrepDialog(self.operation_data, self.iface.mainWindow())
+            if dialog.exec_():
+                sitrep_data = dialog.get_sitrep_data()
+                
+                QMessageBox.information(
+                    self.iface.mainWindow(),
+                    "SITREP",
+                    f"Ситуационный отчет №{sitrep_data.get('sitrep_number', 'N/A')} сформирован"
+                )
+                
+                # Сохраняем в операции
+                if 'sitreps' not in self.operation_data:
+                    self.operation_data['sitreps'] = []
+                self.operation_data['sitreps'].append(sitrep_data)
+        except ImportError:
+            # Простая заглушка если диалог не найден
+            QMessageBox.information(
+                self.iface.mainWindow(),
+                "SITREP",
+                "Функция формирования SITREP будет доступна в следующей версии.\n"
+                "Используйте меню Документы → Стандартные формы"
+            )
     
     # === ОБРАБОТЧИКИ МЕНЮ "ПОМОЩЬ" ===
     

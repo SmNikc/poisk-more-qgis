@@ -1,17 +1,17 @@
 [general]
-name=Поиск-Море
+name=Поиск-Море. Расчетный блок
 qgisMinimumVersion=3.16
-description=Плагин для поисково-спасательных операций на море
+description=Расчетный блок для поисково-спасательных операций на море
 version=1.0.0
 author=МСКЦ
 email=support@msrcc.ru
 [repository]
 repository=https://github.com/msrcc/poisk-more-qgis
-about=Плагин "Поиск-Море" предназначен для автоматизации поисково-спасательных операций на море в системе QGIS. Включает расчет районов поиска, управление данными об авариях, создание документов.
+about=Плагин "Поиск-Море. Расчетный блок" предназначен для автоматизации расчетов при проведении поисково-спасательных операций на море в системе QGIS. Включает расчет исходных пунктов, районов поиска, учет дрейфа и метеоусловий, генерацию отчетов и планов поиска.
 tracker=https://github.com/msrcc/poisk-more-qgis/issues
 homepage=https://msrcc.ru/
 category=Plugins
 icon=icon.png
 experimental=False
 deprecated=False
-tags=search,rescue,maritime,SAR,QGIS
+tags=search,rescue,maritime,SAR,QGIS,calculation

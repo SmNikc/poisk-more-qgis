@@ -1,78 +1,107 @@
-from PyQt5.QtWidgets import QDialog, QDoubleSpinBox, QSpinBox, QPushButton, QVBoxLayout, QMessageBox, QLabel
-from PyQt5.QtCore import QDateTime
-from PyQt5.QtWidgets import QDateTimeEdit  # Импорт QDateTimeEdit из QtWidgets
+# -*- coding: utf-8 -*-
+"""
+dialog_weather.py — контроллер вкладки «Погода».
+Интегрирует новую форму с расписанием ветра и течений.
+"""
 
-class WeatherDialog(QDialog):
-    def __init__(self, parent=None):
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGroupBox, QMessageBox
+from PyQt5.QtCore import pyqtSignal
+
+from .weather_schedule_dialog import WeatherScheduleDialog
+
+
+class DialogWeather(QDialog):
+    """Простой диалог-обертка для вызова формы погоды с расписанием"""
+    
+    weather_data_updated = pyqtSignal(dict)
+    
+    def __init__(self, incident_id=None, parent=None):
         super().__init__(parent)
-        layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("Погода:"))
-        layout.addWidget(QLabel("Скорость ветра (узлы):"))
-        self.wind_speed = QDoubleSpinBox(minimum=0, value=10.0)
-        layout.addWidget(self.wind_speed)
-        layout.addWidget(QLabel("Направление ветра (градусы):"))
-        self.wind_dir = QSpinBox(minimum=0, maximum=360, value=0)
-        layout.addWidget(self.wind_dir)
-        layout.addWidget(QLabel("Скорость течения (узлы):"))
-        self.current_speed = QDoubleSpinBox(minimum=0, value=2.0)
-        layout.addWidget(self.current_speed)
-        layout.addWidget(QLabel("Направление течения (градусы):"))
-        self.current_dir = QSpinBox(minimum=0, maximum=360, value=90)
-        layout.addWidget(self.current_dir)
-        layout.addWidget(QLabel("Время (часы):"))
-        self.time_hours = QDoubleSpinBox(minimum=0, value=3.0)
-        layout.addWidget(self.time_hours)
-        btn = QPushButton("Сохранить")
-        btn.clicked.connect(self.save)
-        layout.addWidget(btn)
-
-    def save(self):
-        self.accept()
-    def get_data(self):
-        """
-        Получить данные из формы
+        self.incident_id = incident_id
+        self.weather_data = {}
+        self.setup_ui()
+    
+    def setup_ui(self):
+        self.setWindowTitle("Погода")
+        self.setMinimumSize(400, 200)
         
-        Returns:
-            dict: Словарь с данными формы
-        """
-        # Автоматически добавленный метод
-        # TODO: Реализовать сбор данных из полей формы
-        try:
-            return self.collect_data()
-        except AttributeError:
-            # Если collect_data не реализован, возвращаем пустой словарь
-            data = {}
-            
-            # Попытка собрать данные из стандартных виджетов
-            for attr_name in dir(self):
-                if attr_name.startswith("txt_") or attr_name.startswith("spin_") or attr_name.startswith("cmb_"):
-                    try:
-                        widget = getattr(self, attr_name)
-                        if hasattr(widget, "text"):
-                            data[attr_name] = widget.text()
-                        elif hasattr(widget, "value"):
-                            data[attr_name] = widget.value()
-                        elif hasattr(widget, "currentText"):
-                            data[attr_name] = widget.currentText()
-                        elif hasattr(widget, "toPlainText"):
-                            data[attr_name] = widget.toPlainText()
-                    except:
-                        pass
-            
-            return data
-
-    def collect_data(self):
-        """
-        Собрать данные из полей формы
+        layout = QVBoxLayout()
         
-        Returns:
-            dict: Словарь с данными формы
-        """
-        data = {}
+        # Информационная группа
+        info_group = QGroupBox("Метеоусловия")
+        info_layout = QVBoxLayout()
         
-        # TODO: Реализовать сбор данных из конкретных полей
-        # Пример:
-        # if hasattr(self, "txt_name"):
-        #     data["name"] = self.txt_name.text()
+        self.asw_label = QLabel("Средний ветер (ASW): не рассчитан")
+        info_layout.addWidget(self.asw_label)
         
-        return data
+        self.twc_label = QLabel("Суммарное течение (TWC): не рассчитано")
+        info_layout.addWidget(self.twc_label)
+        
+        self.status_label = QLabel("Статус: данные не введены")
+        info_layout.addWidget(self.status_label)
+        
+        info_group.setLayout(info_layout)
+        layout.addWidget(info_group)
+        
+        # Кнопки
+        button_layout = QHBoxLayout()
+        
+        self.btn_edit_schedule = QPushButton("📋 Внести расписание ветра и течений")
+        self.btn_edit_schedule.clicked.connect(self.open_weather_schedule)
+        button_layout.addWidget(self.btn_edit_schedule)
+        
+        self.btn_import = QPushButton("📥 Импорт из Гидрометео")
+        self.btn_import.clicked.connect(self.import_hydro)
+        button_layout.addWidget(self.btn_import)
+        
+        layout.addLayout(button_layout)
+        
+        # Кнопки диалога
+        dialog_buttons = QHBoxLayout()
+        
+        self.btn_ok = QPushButton("OK")
+        self.btn_ok.clicked.connect(self.accept)
+        dialog_buttons.addWidget(self.btn_ok)
+        
+        self.btn_cancel = QPushButton("Отмена")
+        self.btn_cancel.clicked.connect(self.reject)
+        dialog_buttons.addWidget(self.btn_cancel)
+        
+        layout.addLayout(dialog_buttons)
+        
+        self.setLayout(layout)
+    
+    def open_weather_schedule(self):
+        """Открыть полную форму с расписанием ветра и течений"""
+        dlg = WeatherScheduleDialog(self.incident_id, self)
+        dlg.weather_updated.connect(self.on_weather_updated)
+        
+        if dlg.exec_():
+            QMessageBox.information(self, "Успешно", 
+                                  "Данные расписания сохранены")
+    
+    def on_weather_updated(self, data):
+        """Обработка обновления данных погоды"""
+        self.weather_data = data
+        
+        # Обновляем метки
+        if 'asw' in data:
+            self.asw_label.setText(f"Средний ветер (ASW): {data['asw']['speed']} @ {data['asw']['direction']}")
+        
+        if 'twc' in data:
+            self.twc_label.setText(f"Суммарное течение (TWC): {data['twc']['speed']} @ {data['twc']['direction']}")
+        
+        self.status_label.setText("Статус: данные введены ✓")
+        
+        # Передаем сигнал дальше
+        self.weather_data_updated.emit(data)
+    
+    def import_hydro(self):
+        """Импорт из модуля Гидрометео"""
+        QMessageBox.information(self, "Импорт", 
+                              "Функция импорта из модуля Гидрометео\n"
+                              "будет реализована в следующей версии.")
+    
+    def get_weather_data(self):
+        """Получить введенные данные погоды"""
+        return self.weather_data

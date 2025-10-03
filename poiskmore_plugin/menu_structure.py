@@ -528,27 +528,40 @@ class MenuManager(QObject):
         dialog = EmergencyTypesDialog(self.iface.mainWindow())
         dialog.exec_()
     
-    def _on_authorization(self):
-        """Обработчик авторизации"""
-        from .dialogs.authorization_dialog import AuthorizationDialog
+def _on_authorization(self):
+    """Обработчик авторизации (вариант -1: внешний сервер)"""
+    from .dialogs.dialog_authorization import DialogAuthorization
+    from qgis.core import Qgis
+    
+    dialog = DialogAuthorization(self.iface.mainWindow())
+    
+    # Подключение сигнала авторизации
+    dialog.authorized.connect(self._on_authorization_success)
+    
+    if dialog.exec_() == QDialog.Accepted:
+        # Авторизация уже обработана через сигнал
+        pass
         
-        dialog = AuthorizationDialog(self.iface.mainWindow())
-        if dialog.exec_():
-            user_data = dialog.get_user_data()
-            if user_data:
-                self.user_authorized = True
-                self._update_menu_state()
-                
-                # Сохраняем данные пользователя
-                settings = QSettings('PoiskMore', 'Authorization')
-                settings.setValue('user_login', user_data['login'])
-                settings.setValue('user_profile', user_data['profile'])
-                
-                QMessageBox.information(
-                    self.iface.mainWindow(),
-                    "Авторизация",
-                    f"Вход выполнен: {user_data['login']} ({user_data['profile']})"
-                )
+def _on_authorization_success(self, token: str, user_info: dict):
+    """Обработка успешной авторизации"""
+    self.user_authorized = True
+    self.current_token = token
+    self.current_user_info = user_info
+    
+    # Обновление состояния меню
+    self._update_menu_state()
+    
+    # Показ сообщения в QGIS
+    self.iface.messageBar().pushMessage(
+        "Авторизация",
+        f"Вход выполнен: {user_info['login']} ({user_info['rcc_name']})",
+        level=Qgis.Success,
+        duration=5
+    )
+    
+    # Активация функций, требующих авторизации
+    if 'sync_contacts' in self.actions:
+        self.actions['sync_contacts'].setEnabled(True)
     
     def _on_sync_contacts(self):
         """Обработчик синхронизации контактов"""
